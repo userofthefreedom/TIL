@@ -1,4 +1,5 @@
 [맛보기](#사전-학습-맛보기)
+[git](#git)
 
 # 사전 학습 (맛보기)
 
@@ -12,3 +13,7 @@
 4. 입출력
     - input과 print 함수
 5. 클래스
+
+# GIT
+- 로컬 기초
+  - git은 working directory, staging area, repository로 구성되어 있다
