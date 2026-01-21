@@ -74,3 +74,12 @@
 # print(f'MAX={max(t)}')
 # print(f'MIN={min(t)}')
 
+
+
+
+
+arr_even = [
+    [3,4,1],
+    [2,1,4],
+    [3,3,0],
+]
