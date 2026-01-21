@@ -1,0 +1,5 @@
+print('HELLO WORLD')
+print('@@@@')
+print("123###456")
+print("MINCODING\n##   ##")
+print("5 4 3 2 1 GO!")
