@@ -66,13 +66,18 @@ def inp():
 # def make_grid():
 #     start_num = int(input())
 #     return [[start_num + i*4 + j for j in range(4)] for i in range(3)]
-
 # first_list = make_grid()
 
 def process():
     for i in range(3):
         for j in range(4):
             first_list[i][j] += 1
+# def process():
+#     global first_list
+#     first_list = [[x + 1 for x in row] for row in first_list]
+# def process():
+#     global first_list
+#     first_list = [list(map(lambda x: x + 1, row)) for row in first_list]
 
 def out():
     for i in first_list:
