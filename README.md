@@ -1,5 +1,6 @@
 [맛보기](#사전-학습-맛보기)
 [git](#git)
+[TIP](#tip)
 
 # 사전 학습 (맛보기)
 
@@ -22,3 +23,33 @@
     - repository : 버전 이력과 파일들이 영구 저장되는 곳
 - Commit
   - 커밋은 버전으로, 변경된 파일을 저장하는 행위
+
+# TIP
+- ord()로 아스키코드화, chr()으로 다시 글으로
+  - 아스키 코드 기준 
+    - 48 <= x <= 57: 숫자
+    - 65 <= x <= 90: 대문자
+    - 97 <= x <= 122: 소문자
+```
+alphab = input()
+wrong_list = []
+x = "A"
+while ord(x) <= ord(alphab) :
+    wrong_list.append(x)
+    x = chr(ord(x)+1)
+
+print("".join(wrong_list))
+```
+- isdigit() 숫자인지 판별
+```
+ch_list = list(map(str,input().split()))
+check_list = 0
+for i in ch_list:
+    if i.isdigit():
+        check_list += 1
+
+if check_list == 0:
+    print("숫자미발견")
+else:
+    print(f"숫자{check_list}개발견")
+```

@@ -63,3 +63,48 @@ while ord(x) <= ord(alphab) :
     x = chr(ord(x)+1)
 
 print("".join(wrong_list))
+
+
+
+
+t = input()
+print(chr(ord(t)-32))
+
+
+ch1, ch2 = map(str, input().split())
+pri_list = []
+for i in range(ord(ch1),ord(ch2)+1):
+    pri_list.append(chr(i))
+for i in range(4):
+    print(" ".join(pri_list))
+
+
+
+
+
+flag = 0
+a, b, c = map(str, input().split())
+
+def process():
+    global flag
+    if a == "A" and b == "B" and c == "C":
+        flag = 1
+def output1():
+    if flag == 1:
+        print("ABC를찾았다")
+    else:
+        print("못찾았다")
+
+process()
+output1()
+
+
+
+
+
+a, b, c = map(int, input().split())
+atoc_list = []
+for i in range(a,b+1):
+    atoc_list.append(str(i))
+for j in range(c):
+    print(" ".join(atoc_list))
