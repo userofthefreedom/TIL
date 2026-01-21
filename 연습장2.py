@@ -233,43 +233,43 @@ def calc_price(p, t):
     return p + (p * t)
 
 
-# 잘못된 설계 예시 (여러 책임이 섞인 함수)
-def process_user_data(user_data):
-    # 책임 1: 데이터 유효성 검사
-    if len(user_data['password']) < 8:
-        raise ValueError('비밀번호는 8자 이상이어야 합니다')
+# # 잘못된 설계 예시 (여러 책임이 섞인 함수)
+# def process_user_data(user_data):
+#     # 책임 1: 데이터 유효성 검사
+#     if len(user_data['password']) < 8:
+#         raise ValueError('비밀번호는 8자 이상이어야 합니다')
 
-    # 책임 2: 비밀번호 암호화 및 저장
-    user_data['password'] = hash_password(user_data['password'])
-    db.users.insert(user_data)
+#     # 책임 2: 비밀번호 암호화 및 저장
+#     user_data['password'] = hash_password(user_data['password'])
+#     db.users.insert(user_data)
 
-    # 책임 3: 이메일 발송
-    send_email(user_data['email'], '가입을 환영합니다!')
-
-
-# 올바른 설계 예시 (책임을 분리한 함수들)
-def validate_password(password):
-    """비밀번호 유효성 검사"""
-    if len(password) < 8:
-        raise ValueError('비밀번호는 8자 이상이어야 합니다')
+#     # 책임 3: 이메일 발송
+#     send_email(user_data['email'], '가입을 환영합니다!')
 
 
-def save_user(user_data):
-    """비밀번호 암호화 및 저장"""
-    user_data['password'] = hash_password(user_data['password'])
-    db.users.insert(user_data)
+# # 올바른 설계 예시 (책임을 분리한 함수들)
+# def validate_password(password):
+#     """비밀번호 유효성 검사"""
+#     if len(password) < 8:
+#         raise ValueError('비밀번호는 8자 이상이어야 합니다')
 
 
-def send_welcome_email(email):
-    """환영 이메일 발송"""
-    send_email(email, '가입을 환영합니다!')
+# def save_user(user_data):
+#     """비밀번호 암호화 및 저장"""
+#     user_data['password'] = hash_password(user_data['password'])
+#     db.users.insert(user_data)
 
 
-# 메인 함수에서 순차적으로 실행
-def process_user_data(user_data):
-    validate_password(user_data['password'])
-    save_user(user_data)
-    send_welcome_email(user_data['email'])
+# def send_welcome_email(email):
+#     """환영 이메일 발송"""
+#     send_email(email, '가입을 환영합니다!')
+
+
+# # 메인 함수에서 순차적으로 실행
+# def process_user_data(user_data):
+#     validate_password(user_data['password'])
+#     save_user(user_data)
+#     send_welcome_email(user_data['email'])
 
 
 
@@ -399,4 +399,215 @@ print(result)  # [('서준', 20), ('지민', 25), ('민우', 30)]
 
 
 # 함수
-## 
+
+def kfc():
+    abc()
+    print("!")
+
+def abc():
+    print("치킨")
+
+kfc() # 정의된 후에 호출했기에, abc() 정의 전에 kfc() 선언해도 된다
+print("#") # 함수가 끝난 후에는 호출한 곳으로 돌아간다
+
+
+
+
+def getsum(a,b,k=8):  #parameter 매개변수
+    return a+b, k  # 2개 이상 return일 경우 튜플로 묶어 리턴
+    print("22") #return은 함수를 종료시킨다
+
+ret = getsum(3, 7) #arguments 인자값
+print(ret)
+
+
+
+#PACKING
+num = [1,2,3,4,5]
+num_2 = (1,2,3,4,5)
+
+#unpacking (*이용 가능)
+a,b,c,d,e = num
+f,g,*h = num_2
+print(a,b,c,d,e)
+print(f,g,h)
+a,*b,c,d = num
+print(a,b,c,d)
+
+
+
+def getsum(*a): #가변인자
+    print(type(a))
+    return a[0]+a[1]+a[2]
+
+ret = getsum(1,2,3)
+print(ret)
+
+
+def print_info(**test): #키워드가변인자
+    print(test)
+
+print_info(kevin=1,bob=2,kate=3)
+
+
+
+
+
+#함수에서 사용하는 변수 > 지역변수, 전역변수
+aa = 1
+def abc():
+    aa=3
+    bb=5
+    print(aa,bb)
+abc()
+print(aa) # 함수가 종료되면 지역 변수는 사라진다, 때문에 위에서 선언하지 않으면 버그
+
+
+
+aa = 7
+bb = 6
+def abc():
+    global aa, bb #여부에따라 지역변수가 되느냐 전역변수가 되느냐 차이
+    print(aa,bb)
+    aa = 3
+    bb = 5
+    print(aa,bb)
+
+abc()
+print(aa,bb)
+
+
+
+
+
+def kef():
+    print(aa,bb)
+    # aa += 1
+    # bb += 1
+    # print(aa,bb) #앞에 글로벌이 있다면 가능하다
+def test():
+    global aa,bb
+    aa = 3
+    bb = 5
+    print(aa,bb)
+
+test()
+kef() #다른 함수에서 글로벌 함수를 출력만 한다면 그것은 가능
+
+
+
+
+
+
+# 내장함수
+## map
+num = ["1","2","3"]
+lst = []
+for i in num:
+    lst.append(int(i))
+print(lst)
+list2=map(int,num)
+print(list2)
+print(list(list2))
+
+## zip
+a = '12345'
+b = 'qwert'
+c = 'ㄱㄴㄷㄹㅁ'
+ret = zip (a,b)
+print(ret)
+print(list(ret))
+for i in zip(a,b,c):
+    print(list(i)) # 리스트로 출력
+for x,y,z in zip(a,b,c):
+    print(x,y,z) #값만 출력
+
+
+arr = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9],
+]
+for i in zip(arr[0],arr[1],arr[2]):
+    print(list(i))
+for i in zip(*arr):
+    print(list(i))
+
+ret=list(map(list,zip(*arr)))
+print(ret)
+
+
+## filter
+
+num  = list(range(1,8))
+def get_even(value):
+    if value%2==0:
+        return True
+    else:
+        return False
+    # return True if value%2==0 else False <컴프리핸션
+
+ret = filter(get_even, num) # 겟 이븐 안에 num을 넣어 참인 값만 걸러주는 것
+print(list(ret))
+
+
+## lambda 익명함수
+
+def sum(a,b):
+    return a+b
+ret = sum(4,6)
+print(ret)
+
+ret = (lambda a,b:a+b)(3,9)
+print(ret)
+
+ret = (lambda a,b:a+b)
+print(ret(10,11))
+
+lst1 = list(range(1,5))
+lst2 = list(range(3,7))
+
+ret = (lambda r,t:r+t)
+lst3 = list(map(ret,lst1,lst2))
+print(lst3)
+
+lst3 = list(map(lambda c,d:c+d,lst1,lst2))
+print(lst3)
+
+
+
+
+## 재귀
+
+for i in range(1, 11):
+    print(i, end=" ")
+for i in range(10,0,-1):
+    print(i, end=" ")
+
+print("")
+
+def abc(level):
+    if level==11:
+        return
+    print(level,end=" ")
+    abc(level+1)
+    print(level,end=" ")
+
+abc(0)
+print("")
+
+
+
+n = int(input())
+path = [0]*n
+
+def abc(level):
+    if level == n:
+        print(*path)
+        return
+    for i in range(6):
+        path[level] = i+1
+        abc(level+1)
+        path[level] = 0
+
+abc(0)
