@@ -8,13 +8,10 @@
 
 
 
-# Python Study Notes
-
 ---
 
 ## 목차
 - [Python Study Notes](#python-study-notes)
-  - [목차](#목차)
   - [1. 변수와 자료형 (int / float / str / bool)](#1-변수와-자료형-int--float--str--bool)
   - [2. 문자열 (Slicing / 연산 / 메서드 / ord \& chr)](#2-문자열-slicing--연산--메서드--ord--chr)
   - [3. 리스트 / 튜플 / range](#3-리스트--튜플--range)
@@ -67,6 +64,8 @@
     - [13-3) `git revert`](#13-3-git-revert)
   - [14) `.gitignore` : 추적 제외 파일 설정](#14-gitignore--추적-제외-파일-설정)
 
+---
+# Python Study Notes
 ---
 
 ## 1. 변수와 자료형 (int / float / str / bool)
