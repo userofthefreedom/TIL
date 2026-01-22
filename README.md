@@ -53,3 +53,6 @@ if check_list == 0:
 else:
     print(f"숫자{check_list}개발견")
 ```
+- python 패키지
+
+![readme_pic]
