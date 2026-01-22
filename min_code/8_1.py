@@ -91,17 +91,30 @@
 
 
 
-def inp():
-    global txt
-    txt = input()
+# def inp():
+#     global txt
+#     txt = input()
 
-def out():
-    if 'a' <= txt <= 'z':
-        print('BD5QA')
-    elif 'A' <= txt <= 'Z':
-        print('QEREF')
-    else :
-        print("".join(chr(i) for i in range(72,64,-1)))
+# def out():
+#     if 'a' <= txt <= 'z':
+#         print('BD5QA')
+#     elif 'A' <= txt <= 'Z':
+#         print('QEREF')
+#     else :
+#         print("".join(chr(i) for i in range(72,64,-1)))
     
-inp()
-out()
+# inp()
+# out()
+
+
+
+
+
+
+
+txt = "#_#_##"
+for i in range(len(txt)):
+    if txt[i] == "#":
+        print("샵",end="")
+    else:
+        print("무",end="")
