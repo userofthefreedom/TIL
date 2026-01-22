@@ -55,4 +55,5 @@ else:
 ```
 - python 패키지
 
-![readme_pic]
+![readme_pic](./preparations/readme_pic(26.01.22).png)
+
