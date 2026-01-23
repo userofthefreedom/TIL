@@ -4,6 +4,7 @@
 
 [git](#git-활용법-정리-기능--예시)
 
+[markdown](#markdown--readme-작성법-정리)
 
 
 
@@ -30,6 +31,22 @@
     - [enumerate](#enumerate)
   - [13. lambda (익명 함수)](#13-lambda-익명-함수)
   - [14. 재귀(Recursion)](#14-재귀recursion)
+  - [Python으로 “클라이언트 → 서버 요청” 정리 (requests 중심)](#python으로-클라이언트--서버-요청-정리-requests-중심)
+    - [0) 용어 한눈에 보기](#0-용어-한눈에-보기)
+    - [1) requests 설치 및 기본 사용 흐름](#1-requests-설치-및-기본-사용-흐름)
+    - [2) GET 요청: 서버에서 “조회”하기](#2-get-요청-서버에서-조회하기)
+    - [3) POST 요청: 서버에 “생성/전송”하기 (JSON 바디)](#3-post-요청-서버에-생성전송하기-json-바디)
+    - [4) POST 요청: form 데이터 전송 (`data=`)](#4-post-요청-form-데이터-전송-data)
+    - [5) 헤더(headers): 인증/콘텐츠 타입/커스텀 헤더](#5-헤더headers-인증콘텐츠-타입커스텀-헤더)
+    - [6) 상태코드와 에러 처리: raise\_for\_status()](#6-상태코드와-에러-처리-raise_for_status)
+    - [7) 응답(response) 다루기: text / json / headers / encoding](#7-응답response-다루기-text--json--headers--encoding)
+    - [8) timeout과 재시도(기본 전략)](#8-timeout과-재시도기본-전략)
+    - [9) Session 사용: 쿠키/연결 재사용(성능/로그인 유지)](#9-session-사용-쿠키연결-재사용성능로그인-유지)
+    - [10) 파일 다운로드/업로드 기초](#10-파일-다운로드업로드-기초)
+      - [10-1) 다운로드(간단)](#10-1-다운로드간단)
+      - [10-2) 업로드(파일 전송)](#10-2-업로드파일-전송)
+    - [11) 실전 템플릿: 안전한 요청 함수 만들기](#11-실전-템플릿-안전한-요청-함수-만들기)
+    - [참고 (연습용 테스트 API)](#참고-연습용-테스트-api)
 - [CLI 기본 명령어](#cli-기본-명령어)
   - [1) `pwd`](#1-pwd)
   - [2) `ls`](#2-ls)
@@ -63,6 +80,23 @@
     - [13-2) `git reset`](#13-2-git-reset)
     - [13-3) `git revert`](#13-3-git-revert)
   - [14) `.gitignore` : 추적 제외 파일 설정](#14-gitignore--추적-제외-파일-설정)
+- [Markdown / README 작성법 정리](#markdown--readme-작성법-정리)
+  - [목차 (내부 링크)](#목차-내부-링크)
+  - [내부링크](#내부링크)
+  - [헤더적기](#헤더적기)
+  - [순서 리스트 적기](#순서-리스트-적기)
+  - [그냥 리스트 적기](#그냥-리스트-적기)
+  - [체크 리스트 적기](#체크-리스트-적기)
+  - [코드블럭](#코드블럭)
+  - [링크걸기](#링크걸기)
+  - [이미지걸기](#이미지걸기)
+  - [텍스트 꾸미기](#텍스트-꾸미기)
+    - [굵게 표현하기](#굵게-표현하기)
+    - [기울임](#기울임)
+    - [취소선](#취소선)
+  - [수평선](#수평선)
+  - [줄바꿈/구분](#줄바꿈구분)
+  - [참고 링크](#참고-링크)
 
 ---
 # Python Study Notes
@@ -387,6 +421,362 @@ print(factorial(5))  # 120
   - 종료 조건이 없으면 무한 재귀 → RecursionError
 
 ---
+## Python으로 “클라이언트 → 서버 요청” 정리 (requests 중심)
+
+- **내용, 설명**
+  - 클라이언트(내 파이썬 코드)가 서버(API)에 요청(request)을 보내면, 서버는 응답(response)을 반환한다.
+  - 보통 HTTP/HTTPS 프로토콜을 사용하며, 요청에는 **메서드(GET/POST/PUT/PATCH/DELETE)**, **URL**, **헤더**, **쿼리/바디**, **인증 정보** 등이 포함된다.
+  - `requests` 라이브러리는 이 과정을 파이썬에서 쉽게 처리하게 해준다.
+
+- **실수하기 쉬운 포인트**
+  - “요청이 성공했다”는 건 단순히 통신이 됐다는 의미가 아니라, **상태코드(status code)** 를 반드시 확인해야 한다.
+  - 응답이 JSON이라고 가정하고 `.json()`을 호출했는데 사실 HTML/텍스트면 에러가 날 수 있다.
+  - 네트워크 요청은 언제든 실패할 수 있으니 **timeout**과 **예외 처리**는 기본이다.
+
+---
+
+### 0) 용어 한눈에 보기
+
+- **내용, 설명**
+  - **Endpoint**: 서버가 제공하는 API 주소(예: `/v1/users`)
+  - **URL**: 전체 주소(프로토콜 + 도메인 + 경로 + 쿼리)
+  - **Query String(쿼리스트링)**: URL 뒤 `?key=value&...` 형태
+  - **Headers(헤더)**: 메타데이터(인증, 콘텐츠 타입 등)
+  - **Body(바디)**: 요청 본문(POST/PUT/PATCH에서 주로 사용)
+  - **Status Code**:
+    - `2xx` 성공 (예: 200 OK, 201 Created)
+    - `3xx` 리다이렉트
+    - `4xx` 클라이언트 오류 (예: 400, 401, 403, 404)
+    - `5xx` 서버 오류 (예: 500)
+
+- **예시**
+
+    URL 예시:
+    https://api.example.com/v1/users?limit=10&page=2
+
+    - 프로토콜: https
+    - 도메인: api.example.com
+    - 경로: /v1/users
+    - 쿼리: limit=10&page=2
+
+- **실수하기 쉬운 포인트**
+  - `401`은 인증 실패(토큰/키 문제), `403`은 권한 없음, `404`는 경로 틀림 가능성.
+  - “서버가 죽었다” 판단 전에 URL/인증/파라미터부터 점검하기.
+
+---
+
+### 1) requests 설치 및 기본 사용 흐름
+
+- **내용, 설명**
+  - `requests`는 표준 라이브러리가 아니라 설치가 필요할 수 있다.
+  - 기본 흐름:
+    1) 요청 보내기 (`requests.get/post/...`)
+    2) 응답 객체 확인 (`status_code`, `headers`, `text`)
+    3) 필요하면 JSON 파싱 (`.json()`)
+    4) 예외 처리/타임아웃/재시도 고려
+
+- **예시**
+
+    pip install requests
+
+    import requests
+
+    r = requests.get("https://httpbin.org/get")
+    print(r.status_code)
+    print(r.text)
+
+- **실수하기 쉬운 포인트**
+  - `requests.get()`은 기본적으로 오래 기다릴 수 있음 → `timeout`을 주는 습관.
+
+---
+
+### 2) GET 요청: 서버에서 “조회”하기
+
+- **내용, 설명**
+  - GET은 주로 “데이터 조회”에 사용한다.
+  - 파라미터는 보통 쿼리스트링으로 전달한다.
+  - `params={...}`를 사용하면 requests가 URL 인코딩까지 처리한다.
+
+- **예시**
+
+    import requests
+
+    url = "https://httpbin.org/get"
+    params = {"q": "python", "page": 1}
+
+    r = requests.get(url, params=params, timeout=5)
+    print(r.url)          # 실제 요청된 URL 확인 가능
+    print(r.status_code)
+
+    data = r.json()
+    print(data["args"])   # {"q": "python", "page": "1"}
+
+- **실수하기 쉬운 포인트**
+  - `params`를 문자열로 직접 붙이면 인코딩 문제/오타가 나기 쉽다 → `params` 사용 권장.
+  - `r.json()`은 응답이 JSON일 때만 가능.
+
+---
+
+### 3) POST 요청: 서버에 “생성/전송”하기 (JSON 바디)
+
+- **내용, 설명**
+  - POST는 서버에 데이터를 생성하거나 전송할 때 사용한다.
+  - JSON API는 보통 `json={...}`로 보내며, requests가 `Content-Type: application/json` 처리까지 해준다.
+
+- **예시**
+
+    import requests
+
+    url = "https://httpbin.org/post"
+    payload = {"name": "sejin", "role": "planner"}
+
+    r = requests.post(url, json=payload, timeout=5)
+    print(r.status_code)
+
+    data = r.json()
+    print(data["json"])  # {"name": "...", "role": "..."}
+
+- **실수하기 쉬운 포인트**
+  - `data=`와 `json=`은 다름:
+    - `json=`: JSON으로 인코딩
+    - `data=`: 보통 form 형태(또는 raw 문자열)
+  - API 문서가 요구하는 형식(JSON vs form)을 확인해야 한다.
+
+---
+
+### 4) POST 요청: form 데이터 전송 (`data=`)
+
+- **내용, 설명**
+  - `application/x-www-form-urlencoded` 형태로 전송할 때 `data=`를 사용한다.
+  - 로그인 폼 등 레거시 시스템에서 자주 사용.
+
+- **예시**
+
+    import requests
+
+    url = "https://httpbin.org/post"
+    form = {"username": "user1", "password": "pw1234"}
+
+    r = requests.post(url, data=form, timeout=5)
+    print(r.status_code)
+    print(r.json()["form"])
+
+- **실수하기 쉬운 포인트**
+  - JSON API인데 `data=`로 보내면 서버가 바디를 해석 못 할 수 있다.
+
+---
+
+### 5) 헤더(headers): 인증/콘텐츠 타입/커스텀 헤더
+
+- **내용, 설명**
+  - 헤더는 요청에 대한 “부가 정보”를 담는다.
+  - 대표적으로 인증 토큰(Authorization), 사용자 에이전트(User-Agent) 등이 있다.
+
+- **예시**
+
+    import requests
+
+    url = "https://httpbin.org/headers"
+    headers = {
+      "Authorization": "Bearer YOUR_TOKEN",
+      "User-Agent": "MyPythonClient/1.0",
+    }
+
+    r = requests.get(url, headers=headers, timeout=5)
+    print(r.status_code)
+    print(r.json())
+
+- **실수하기 쉬운 포인트**
+  - 토큰 앞에 `Bearer `가 필요한지(혹은 다른 스킴인지) API 문서 확인 필수.
+  - 헤더 키 오타(Authorization vs Authorisation 등) 주의.
+
+---
+
+### 6) 상태코드와 에러 처리: raise_for_status()
+
+- **내용, 설명**
+  - 상태코드를 직접 체크하거나, `raise_for_status()`로 4xx/5xx를 예외로 처리할 수 있다.
+
+- **예시**
+
+    import requests
+
+    try:
+        r = requests.get("https://httpbin.org/status/404", timeout=5)
+        r.raise_for_status()  # 4xx/5xx면 HTTPError 발생
+        print("OK:", r.status_code)
+    except requests.exceptions.HTTPError as e:
+        print("HTTPError:", e)
+    except requests.exceptions.Timeout:
+        print("Timeout")
+    except requests.exceptions.RequestException as e:
+        print("RequestException:", e)
+
+- **실수하기 쉬운 포인트**
+  - `raise_for_status()`를 쓰면 실패를 놓치지 않아서 안정적인 코드가 된다.
+
+---
+
+### 7) 응답(response) 다루기: text / json / headers / encoding
+
+- **내용, 설명**
+  - `r.text`: 문자열(디코딩된 텍스트)
+  - `r.content`: 바이트(이미지/파일 등)
+  - `r.json()`: JSON 파싱
+  - `r.headers`: 응답 헤더 딕셔너리
+  - `r.encoding`: 텍스트 인코딩(필요 시 수동 설정)
+
+- **예시**
+
+    import requests
+
+    r = requests.get("https://httpbin.org/get", timeout=5)
+    print(r.status_code)
+    print(r.headers.get("Content-Type"))
+    print(r.text[:100])
+
+    data = r.json()
+    print(data.keys())
+
+- **실수하기 쉬운 포인트**
+  - 응답이 JSON이 아닐 때 `r.json()` 호출하면 ValueError가 날 수 있다.
+  - 파일 다운로드는 `r.content`/`stream=True` 사용이 안전.
+
+---
+
+### 8) timeout과 재시도(기본 전략)
+
+- **내용, 설명**
+  - 네트워크 요청은 지연/실패가 발생할 수 있으므로 `timeout`은 필수.
+  - 단순 재시도는 서버에 부담이 될 수 있어, 제한적으로 사용한다.
+
+- **예시**
+
+    import time
+    import requests
+
+    url = "https://httpbin.org/delay/2"
+
+    for i in range(3):
+        try:
+            r = requests.get(url, timeout=1)  # 일부러 타임아웃 유도
+            print("Success:", r.status_code)
+            break
+        except requests.exceptions.Timeout:
+            print("Timeout, retry:", i + 1)
+            time.sleep(1)
+
+- **실수하기 쉬운 포인트**
+  - timeout을 너무 짧게 잡으면 정상 요청도 실패할 수 있다.
+  - 무한 재시도는 금지(서버/클라이언트 모두 위험).
+
+---
+
+### 9) Session 사용: 쿠키/연결 재사용(성능/로그인 유지)
+
+- **내용, 설명**
+  - `requests.Session()`을 쓰면:
+    - 같은 서버에 여러 요청 시 연결 재사용(성능 향상)
+    - 쿠키 유지(로그인 세션 유지 등)
+    - 공통 헤더/파라미터 관리 용이
+
+- **예시**
+
+    import requests
+
+    session = requests.Session()
+    session.headers.update({"User-Agent": "MyClient/1.0"})
+
+    r1 = session.get("https://httpbin.org/get", timeout=5)
+    r2 = session.get("https://httpbin.org/get", timeout=5)
+
+    print(r1.status_code, r2.status_code)
+
+- **실수하기 쉬운 포인트**
+  - 세션은 “상태”를 가지므로, 다른 계정/다른 토큰을 섞어 쓰지 않게 주의.
+
+---
+
+### 10) 파일 다운로드/업로드 기초
+
+#### 10-1) 다운로드(간단)
+- **내용, 설명**
+  - 작은 파일은 `r.content`로 받아 저장 가능
+
+- **예시**
+
+    import requests
+
+    r = requests.get("https://httpbin.org/image/png", timeout=5)
+    with open("image.png", "wb") as f:
+        f.write(r.content)
+
+- **실수하기 쉬운 포인트**
+  - 큰 파일은 `stream=True`로 나눠 받는 것이 안전.
+
+#### 10-2) 업로드(파일 전송)
+- **내용, 설명**
+  - `files=` 파라미터로 multipart/form-data 업로드 가능
+
+- **예시**
+
+    import requests
+
+    url = "https://httpbin.org/post"
+    with open("image.png", "rb") as f:
+        r = requests.post(url, files={"file": f}, timeout=10)
+
+    print(r.status_code)
+
+- **실수하기 쉬운 포인트**
+  - 서버가 요구하는 필드명(예: file, upload 등)이 다를 수 있음 → API 문서 확인.
+
+---
+
+### 11) 실전 템플릿: 안전한 요청 함수 만들기
+
+- **내용, 설명**
+  - 자주 쓰는 패턴(타임아웃/에러처리/JSON 파싱)을 함수로 묶으면 실수가 줄어든다.
+
+- **예시**
+
+    import requests
+
+    def get_json(url, params=None, headers=None, timeout=5):
+        try:
+            r = requests.get(url, params=params, headers=headers, timeout=timeout)
+            r.raise_for_status()
+            return r.json()
+        except requests.exceptions.Timeout:
+            return {"error": "timeout"}
+        except requests.exceptions.HTTPError as e:
+            return {"error": "http_error", "detail": str(e), "status": r.status_code}
+        except ValueError:
+            return {"error": "not_json"}
+        except requests.exceptions.RequestException as e:
+            return {"error": "request_exception", "detail": str(e)}
+
+    data = get_json("https://httpbin.org/get", params={"q": "python"})
+    print(data)
+
+- **실수하기 쉬운 포인트**
+  - 실패 케이스를 먼저 설계하면(Timeout/HTTPError/Not JSON) 디버깅이 쉬워진다.
+
+---
+
+### 참고 (연습용 테스트 API)
+
+- **내용, 설명**
+  - 실제 서비스 API가 없어도 연습할 수 있는 공개 테스트 서버
+  - 요청/응답 구조를 확인하기 좋다.
+
+- **예시**
+
+    https://httpbin.org/
+    https://jsonplaceholder.typicode.com/
+
+- **실수하기 쉬운 포인트**
+  - 테스트 API는 실제 서비스와 인증/제한이 다를 수 있다.
 
 
 
@@ -906,3 +1296,262 @@ Git은 **코드 변경 사항을 기록하고(버전 관리)**, 다른 사람과
     git commit -m "Apply .gitignore"
 
 ---
+---
+# Markdown / README 작성법 정리
+
+  - 마크다운은 “렌더링되는 곳(README.md 미리보기)”에서만 제대로 보인다.
+  - 메모장처럼 일반 텍스트에서는 서식이 안 보이는 게 정상이다.
+
+---
+
+## 목차 (내부 링크)
+
+- **내용, 설명**
+  - 문서 상단에 목차를 만들면 빠르게 원하는 위치로 이동할 수 있다.
+  - 링크는 보통 `(#헤더이름)` 형태로 작성한다.
+  - 영어는 소문자, 띄어쓰기는 `-` 로 변환된다.
+
+- **예시**
+
+    - [헤더](#헤더적기)
+    - [순서 리스트](#순서-리스트-적기)
+    - [그냥 리스트](#그냥-리스트-적기)
+    - [체크 리스트](#체크-리스트-적기)
+    - [코드 블럭](#코드블럭)
+    - [링크 걸기](#링크걸기)
+    - [이미지 걸기](#이미지걸기)
+    - [텍스트 꾸미기](#텍스트-꾸미기)
+    - [수평선](#수평선)
+    - [참고 링크](#참고-링크)
+
+- **실수하기 쉬운 포인트**
+  - 내부 링크는 “헤더 이름”을 기준으로 자동 생성된다.
+  - 띄어쓰기가 있으면 `-`로 바뀐다.
+
+---
+
+## 내부링크
+
+- **내용, 설명**
+  - 문서 안에서 특정 위치로 이동하는 링크를 말한다.
+  - 기본 구조는 `[표시될 글자](#이동할-헤더)` 이다.
+  - 이동할 헤더는 보통:
+    - 영어는 소문자
+    - 띄어쓰기는 `-` 처리
+
+- **예시**
+
+    [맨 위로 이동](#markdown--readme-작성법-정리)
+
+- **실수하기 쉬운 포인트**
+  - 링크 괄호 사이에 띄어쓰기 넣으면 동작이 깨질 수 있다.
+  - 헤더 글자를 수정하면 내부 링크도 함께 수정해야 한다.
+
+---
+
+## 헤더적기
+
+- **내용, 설명**
+  - `#` 개수에 따라 제목 크기(레벨)가 달라진다.
+  - 보통 문서 제목은 `#`, 큰 섹션은 `##`, 하위는 `###`로 구성한다.
+
+- **예시**
+
+    # 헤더 1
+    ## 헤더 2
+    ### 헤더 3
+    #### 헤더 4
+    ##### 헤더 5
+
+- **실수하기 쉬운 포인트**
+  - `#` 뒤에는 공백 한 칸이 있어야 한다.  
+    (`#헤더` ❌ / `# 헤더` ✅)
+
+---
+
+## 순서 리스트 적기
+
+- **내용, 설명**
+  - 숫자 + `.` 을 붙이면 순서 리스트를 만들 수 있다.
+  - `Tab` 키로 들여쓰기하면 하위 리스트를 만들 수 있다.
+
+- **예시**
+
+    1. 첫 번째
+    2. 두 번째
+       1. 두 번째-하위 1
+       2. 두 번째-하위 2
+
+- **실수하기 쉬운 포인트**
+  - 하위 리스트는 들여쓰기 공백이 맞지 않으면 깨질 수 있다.
+  - 줄바꿈을 많이 하면 리스트 구조가 풀릴 수 있다.
+
+---
+
+## 그냥 리스트 적기
+
+- **내용, 설명**
+  - 순서가 없는 리스트는 `-`, `*`, `+` 중 하나로 만들 수 있다.
+  - 한 문서에서는 **한 가지 기호로 통일**하는 것이 좋다.
+
+- **예시**
+
+    - 순서가 없는 리스트
+      - 엔터 후 탭을 한 번 누르면 하위 리스트 가능
+        - 다시 돌아가려면 `Shift + Tab`
+
+- **실수하기 쉬운 포인트**
+  - 섞어 쓰면 에디터에서 경고가 뜨기도 한다.
+  - 들여쓰기(탭/공백)가 깨지면 구조가 무너진다.
+
+---
+
+## 체크 리스트 적기
+
+- **내용, 설명**
+  - 작업 목록(todo) 정리에 자주 사용한다.
+  - `- [ ]` : 미완료
+  - `- [x]` : 완료
+
+- **예시**
+
+    - [x] 계란
+    - [ ] 당근
+    - [x] 우유
+    - [ ] 과자
+
+- **실수하기 쉬운 포인트**
+  - `[ ]` 안의 공백이 빠지면 체크박스로 인식되지 않는다.
+  - 반드시 대괄호 앞에 `-` 또는 `*`가 필요하다.
+
+---
+
+## 코드블럭
+
+- **내용, 설명**
+  - 코드 블럭은 백틱(`) 3개로 감싸서 만든다.
+  - 언어를 함께 적으면 문법 하이라이팅이 된다.
+
+- **예시**
+
+    ```python
+    print("안")
+    ```
+
+- **실수하기 쉬운 포인트**
+  - 백틱 3개 시작/끝이 정확히 닫혀야 한다.
+  - 중간에 닫히면 문서 아래가 전부 코드처럼 보일 수 있다.
+
+---
+
+## 링크걸기
+
+- **내용, 설명**
+  - `[링크이름](URL)` 형태로 링크를 작성한다.
+  - README에서는 참고 자료 링크를 자주 붙인다.
+
+- **예시**
+
+    [네이버](https://www.naver.com)  
+    [왕초보를 위한 Python](https://www.python.org)
+
+- **실수하기 쉬운 포인트**
+  - `[]()` 사이 순서가 바뀌면 링크가 깨진다.
+  - URL에 공백이 있으면 동작이 안 한다.
+
+---
+
+## 이미지걸기
+
+- **내용, 설명**
+  - 이미지 문법은 링크와 비슷하지만 앞에 `!`가 붙는다.
+  - `![이미지이름](이미지URL)`
+
+- **예시**
+
+    ![example](https://via.placeholder.com/150)
+
+- **실수하기 쉬운 포인트**
+  - 이미지 URL이 실제 이미지 파일 링크여야 한다.
+  - 로컬 경로도 가능하지만 경로가 맞아야 한다.
+
+---
+
+## 텍스트 꾸미기
+
+### 굵게 표현하기
+- **내용, 설명**
+  - `**굵게**` 또는 `__굵게__`
+
+- **예시**
+
+    **글자강조**
+    __글자강조__
+
+- **실수하기 쉬운 포인트**
+  - 기호 사이에 공백이 있으면 적용이 깨질 수 있다.
+
+### 기울임
+- **내용, 설명**
+  - `*기울임*` 또는 `_기울임_`
+  - 별 또는 언더바 뒤에는 공백을 두지 않는다.
+
+- **예시**
+
+    *기울임*
+    _기울임_
+
+### 취소선
+- **내용, 설명**
+  - `~~취소선~~`
+
+- **예시**
+
+    ~~취소선~~
+
+- **실수하기 쉬운 포인트**
+  - `~~`와 글자 사이에 띄어쓰기 넣으면 이상해질 수 있다.
+
+---
+
+## 수평선
+
+- **내용, 설명**
+  - 문서 구분용 수평선을 넣을 수 있다.
+  - `---` / `***` / `___` 모두 동일하게 동작한다(3개 이상)
+
+- **예시**
+
+    ---
+    ***
+    ___
+
+- **실수하기 쉬운 포인트**
+  - 에디터에서 안 보이면 README 미리보기로 확인해야 한다.
+
+---
+
+## 줄바꿈/구분
+
+- **내용, 설명**
+  - Markdown에서 줄바꿈은 방식이 여러 가지다.
+  - `<br>` 태그를 쓰면 확실하게 줄바꿈 된다.
+
+- **예시**
+
+    첫 줄<br>
+    둘째 줄
+
+- **실수하기 쉬운 포인트**
+  - 엔터만 누르면 줄바꿈이 안 되는 경우가 있어 `<br>`이 안전하다.
+
+---
+
+## 참고 링크
+
+- **내용, 설명**
+  - 마크다운 공식 문법 참고 사이트
+
+- **예시**
+
+    https://www.markdownguide.org/
