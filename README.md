@@ -327,6 +327,12 @@ packed_values = 1, 2, 3, 4, 5
 a, b, *rest = packed_values
 print(a, b, rest)  # 1 2 [3,4,5]
 ```
+- **swap**
+```python
+a, b = 1, 2
+a, b = b, a
+print(a, b)  # 2 1
+```
 - **실수하기 쉬운 포인트**
   - 언패킹 변수 개수가 안 맞으면 ValueError
   - `*`는 남는 값들을 리스트로 받는다
