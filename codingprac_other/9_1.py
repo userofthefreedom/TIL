@@ -7,9 +7,6 @@
 # print(f'숫자{inp}개수는{answer}개')
 
 
-
-
-
 # arr = [
 #     ['A','B','C','D','E'],
 #     ['E','A','B','A','B'],
@@ -37,18 +34,11 @@
 # # print("미발견" if cnt == 0 else "발견" if cnt <= 2 else "대발견")
 
 
-
-
-
-
-
 # arr = ['A','F','G','A','B','C']
 # inp1, inp2 = map(str,input().split())
 # cnt1 = sum(i==inp1 for i in arr)
 # cnt2 = sum(i==inp2 for i in arr)
 # print("와2개" if cnt1 and cnt2 else "오1개" if cnt1 or cnt2 else "우0개")
-
-
 
 
 # arr = [3,4,2,5,7,9]
@@ -57,7 +47,15 @@
 # print(" ".join(map(str,arr)))
 
 
+# class ABC:
+#     def __init__(self):
+#         self.x = 0
+#         self.y = 0
 
+# t = ABC()
 
+# a, b = map(int, input().split())
+# t.x = a
+# t.y = b
 
-
+# print(t.x + t.y)

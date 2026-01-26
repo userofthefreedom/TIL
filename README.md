@@ -13,24 +13,26 @@
 
 ## 목차
 - [Python Study Notes](#python-study-notes)
-  - [1. 변수와 자료형 (int / float / str / bool)](#1-변수와-자료형-int--float--str--bool)
-  - [2. 문자열 (Slicing / 연산 / 메서드 / ord \& chr)](#2-문자열-slicing--연산--메서드--ord--chr)
-  - [3. 리스트 / 튜플 / range](#3-리스트--튜플--range)
-  - [4. 딕셔너리(dict) / 집합(set)](#4-딕셔너리dict--집합set)
-  - [5. 조건문 (if / elif / else) + 중첩 조건문](#5-조건문-if--elif--else--중첩-조건문)
-  - [6. 반복문 (for / while / break / continue / pass)](#6-반복문-for--while--break--continue--pass)
-  - [7. 함수(Function) 기본: 정의/호출/return](#7-함수function-기본-정의호출return)
-  - [8. 함수 인자(Arguments) 종류 정리](#8-함수-인자arguments-종류-정리)
-  - [9. 스코프(Scope) \& 전역변수 global (LEGB Rule)](#9-스코프scope--전역변수-global-legb-rule)
-  - [10. 패킹/언패킹 (Packing / Unpacking)](#10-패킹언패킹-packing--unpacking)
-  - [11. 모듈 import 사용법 (import / from / as)](#11-모듈-import-사용법-import--from--as)
-  - [12. 내장함수: map / zip / filter / enumerate](#12-내장함수-map--zip--filter--enumerate)
+  - [변수와 자료형 (int / float / str / bool)](#변수와-자료형-int--float--str--bool)
+  - [문자열 (Slicing / 연산 / 메서드 / ord \& chr)](#문자열-slicing--연산--메서드--ord--chr)
+  - [리스트 / 튜플 / range](#리스트--튜플--range)
+  - [딕셔너리(dict) / 집합(set)](#딕셔너리dict--집합set)
+  - [조건문 (if / elif / else) + 중첩 조건문](#조건문-if--elif--else--중첩-조건문)
+  - [반복문 (for / while / break / continue / pass)](#반복문-for--while--break--continue--pass)
+  - [함수(Function) 기본: 정의/호출/return](#함수function-기본-정의호출return)
+  - [함수 인자(Arguments) 종류 정리](#함수-인자arguments-종류-정리)
+  - [스코프(Scope) \& 전역변수 global (LEGB Rule)](#스코프scope--전역변수-global-legb-rule)
+  - [패킹/언패킹 (Packing / Unpacking)](#패킹언패킹-packing--unpacking)
+  - [모듈 import 사용법 (import / from / as)](#모듈-import-사용법-import--from--as)
+  - [내장함수: map / zip / filter / enumerate](#내장함수-map--zip--filter--enumerate)
     - [map](#map)
     - [zip](#zip)
     - [filter](#filter)
     - [enumerate](#enumerate)
-  - [13. lambda (익명 함수)](#13-lambda-익명-함수)
-  - [14. 재귀(Recursion)](#14-재귀recursion)
+  - [lambda (익명 함수)](#lambda-익명-함수)
+  - [재귀(Recursion)](#재귀recursion)
+  - [가변 객체와 불변 객체](#가변-객체와-불변-객체)
+  - [method](#method)
   - [Python으로 “클라이언트 → 서버 요청” 정리 (requests 중심)](#python으로-클라이언트--서버-요청-정리-requests-중심)
     - [0) 용어 한눈에 보기](#0-용어-한눈에-보기)
     - [1) requests 설치 및 기본 사용 흐름](#1-requests-설치-및-기본-사용-흐름)
@@ -102,7 +104,7 @@
 # Python Study Notes
 ---
 
-## 1. 변수와 자료형 (int / float / str / bool)
+## 변수와 자료형 (int / float / str / bool)
 - **내용, 설명**
   - 파이썬은 다양한 자료형을 사용하며, `type()`으로 자료형 확인 가능
   - 한 줄에 여러 변수 할당 가능 (`a, b = 1, 2`)
@@ -127,7 +129,7 @@ print(bool("k"))   # True
 
 ---
 
-## 2. 문자열 (Slicing / 연산 / 메서드 / ord & chr)
+## 문자열 (Slicing / 연산 / 메서드 / ord & chr)
 - **내용, 설명**
   - 문자열은 **순서가 있는 자료형**이라 인덱싱/슬라이싱 가능
   - 하지만 문자열은 **불변(immutable)** → 인덱스로 직접 수정 불가
@@ -152,7 +154,7 @@ print(chr(ord(capital)+32)) # a
 
 ---
 
-## 3. 리스트 / 튜플 / range
+## 리스트 / 튜플 / range
 - **내용, 설명**
   - 리스트(list): 순서 있음, 변경 가능
   - 튜플(tuple): 순서 있음, 변경 불가
@@ -169,13 +171,24 @@ print(tp[1], len(tp))
 print(list(range(3)))       # [0,1,2]
 print(list(range(3,8,2)))   # [3,5,7]
 ```
+### List Comprehension
+
+#### 예시 코드
+```
+    numbers = [1, 2, 3]
+    squared = [n**2 for n in numbers]
+```
+#### 2차원 리스트 생성
+```
+    matrix = [[0 for _ in range(5)] for _ in range(5)]
+```
 - **실수하기 쉬운 포인트**
   - `range(3)`를 출력하면 range 객체가 보임 → `list(range(3))`로 확인
   - 튜플은 값 변경 불가: `tp[0] = 10` → 오류
 
 ---
 
-## 4. 딕셔너리(dict) / 집합(set)
+## 딕셔너리(dict) / 집합(set)
 - **내용, 설명**
   - dict: `key:value` 형태, key 중복 불가
   - set: 중복 제거에 매우 유용, 합집합/교집합/차집합 가능
@@ -201,7 +214,7 @@ print(s1 - s2)  # 차집합
 
 ---
 
-## 5. 조건문 (if / elif / else) + 중첩 조건문
+## 조건문 (if / elif / else) + 중첩 조건문
 - **내용, 설명**
   - 조건은 위에서부터 평가되므로 `elif` 순서가 매우 중요
   - 중첩 조건문으로 세부 조건 처리 가능
@@ -223,7 +236,7 @@ else:
 
 ---
 
-## 6. 반복문 (for / while / break / continue / pass)
+## 반복문 (for / while / break / continue / pass)
 - **내용, 설명**
   - `break`: 반복 즉시 종료
   - `continue`: 현재 회차 스킵
@@ -247,7 +260,7 @@ for i in range(10):
 
 ---
 
-## 7. 함수(Function) 기본: 정의/호출/return
+## 함수(Function) 기본: 정의/호출/return
 - **내용, 설명**
   - `return` 만나면 함수 종료 + 값 반환
   - `print()`는 반환값이 없어서 `None` 반환
@@ -267,7 +280,7 @@ print(resu)  # None
 
 ---
 
-## 8. 함수 인자(Arguments) 종류 정리
+## 함수 인자(Arguments) 종류 정리
 - **내용, 설명**
   1) Positional arguments  
   2) Default arguments  
@@ -291,7 +304,7 @@ func(1, 2, 3, 4, 5, key1='value1')
 
 ---
 
-## 9. 스코프(Scope) & 전역변수 global (LEGB Rule)
+## 스코프(Scope) & 전역변수 global (LEGB Rule)
 - **내용, 설명**
   - Local → Enclosed → Global → Built-in
   - 내장함수 이름(sum 등)을 변수로 쓰면 덮어쓰기 문제가 발생
@@ -316,7 +329,7 @@ print(num)  # 1
 
 ---
 
-## 10. 패킹/언패킹 (Packing / Unpacking)
+## 패킹/언패킹 (Packing / Unpacking)
 - **내용, 설명**
   - 패킹: 여러 값을 하나로 묶기
   - 언패킹: 여러 변수로 풀어내기
@@ -339,7 +352,7 @@ print(a, b)  # 2 1
 
 ---
 
-## 11. 모듈 import 사용법 (import / from / as)
+## 모듈 import 사용법 (import / from / as)
 - **내용, 설명**
   - `import math` : 모듈 전체 사용
   - `from math import sqrt` : 특정 함수만
@@ -358,7 +371,7 @@ print(msqrt(16))
 
 ---
 
-## 12. 내장함수: map / zip / filter / enumerate
+## 내장함수: map / zip / filter / enumerate
 ### map
 - **내용, 설명**: 요소에 함수를 적용한 결과를 map 객체로 반환
 ```python
@@ -395,7 +408,7 @@ for idx, fruit in enumerate(['apple', 'banana'], start=1):
 
 ---
 
-## 13. lambda (익명 함수)
+## lambda (익명 함수)
 - **내용, 설명**
   - 한 줄로 간단한 함수 작성
   - `sorted(key=...)`, map/filter에 자주 사용
@@ -410,7 +423,7 @@ print(result)
 
 ---
 
-## 14. 재귀(Recursion)
+## 재귀(Recursion)
 - **내용, 설명**
   - 함수가 자기 자신을 호출
   - 종료 조건(base case) 필수
@@ -425,7 +438,231 @@ print(factorial(5))  # 120
 ```
 - **실수하기 쉬운 포인트**
   - 종료 조건이 없으면 무한 재귀 → RecursionError
+---
 
+## 가변 객체와 불변 객체
+
+### 정의
+- **가변 객체(mutable)**: 객체의 값이 변경될 수 있는 객체
+  - 예: list, dict, set
+- **불변 객체(immutable)**: 객체 생성 후 값이 변경되지 않는 객체
+  - 예: int, float, str, tuple
+
+#### 이론 설명
+- 가변 객체는 같은 객체를 여러 변수가 참조하면, 한 쪽의 변경이 모두에게 영향을 준다.
+- 불변 객체는 값이 바뀌는 것처럼 보여도 **새로운 객체가 생성**된다.
+
+#### 예시 코드
+```
+    # 가변 객체
+    a = [1, 2, 3]
+    b = a
+    b[0] = 100
+    print(a)  # [100, 2, 3]
+    print(a is b)  # True
+
+    # 불변 객체
+    a = 20
+    b = a
+    b = 10
+    print(a)  # 20
+    print(a is b)  # False
+```
+
+### 얕은 복사 (Shallow Copy)
+
+#### 정의
+- 새로운 객체를 만들지만, **내부에 포함된 객체는 원본과 공유**한다.
+
+#### 예시 코드
+```
+    # 1차원 리스트 (문제 없음)
+    a = [1, 2, 3]
+    b = a[:]
+    a[0] = 100
+    print(a)  # [100, 2, 3]
+    print(b)  # [1, 2, 3]
+
+    # 다차원 리스트 (문제 발생)
+    a = [1, 2, [3, 4]]
+    b = a[:]
+    b[2][0] = 999
+    print(a)  # [1, 2, [999, 4]]
+    print(b)  # [1, 2, [999, 4]]
+```
+
+### 깊은 복사 (Deep Copy)
+
+#### 정의
+- 객체 내부의 모든 중첩 객체까지 **완전히 새로운 객체로 복사**한다.
+
+#### 예시 코드
+```
+    import copy
+
+    a = [1, 2, [3, 4]]
+    b = copy.deepcopy(a)
+    b[2][0] = 999
+
+    print(a)  # [1, 2, [3, 4]]
+    print(b)  # [1, 2, [999, 4]]
+    print(a[2] is b[2])  # False
+```
+---
+## method
+### method란?
+
+#### 정의
+- **메서드(method)**는 특정 객체에 소속된 함수이다.
+- `객체.메서드()` 형태로 호출한다.
+
+#### 호출 방식
+```
+    # 함수
+    def func():
+        pass
+    func()
+
+    # 메서드
+    numbers = [1, 2, 3]
+    numbers.append(4)
+```
+
+### 공통 시퀀스 메서드
+
+#### `.index()`
+
+##### 설명
+- 특정 값이 **처음 등장하는 위치(인덱스)** 를 반환한다.
+- 값이 없으면 `ValueError` 발생
+
+##### 예시 코드
+```
+    text = 'banana'
+    print(text.index('a'))  # 1
+
+    nums = [1, 2, 3]
+    print(nums.index(2))  # 1
+```
+
+#### `.count()`
+
+##### 설명
+- 특정 값이 **몇 번 등장하는지** 개수를 반환한다.
+
+##### 예시 코드
+```
+    text = 'banana'
+    print(text.count('a'))  # 3
+
+    nums = [1, 2, 2, 3]
+    print(nums.count(2))  # 2
+```
+
+### 문자열 탐색 및 검증 메서드
+
+#### `.find()`
+- 값이 없으면 `-1` 반환 (에러 없음)
+```
+    text = 'banana'
+    print(text.find('a'))  # 1
+    print(text.find('z'))  # -1
+```
+#### `.isupper()` / `.islower()`
+```
+    print('HELLO'.isupper())  # True
+    print('Hello'.islower())  # False
+```
+#### `.isalpha()`
+```
+    print('Hello'.isalpha())  # True
+    print('123abc'.isalpha())  # False
+```
+### 문자열 조작 메서드
+
+#### `.replace()`
+```
+    text = 'Hello world world'
+    print(text.replace('world', 'Python', 1))
+```
+#### `.strip()`
+```
+    text = '   Hello World   '
+    print(text.strip())
+```
+#### `.split()`
+```
+    text = 'Hello   Python'
+    print(text.split())
+```
+#### `.join()`
+```
+    words = ['Python', 'is', 'fun']
+    print(' '.join(words))
+```
+
+### 리스트 값 추가 및 삭제 메서드
+
+#### `.append()`
+- **원본 리스트 변경**, 반환값은 `None`
+```
+    nums = [1, 2]
+    nums.append(3)
+```
+#### `.extend()`
+```
+    nums.extend([4, 5])
+```
+#### `.insert()`
+```
+    nums.insert(1, 100)
+```
+#### `.remove()` / `.pop()` / `.clear()`
+
+### 리스트 정렬 및 순서 변경
+
+#### `.reverse()`
+```
+    nums.reverse()
+```
+#### `.sort()`
+```
+    nums.sort()
+    nums.sort(reverse=True)
+```
+> ⚠ `sort()`는 None 반환 → 체이닝 불가
+
+### 메서드 체이닝
+
+#### 정의
+- 여러 메서드를 **연속해서 호출**하는 방식
+
+##### 예시 코드
+```
+    text = 'heLLo'
+    result = text.swapcase().replace('l', 'z')
+```
+#### 흔한 실수
+```
+    nums = [3, 1, 2]
+    result = nums.sort()  # None 반환 → 실수
+```
+#### 올바른 방법
+```
+    sorted_nums = sorted(nums)
+```
+
+### 숫자 판별 메서드 비교
+
+| 메서드 | 특징 |
+|------|------|
+| isdecimal | 가장 엄격 |
+| isdigit | 지수 표현 허용 |
+| isnumeric | 로마 숫자·분수까지 허용 |
+```
+    print('Ⅳ'.isnumeric())  # True
+    print('Ⅳ'.isdigit())   # False
+```
 ---
 ## Python으로 “클라이언트 → 서버 요청” 정리 (requests 중심)
 
