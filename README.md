@@ -495,7 +495,9 @@ print(factorial(5))  # 120
     print(b)  # [1, 2, [999, 4]]
     print(a[2] is b[2])  # False
 ```
+
 ## method
+
 ### method란?
 
 #### 정의
@@ -503,16 +505,21 @@ print(factorial(5))  # 120
 - `객체.메서드()` 형태로 호출한다.
 
 #### 호출 방식
-```
+
     # 함수
     def func():
         pass
+
     func()
+    # 출력: None (아무것도 반환하지 않음)
 
     # 메서드
     numbers = [1, 2, 3]
     numbers.append(4)
-```
+    print(numbers)
+    # 출력: [1, 2, 3, 4]
+
+---
 
 ### 공통 시퀀스 메서드
 
@@ -523,13 +530,16 @@ print(factorial(5))  # 120
 - 값이 없으면 `ValueError` 발생
 
 ##### 예시 코드
-```
+
     text = 'banana'
-    print(text.index('a'))  # 1
+    print(text.index('a'))
+    # 출력: 1
 
     nums = [1, 2, 3]
-    print(nums.index(2))  # 1
-```
+    print(nums.index(2))
+    # 출력: 1
+
+---
 
 #### `.count()`
 
@@ -537,86 +547,164 @@ print(factorial(5))  # 120
 - 특정 값이 **몇 번 등장하는지** 개수를 반환한다.
 
 ##### 예시 코드
-```
+
     text = 'banana'
-    print(text.count('a'))  # 3
+    print(text.count('a'))
+    # 출력: 3
 
     nums = [1, 2, 2, 3]
-    print(nums.count(2))  # 2
-```
+    print(nums.count(2))
+    # 출력: 2
+
+---
 
 ### 문자열 탐색 및 검증 메서드
 
 #### `.find()`
 - 값이 없으면 `-1` 반환 (에러 없음)
-```
+
     text = 'banana'
-    print(text.find('a'))  # 1
-    print(text.find('z'))  # -1
-```
+    print(text.find('a'))
+    # 출력: 1
+
+    print(text.find('z'))
+    # 출력: -1
+
+---
+
 #### `.isupper()` / `.islower()`
-```
-    print('HELLO'.isupper())  # True
-    print('Hello'.islower())  # False
-```
+
+    print('HELLO'.isupper())
+    # 출력: True
+
+    print('Hello'.islower())
+    # 출력: False
+
+---
+
 #### `.isalpha()`
-```
-    print('Hello'.isalpha())  # True
-    print('123abc'.isalpha())  # False
-```
+
+    print('Hello'.isalpha())
+    # 출력: True
+
+    print('123abc'.isalpha())
+    # 출력: False
+
+---
+
 ### 문자열 조작 메서드
 
 #### `.replace()`
-```
+
     text = 'Hello world world'
     print(text.replace('world', 'Python', 1))
-```
+    # 출력: Hello Python world
+
+---
+
 #### `.strip()`
-```
+
     text = '   Hello World   '
     print(text.strip())
-```
+    # 출력: Hello World
+
+---
+
 #### `.split()`
-```
+
     text = 'Hello   Python'
     print(text.split())
-```
+    # 출력: ['Hello', 'Python']
+
+---
+
 #### `.join()`
-```
+
     words = ['Python', 'is', 'fun']
     print(' '.join(words))
-```
+    # 출력: Python is fun
+
+---
 
 ### 리스트 값 추가 및 삭제 메서드
 
 #### `.append()`
 - **원본 리스트 변경**, 반환값은 `None`
-```
+
     nums = [1, 2]
-    nums.append(3)
-```
+    result = nums.append(3)
+
+    print(nums)
+    # 출력: [1, 2, 3]
+
+    print(result)
+    # 출력: None
+
+---
+
 #### `.extend()`
-```
+
+    nums = [1, 2]
     nums.extend([4, 5])
-```
+    print(nums)
+    # 출력: [1, 2, 4, 5]
+
+---
+
 #### `.insert()`
-```
+
+    nums = [1, 2, 3]
     nums.insert(1, 100)
-```
+    print(nums)
+    # 출력: [1, 100, 2, 3]
+
+---
+
 #### `.remove()` / `.pop()` / `.clear()`
+
+    nums = [1, 2, 3, 2]
+    nums.remove(2)
+    print(nums)
+    # 출력: [1, 3, 2]
+
+    item = nums.pop()
+    print(item)
+    # 출력: 2
+
+    print(nums)
+    # 출력: [1, 3]
+
+    nums.clear()
+    print(nums)
+    # 출력: []
+
+---
 
 ### 리스트 정렬 및 순서 변경
 
 #### `.reverse()`
-```
+
+    nums = [1, 3, 2]
     nums.reverse()
-```
+    print(nums)
+    # 출력: [2, 3, 1]
+
+---
+
 #### `.sort()`
-```
+
+    nums = [3, 1, 2]
     nums.sort()
+    print(nums)
+    # 출력: [1, 2, 3]
+
     nums.sort(reverse=True)
-```
+    print(nums)
+    # 출력: [3, 2, 1]
+
 > ⚠ `sort()`는 None 반환 → 체이닝 불가
+
+---
 
 ### 메서드 체이닝
 
@@ -624,19 +712,30 @@ print(factorial(5))  # 120
 - 여러 메서드를 **연속해서 호출**하는 방식
 
 ##### 예시 코드
-```
+
     text = 'heLLo'
     result = text.swapcase().replace('l', 'z')
-```
+    print(result)
+    # 출력: HEzzO
+
+---
+
 #### 흔한 실수
-```
+
     nums = [3, 1, 2]
-    result = nums.sort()  # None 반환 → 실수
-```
+    result = nums.sort()
+    print(result)
+    # 출력: None
+
+---
+
 #### 올바른 방법
-```
+
+    nums = [3, 1, 2]
     sorted_nums = sorted(nums)
-```
+    print(sorted_nums)
+    # 출력: [1, 2, 3]
+
 
 ### 숫자 판별 메서드 비교
 
