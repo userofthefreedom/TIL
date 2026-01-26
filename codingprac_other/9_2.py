@@ -92,3 +92,40 @@
 
 
 # main()
+
+
+# arr = [
+#     [3, 5, 14],
+#     [2, 3, 9],
+#     [6, 2, 7]
+# ]
+
+# t = int(input())
+# count = 0
+# for i in arr:
+#     for j in i:
+#         if j % t == 0:
+#             count += 1
+
+# print(count)
+
+
+def main():
+    def BBQ(x):
+        for i in range(1, x+1):
+            print(i, end="")
+
+    def KFC(x):
+        for i in range(7):
+            print(x, end="")
+
+    t = int(input())
+    if t % 2 == 0:
+        a = input()
+        KFC(a)
+    else:
+        a = int(input())
+        BBQ(a)
+
+
+main()
