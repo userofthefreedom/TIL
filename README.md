@@ -13,7 +13,7 @@
 
 ## 목차
 - [Python Study Notes](#python-study-notes)
-  - [basic](#basic)
+  - [Basic](#basic)
   - [변수와 자료형](#변수와-자료형)
   - [조건문 (if / elif / else) + 중첩 조건문](#조건문-if--elif--else--중첩-조건문)
   - [반복문 (for / while / break / continue / pass)](#반복문-for--while--break--continue--pass)
@@ -30,6 +30,39 @@
   - [lambda (익명 함수)](#lambda-익명-함수)
   - [재귀(Recursion)](#재귀recursion)
   - [method](#method)
+    - [method란?](#method란)
+      - [정의](#정의)
+      - [호출 방식](#호출-방식)
+    - [공통 시퀀스 메서드](#공통-시퀀스-메서드)
+      - [`.index()`](#index)
+        - [설명](#설명)
+        - [예시 코드](#예시-코드)
+      - [`.count()`](#count)
+        - [설명](#설명-1)
+        - [예시 코드](#예시-코드-1)
+    - [문자열 탐색 및 검증 메서드](#문자열-탐색-및-검증-메서드)
+      - [`.find()`](#find)
+      - [`.isupper()` / `.islower()`](#isupper--islower)
+      - [`.isalpha()`](#isalpha)
+    - [문자열 조작 메서드](#문자열-조작-메서드)
+      - [`.replace()`](#replace)
+      - [`.strip()`](#strip)
+      - [`.split()`](#split)
+      - [`.join()`](#join)
+    - [리스트 값 추가 및 삭제 메서드](#리스트-값-추가-및-삭제-메서드)
+      - [`.append()`](#append)
+      - [`.extend()`](#extend)
+      - [`.insert()`](#insert)
+      - [`.remove()` / `.pop()` / `.clear()`](#remove--pop--clear)
+    - [리스트 정렬 및 순서 변경](#리스트-정렬-및-순서-변경)
+      - [`.reverse()`](#reverse)
+      - [`.sort()`](#sort)
+    - [메서드 체이닝](#메서드-체이닝)
+      - [정의](#정의-1)
+        - [예시 코드](#예시-코드-2)
+      - [흔한 실수](#흔한-실수)
+      - [올바른 방법](#올바른-방법)
+    - [숫자 판별 메서드 비교](#숫자-판별-메서드-비교)
   - [Python으로 “클라이언트 → 서버 요청” 정리 (requests 중심)](#python으로-클라이언트--서버-요청-정리-requests-중심)
     - [0) 용어 한눈에 보기](#0-용어-한눈에-보기)
     - [1) requests 설치 및 기본 사용 흐름](#1-requests-설치-및-기본-사용-흐름)
@@ -110,13 +143,13 @@
   - 오류 시 즉시 중단
   - python, JS의 방식 (C, C++의 경우 전체 변환 후 실행하는 컴파일러 사용)
 - 표현식 : 하나의 값으로 평가될 수 있는 모든 코드 
-```
+```python
 3+5
 x>10
 5*4
 ```
 - 값 : 표현식이 평가된 결과, 더 이상 계산/평가될 수 없는 프로그램 가장 기본 데이터 조각
-```
+```python
 13.14
 "안녕하세요"
 True, False
@@ -124,7 +157,7 @@ True, False
   - 모든 값은 그 자체로 가장 단순한 표현식
 - 변수 : 값을 나중에 활용하기 위해 값에 붙이는 고유한 이름
   - 변수 할당 : 표현식이 만들어 낸 값이 이름을 붙이는 것
-  ```
+  ```python
   num = 36.5
   ```
     - num : 변수 이름
@@ -136,7 +169,7 @@ True, False
   - 객체란 값 + 타입 + 주소 정보(고유id)를 묶은 것
     - 변수는 특정 객체를 가리치는 이름표
   - 재할당 : 변수가 가리키는 대상을 새로운 값으로 변경하는 행위
-    ```
+    ```python
     number = 10
     double = 2*number
     print(double) # 20
@@ -150,12 +183,12 @@ True, False
       - **가변 객체(mutable)**: 객체의 값이 변경될 수 있는 객체
         - 예: list, dict, set
       - **불변 객체(immutable)**: 객체 생성 후 값이 변경되지 않는 객체
-        - 예: int, float, str, tuple
+        - 예: int, float, str, tuple, range
     - 이론
       - 가변 객체는 같은 객체를 여러 변수가 참조하면, 한 쪽의 변경이 모두에게 영향을 준다.
       - 불변 객체는 값이 바뀌는 것처럼 보여도 **새로운 객체가 생성**된다.
     - 예시 코드
-    ```
+    ```python
     # 가변 객체
     a = [1, 2, 3]
     b = a
@@ -173,7 +206,7 @@ True, False
   - 얕은 복사 (Shallow Copy)
     - 정의 : 새로운 객체를 만들지만, **내부에 포함된 객체는 원본과 공유**한다.
     - 예시 코드
-    ```
+    ```python
     # 1차원 리스트 (문제 없음)
     a = [1, 2, 3]
     b = a[:]
@@ -191,7 +224,7 @@ True, False
   - 깊은 복사 (Deep Copy)
     - 정의 : 객체 내부의 모든 중첩 객체까지 **완전히 새로운 객체로 복사**한다.
     - 예시
-    ```
+    ```python
     import copy
 
     a = [1, 2, [3, 4]]
@@ -208,6 +241,39 @@ True, False
   - 표현식과 다르게 값이 남지 않음 (ex. name = '홍길동'이라는 문장은 지시하지 값은 x)
 - 타입 : 변수나 값이 가질 수 있는 데이터의 종류
   - 값(피연산자)과 연산자로 구분
+    - 연산자
+      - 산술 연산자 :  ** |\~| -(음수부호) |\~| *, /, //, % |\~| +, -
+      - 복합 연산자 : +=, -=, *=, /=, //=, %=, **=
+      - 비교 연산자 : <, <=, >, >=, ==, !=, is, is not
+        - == 연산자는 값을 비교하고, is 연산자는 객체 그 자체(주소)를 비교한다
+        - is 연산자는 주로 싱글턴 객체 (None, True, False 등 파이썬에 단 하나뿐인 객체) 비교에 사용 
+      - 논리 연산자 : and, or, not
+          ```python
+          print(True and False) # False
+          print(True or False) # True
+          print(not 0) # True
+          ```
+        - 단축 평가
+          - and 연산자 : 처음 만나는 거짓 값을 반환, 아니면 마지막 참 값을 반환
+          - or 연산자 : 처음 만나는 참 값을 반환, 아니라면 마지막 거짓 값을 반환
+      - 멤버십 연산자 : in, not in
+      - 시퀀스 연산자 (문자열, 리스트, 튜플에 특별히 사용되는 연산자) : +, *
+    - 연산자 우선순위 총합
+        ```
+        ()
+        []
+        **
+        +, - (양/음수)
+        *, /, //, %
+        +, -
+        <, <=, =>, >, ==, !=
+        is, is not
+        in, not in
+        not
+        and
+        or
+        ```
+
   - Data type : 값의 종류와 그 값으로 할 수 있는 동작(연산) 결정 속성
     - numeric type : int, float. complex
     - text sequence type : str
@@ -239,13 +305,13 @@ True, False
 
 - Numeric types : 숫자형 데이터
   - int / 정수 자료형
-    ```
+    ```python
     student_count = 14
     temp = -19
     zero = 0
     ```
   - float / 실수 자료형
-    ```
+    ```python
     pi=3.14
     tax_rate = 1.242
     ```
@@ -253,7 +319,7 @@ True, False
       - 컴퓨터는 2진법을 사용하는데, 일부 소수는 2진수로 바꾸면 무한 소수가 된다
       - 때문에 컴퓨터는 근사값으로 잘라 저장하며 오류가 생길 수 있음
     - 지수 표현법
-      ```
+      ```python
       # 1,230,000,000 (1.23 * 10^9)
       big = 1.23e9
       # 0.00314 (3.14 *10^-3)
@@ -303,19 +369,19 @@ True, False
     - 여러 값을 순서대로 저장하는 변경 가능 자료형 (숫자, 문자열, 리스트 등 모든 종류 데이터 가능)
       - 중첩 리스트 (ex. lst = [1, 3, ['hy', 'lol', 4], 'pyth'])
     - 수정 (슬라이싱으로도 수정 가능)
-      ```
+      ```python
       my_list = ['java', 'django', 'C++', 'HTML', 'python']
       my_list[0] = 'python'
       print(my_list) # ['python', 'django', 'C++', 'HTML', 'python']
       ```
     - List Comprehension
       - 예시 코드
-        ```
+        ```python
         numbers = [1, 2, 3]
         squared = [n**2 for n in numbers]
         ```
       - 2차원 리스트 생성
-        ```
+        ```python
         matrix = [[0 for _ in range(5)] for _ in range(5)]
         ```
   - tuple / 튜플
@@ -323,13 +389,13 @@ True, False
     - 형식
       - 소괄호 안의 값들을 쉼표로 구분하여 만듦
       - 단일 요소 튜플은 반드시 후행 쉼표가 필요하다
-        ```
+        ```python
         tuple1 = ()
         tuple2 = (2,)
         tuple3 = 'java', 2, 'C++', 7, 'python'
         ```
     - 변경 불가하기에 내부 동작과 안전한 데이터 전달 등에 사용
-      ```
+      ```python
       x, y = 10, 20
       ```
   - range
@@ -357,19 +423,72 @@ True, False
       }
       print(di[2]["ㄱ"]) # 가자
       ```
-  - set: 중복 제거에 매우 유용, 합집합/교집합/차집합 가능
-- **예시**
-```python
-s1 = {1,2,3}
-s2 = {3,6,9}
-print(s1 | s2)  # 합집합
-print(s1 & s2)  # 교집합
-print(s1 - s2)  # 차집합
-```
+    - 규칙
+      - key - 중복될 수 없으면 변경 불가 자료형만 가능하다 (str, int, float, tuple)
+      - value - 어떤 자료형이든 가능
+    - 딕셔너리 컴프리헨션 (Dictionary Comprehension)
+      - 문법
+        ```python
+        {key_expression: value_expression for item in iterable if condition}
+        ```
+      - 구성 요소
+        - key_expression: 딕셔너리의 키를 정의
+        - value_expression: 딕셔너리의 값을 정의
+        - iterable: 반복 가능한 객체 (리스트, 튜플 등)
+        - condition: 선택 조건 (만족하는 항목만 포함, 생략 가능)
+      - 예시
+        ```python
+        numbers = [1, 2, 3, 4, 5]
+
+        squared = {n: n**2 for n in numbers}
+        print(squared)
+        # 출력: {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+
+        even_squared = {n: n**2 for n in numbers if n % 2 == 0}
+        print(even_squared)
+        # 출력: {2: 4, 4: 16}
+        ```
+
+  - set / 세트 / 집합
+    - 중복 제거에 매우 유용, 합집합/교집합/차집합 가능, 순서가 없기에 슬라이싱이나 인덱싱도 없다
+    - 형식 : 중괄호 안의 쉼표로 값을 구분하여 만든다
+        ```python
+        my_set1 = set() # 빈 딕셔너리와 구분을 위해 빈 세트는 반드시 이렇게
+        my_set2 = {1, 1, 2, 2, 2, 3}
+        print(my_set1) # set() 
+        print(my_set2) # {1, 2, 3}
+
+        s1 = {1,2,3}
+        s2 = {3,6,9}
+        print(s1 | s2)  # 합집합 {1, 2, 3, 6, 9}
+        print(s1 & s2)  # 교집합 {3}
+        print(s1 - s2)  # 차집합 {1, 2}
+        ```
   - **실수하기 쉬운 포인트**
     - dict 접근은 인덱스가 아니라 key 기반: `di[0]` 같은 접근 불가
     - set은 순서가 없음 → 인덱싱 불가 (`s[0]` 안됨)
-
+- other
+  - None : 값이 없음을 표현하는 타입
+  - Boolean
+    - True 또는 False만 가지는 타입
+      ```python
+      is_act = True
+      is_logged = False
+      print(is_act) # True
+      print(is_logged) # False
+      print( 10 > 5 ) # True
+      print(10 == 5) # False
+  - collection : 여러개를 묶는 자료형 [str, list, tuple, range, set, dict]
+  
+- 형변환
+  - 암시적 형변환 : Boolean과 Numeric Type만 가능하다
+      ```python
+      print( 3 + 5.0 ) # 8.0 float로 자동 변환
+      print(True + 3) # 4 True를 1로 자동 변환
+      print(True + False) # 1 False를 0으로 변환
+      ```
+  - 명시적 형변환 : 함수를 통해 지적하여 변환
+    - int(), float(), str(), list(), tuple(), set()
 
 ## 조건문 (if / elif / else) + 중첩 조건문
 - **내용, 설명**
