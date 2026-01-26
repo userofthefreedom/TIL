@@ -27,6 +27,15 @@
     - [zip](#zip)
     - [filter](#filter)
     - [enumerate](#enumerate)
+    - [지연평가](#지연평가)
+    - ['이터레이터(Iterator)'](#이터레이터iterator)
+    - [결과를 보려면 '소비(consumption)'해야 한다](#결과를-보려면-소비consumption해야-한다)
+      - [list()로 한 번에 소비](#list로-한-번에-소비)
+      - [for문으로 하나씩 소비](#for문으로-하나씩-소비)
+    - [why?](#why)
+    - [5. 지연 평가를 사용하는 다른 함수들](#5-지연-평가를-사용하는-다른-함수들)
+      - [range()](#range)
+      - [zip()](#zip-1)
   - [lambda (익명 함수)](#lambda-익명-함수)
   - [재귀(Recursion)](#재귀recursion)
   - [method](#method)
@@ -673,6 +682,116 @@ print(list(ret))
 ```python
 for idx, fruit in enumerate(['apple', 'banana'], start=1):
     print(idx, fruit)
+```
+### 지연평가
+
+map은 리스트를 받아서 **"어떻게 처리할지에 대한 계획"**만 만들고  
+실제 계산은 나중으로 미룹니다.
+  ```python
+  numbers = [10, 20, 30]
+  recipe = map(lambda x: x * 2, numbers)
+
+  print(recipe)
+  # 출력: <map object at 0x...>
+  ```
+아직 `[20, 40, 60]`이 만들어진 것이 아니라  
+"각 요소를 2배로 만드는 방법"만 저장된 상태입니다.
+
+### '이터레이터(Iterator)'
+map이 반환하는 것은 리스트가 아니라 **이터레이터(iterator)** 입니다.
+
+- iterable (이터러블)  
+  반복 가능한 객체 (list, tuple, str 등)
+
+- iterator (이터레이터)  
+  값을 하나씩 꺼내는 흐름(stream) 객체  
+  next()로 다음 값을 생성하며, 한 번 소비하면 다시 사용할 수 없음
+
+즉 map은  
+"다음 값을 어떻게 만들지 아는 객체"를 돌려줄 뿐,  
+값을 미리 만들어 두지 않습니다.
+
+### 결과를 보려면 '소비(consumption)'해야 한다
+
+이터레이터는 요청받기 전까지 계산하지 않습니다.  
+값을 보려면 **이터레이터를 소비**해야 합니다.
+
+#### list()로 한 번에 소비
+```python
+numbers = [10, 20, 30]
+recipe = map(lambda x: x * 2, numbers)
+
+result = list(recipe)
+print(result)
+# 출력: [20, 40, 60]
+```
+list()가 이터레이터 안의 값을 모두 꺼내면서  
+그제서야 계산이 실행됩니다.
+
+####  for문으로 하나씩 소비
+```python
+numbers = [10, 20, 30]
+recipe = map(lambda x: x * 2, numbers)
+
+for item in recipe:
+    print(item)
+
+# 출력:
+# 20
+# 40
+# 60
+```
+for문은 내부적으로 next()를 계속 호출하여  
+값을 하나씩 요청합니다.
+
+※ 주의: 이터레이터는 일회용이라  
+이미 list()로 소비했다면 다시 사용할 수 없습니다.
+
+### why?
+
+이유는 **메모리 효율성** 때문입니다.
+
+만약 데이터가 10억 개라면  
+모든 결과를 리스트로 한 번에 만드는 것은  
+시간과 메모리를 크게 낭비합니다.
+
+하지만 이터레이터는  
+👉 필요할 때마다  
+👉 하나씩 계산  
+👉 최소한의 메모리만 사용
+
+그래서 대용량 데이터 처리에 매우 유리합니다.
+
+### 5. 지연 평가를 사용하는 다른 함수들
+
+map만 이런 방식으로 동작하는 것이 아닙니다.
+
+#### range()
+
+range(100)은 숫자 100개가 들어있는 리스트가 아니라  
+"요청하면 숫자를 만들어 줄 수 있는 객체"입니다.
+```python
+r = range(5)
+print(r)
+# 출력: range(0, 5)
+
+print(list(r))
+# 출력: [0, 1, 2, 3, 4]
+```
+#### zip()
+
+zip도 여러 iterable을 묶는 "계획"만 만들고  
+요청될 때 튜플을 하나씩 생성합니다.
+```python
+names = ['철수', '영희']
+scores = [90, 85]
+
+z = zip(names, scores)
+print(z)
+# 출력: <zip object at 0x...>
+
+print(list(z))
+# 출력: [('철수', 90), ('영희', 85)]
 ```
 
 ## lambda (익명 함수)
