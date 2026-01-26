@@ -13,10 +13,8 @@
 
 ## 목차
 - [Python Study Notes](#python-study-notes)
-  - [변수와 자료형 (int / float / str / bool)](#변수와-자료형-int--float--str--bool)
-  - [문자열 (Slicing / 연산 / 메서드 / ord \& chr)](#문자열-slicing--연산--메서드--ord--chr)
-  - [리스트 / 튜플 / range](#리스트--튜플--range)
-  - [딕셔너리(dict) / 집합(set)](#딕셔너리dict--집합set)
+  - [basic](#basic)
+  - [변수와 자료형](#변수와-자료형)
   - [조건문 (if / elif / else) + 중첩 조건문](#조건문-if--elif--else--중첩-조건문)
   - [반복문 (for / while / break / continue / pass)](#반복문-for--while--break--continue--pass)
   - [함수(Function) 기본: 정의/호출/return](#함수function-기본-정의호출return)
@@ -31,7 +29,6 @@
     - [enumerate](#enumerate)
   - [lambda (익명 함수)](#lambda-익명-함수)
   - [재귀(Recursion)](#재귀recursion)
-  - [가변 객체와 불변 객체](#가변-객체와-불변-객체)
   - [method](#method)
   - [Python으로 “클라이언트 → 서버 요청” 정리 (requests 중심)](#python으로-클라이언트--서버-요청-정리-requests-중심)
     - [0) 용어 한눈에 보기](#0-용어-한눈에-보기)
@@ -103,113 +100,275 @@
 ---
 # Python Study Notes
 
-## 변수와 자료형 (int / float / str / bool)
-- **내용, 설명**
+
+## Basic
+ - 실행과정
+  - 컴퓨터는 기계어로 소통하지만 인간이 직접 기계어를 사용하긴 어렵다
+  - 때문에 인터프리터를 통해 명령어를 운영체제가 이해하는 언어로 번역
+- 인터프리터
+  - 소스코드를 한줄씩 읽고 즉시 실행하는 프로그램
+  - 오류 시 즉시 중단
+  - python, JS의 방식 (C, C++의 경우 전체 변환 후 실행하는 컴파일러 사용)
+- 표현식 : 하나의 값으로 평가될 수 있는 모든 코드 
+```
+3+5
+x>10
+5*4
+```
+- 값 : 표현식이 평가된 결과, 더 이상 계산/평가될 수 없는 프로그램 가장 기본 데이터 조각
+```
+13.14
+"안녕하세요"
+True, False
+```
+  - 모든 값은 그 자체로 가장 단순한 표현식
+- 변수 : 값을 나중에 활용하기 위해 값에 붙이는 고유한 이름
+  - 변수 할당 : 표현식이 만들어 낸 값이 이름을 붙이는 것
+  ```
+  num = 36.5
+  ```
+    - num : 변수 이름
+    - = : 할당 연산자
+    - 36.5 : 표현식
+  - 변수명 규칙
+    - 영문,언더스코어(_),숫자로 구성 / 숫자로 시작 불가 / 대소문자 구분 / 예약어 사용 불가
+- 객체
+  - 객체란 값 + 타입 + 주소 정보(고유id)를 묶은 것
+    - 변수는 특정 객체를 가리치는 이름표
+  - 재할당 : 변수가 가리키는 대상을 새로운 값으로 변경하는 행위
+    ```
+    number = 10
+    double = 2*number
+    print(double) # 20
+
+    number = 5
+    print(double) # 20
+    ```
+    - 즉 , 객체란 실제 사람, 메모리 주소는 사람이 사는 주소, 변수는 사람의 주소록 상 이름표
+  - 가변 객체와 불변 객체
+    - 정의
+      - **가변 객체(mutable)**: 객체의 값이 변경될 수 있는 객체
+        - 예: list, dict, set
+      - **불변 객체(immutable)**: 객체 생성 후 값이 변경되지 않는 객체
+        - 예: int, float, str, tuple
+    - 이론
+      - 가변 객체는 같은 객체를 여러 변수가 참조하면, 한 쪽의 변경이 모두에게 영향을 준다.
+      - 불변 객체는 값이 바뀌는 것처럼 보여도 **새로운 객체가 생성**된다.
+    - 예시 코드
+    ```
+    # 가변 객체
+    a = [1, 2, 3]
+    b = a
+    b[0] = 100
+    print(a)  # [100, 2, 3]
+    print(a is b)  # True
+
+    # 불변 객체
+    a = 20
+    b = a
+    b = 10
+    print(a)  # 20
+    print(a is b)  # False
+    ```
+  - 얕은 복사 (Shallow Copy)
+    - 정의 : 새로운 객체를 만들지만, **내부에 포함된 객체는 원본과 공유**한다.
+    - 예시 코드
+    ```
+    # 1차원 리스트 (문제 없음)
+    a = [1, 2, 3]
+    b = a[:]
+    a[0] = 100
+    print(a)  # [100, 2, 3]
+    print(b)  # [1, 2, 3]
+
+    # 다차원 리스트 (문제 발생)
+    a = [1, 2, [3, 4]]
+    b = a[:]
+    b[2][0] = 999
+    print(a)  # [1, 2, [999, 4]]
+    print(b)  # [1, 2, [999, 4]]
+    ```
+  - 깊은 복사 (Deep Copy)
+    - 정의 : 객체 내부의 모든 중첩 객체까지 **완전히 새로운 객체로 복사**한다.
+    - 예시
+    ```
+    import copy
+
+    a = [1, 2, [3, 4]]
+    b = copy.deepcopy(a)
+    b[2][0] = 999
+
+    print(a)  # [1, 2, [3, 4]]
+    print(b)  # [1, 2, [999, 4]]
+    print(a[2] is b[2])  # False
+    ```
+- 문장
+  - 할당문 (x=100), 정의문 (def sum_num()), 제어문 (pass) 등 동작을 지시하는 실행 가능 코드의 최소 단위
+  - 그 자체로 완결된 하나의 명령
+  - 표현식과 다르게 값이 남지 않음 (ex. name = '홍길동'이라는 문장은 지시하지 값은 x)
+- 타입 : 변수나 값이 가질 수 있는 데이터의 종류
+  - 값(피연산자)과 연산자로 구분
+  - Data type : 값의 종류와 그 값으로 할 수 있는 동작(연산) 결정 속성
+    - numeric type : int, float. complex
+    - text sequence type : str
+    - sequence type : list tuple, range
+    - non-sequence type : set, dict
+    - others : Boolean, None, Functions
+
+## 변수와 자료형
+- **설명**
   - 파이썬은 다양한 자료형을 사용하며, `type()`으로 자료형 확인 가능
   - 한 줄에 여러 변수 할당 가능 (`a, b = 1, 2`)
   - `bool()` 변환 시 `0`, `""`는 False, 그 외는 대부분 True
-- **예시**
-```python
-a = 1
-b = '1'
-c = True
+  ```python
+  a = 1
+  b = '1'
+  c = True
 
-a, b, c = 1, '1', True
-print(type(a), type(b), type(c))
+  a, b, c = 1, '1', True
+  print(type(a), type(b), type(c))
 
-print(bool(0))     # False
-print(bool(-10))   # True
-print(bool(""))    # False
-print(bool("k"))   # True
-```
-- **실수하기 쉬운 포인트**
-  - `True/False`는 반드시 첫 글자 대문자
-  - `"0"`(문자열)은 빈 문자열이 아니므로 `bool("0") == True`
+  print(bool(0))     # False
+  print(bool(-10))   # True
+  print(bool(""))    # False
+  print(bool("k"))   # True
+  ```
+  - **실수하기 쉬운 포인트**
+    - `True/False`는 반드시 첫 글자 대문자
+    - `"0"`(문자열)은 빈 문자열이 아니므로 `bool("0") == True`
 
+- Numeric types : 숫자형 데이터
+  - int / 정수 자료형
+    ```
+    student_count = 14
+    temp = -19
+    zero = 0
+    ```
+  - float / 실수 자료형
+    ```
+    pi=3.14
+    tax_rate = 1.242
+    ```
+    - 부동소수점 오차
+      - 컴퓨터는 2진법을 사용하는데, 일부 소수는 2진수로 바꾸면 무한 소수가 된다
+      - 때문에 컴퓨터는 근사값으로 잘라 저장하며 오류가 생길 수 있음
+    - 지수 표현법
+      ```
+      # 1,230,000,000 (1.23 * 10^9)
+      big = 1.23e9
+      # 0.00314 (3.14 *10^-3)
+      small = 3.14e-3
+      ```
+  - 숫자형 행동 -> 산술연산
+    - 산술 연산자 (우선 순위) : ** |\~| -(음수부호) |\~| *, /, //, % |\~| +, -
+- Sequence type : 여러 개 값을 순서대로 나열하여 저장하는 자료형 (str, list, tuple, range)
+  - 특징
+    - 순서가 존재, 인덱싱/슬라이싱 가능, len()을 통한 길이 측정, 반복문 가능
+  - str / 문자열
+    - **내용, 설명**
+      - 문자열은 **순서가 있는 자료형**이라 인덱싱/슬라이싱 가능
+      - 하지만 문자열은 **불변(immutable)** → 인덱스로 직접 수정 불가
+      - `ord()`는 문자 → ASCII 숫자, `chr()`는 숫자 → 문자
+    - **예시**
+      ```python
+      s = "abcdeFG"
+      print(s[:3])     # abc
+      print(s[3:])     # deFG
+      print(s[::-1])   # GFedcba
 
-## 문자열 (Slicing / 연산 / 메서드 / ord & chr)
-- **내용, 설명**
-  - 문자열은 **순서가 있는 자료형**이라 인덱싱/슬라이싱 가능
-  - 하지만 문자열은 **불변(immutable)** → 인덱스로 직접 수정 불가
-  - `ord()`는 문자 → ASCII 숫자, `chr()`는 숫자 → 문자
-- **예시**
-```python
-s = "abcdeFG"
-print(s[:3])     # abc
-print(s[3:])     # deFG
-print(s[::-1])   # GFedcba
+      ret = s.replace(s[1], "ㄱ")
+      print(ret)
 
-ret = s.replace(s[1], "ㄱ")
-print(ret)
+      capital = "A"
+      print(ord(capital))         # 65
+      print(chr(ord(capital)+32)) # a
+      ```
+    - 이스케이프 시퀀스
+      - 역슬래쉬 + 문자를 통해 줄바꿈 , 탭 등 특수 기능 수행
+    - f-string
+      ```
+      name = '홍길동'
+      age = 25
+      print(f'안녕하세요, {age}살 {name}입니다.")
+      # 안녕하세요, 25살 홍길동입니다.
+      ```
+    - **실수하기 쉬운 포인트**
+      - `s[1] = "x"` 같은 직접 변경은 불가능 (TypeError)
+      - `s + 1`처럼 문자열과 숫자는 바로 더할 수 없음 → `s + str(1)`
+    - **아스키코드**
+      - 숫자 (0\~9) : 48\~57
+      - 소문자 (a\~z) : 97\~122
+      - 대문자 (A\~Z) : 65\~90
+  - list / 리스트 
+    - 여러 값을 순서대로 저장하는 변경 가능 자료형 (숫자, 문자열, 리스트 등 모든 종류 데이터 가능)
+      - 중첩 리스트 (ex. lst = [1, 3, ['hy', 'lol', 4], 'pyth'])
+    - 수정 (슬라이싱으로도 수정 가능)
+      ```
+      my_list = ['java', 'django', 'C++', 'HTML', 'python']
+      my_list[0] = 'python'
+      print(my_list) # ['python', 'django', 'C++', 'HTML', 'python']
+      ```
+    - List Comprehension
+      - 예시 코드
+        ```
+        numbers = [1, 2, 3]
+        squared = [n**2 for n in numbers]
+        ```
+      - 2차원 리스트 생성
+        ```
+        matrix = [[0 for _ in range(5)] for _ in range(5)]
+        ```
+  - tuple / 튜플
+    - 여러개 값을 순서대로 저장하는 변경 불가 자료형
+    - 형식
+      - 소괄호 안의 값들을 쉼표로 구분하여 만듦
+      - 단일 요소 튜플은 반드시 후행 쉼표가 필요하다
+        ```
+        tuple1 = ()
+        tuple2 = (2,)
+        tuple3 = 'java', 2, 'C++', 7, 'python'
+        ```
+    - 변경 불가하기에 내부 동작과 안전한 데이터 전달 등에 사용
+      ```
+      x, y = 10, 20
+      ```
+  - range
+    - 연속된 정수 시퀀스를 생성하는 변경 불가 자료형
+    - 형식
+      - range(start, stop, step)
+        ```python
+        print(list(range(3)))       # [0,1,2]
+        print(list(range(3,8,2)))   # [3,5,7]
+        print(list(range(10,1,-2))) # [10, 8, 6, 4, 2]
+        ```
+  - **실수하기 쉬운 포인트**
+    - `range(3)`를 출력하면 range 객체가 보임 → `list(range(3))`로 확인
+    - 튜플은 값 변경 불가: `tp[0] = 10` → 오류
 
-capital = "A"
-print(ord(capital))         # 65
-print(chr(ord(capital)+32)) # a
-```
-- **실수하기 쉬운 포인트**
-  - `s[1] = "x"` 같은 직접 변경은 불가능 (TypeError)
-  - `s + 1`처럼 문자열과 숫자는 바로 더할 수 없음 → `s + str(1)`
-- **아스키코드**
-  - 숫자 (0\~9) : 48\~57
-  - 소문자 (a\~z) : 97\~122
-  - 대문자 (A\~Z) : 65\~90
-
-## 리스트 / 튜플 / range
-- **내용, 설명**
-  - 리스트(list): 순서 있음, 변경 가능
-  - 튜플(tuple): 순서 있음, 변경 불가
-  - range: 연속된 숫자 생성 (반복문에서 자주 사용)
-- **예시**
-```python
-my_list = ['java', 'django', 'C++', 'HTML', 'python']
-my_list[0] = 'python'
-print(len(my_list))
-
-tp = (1, 2, 3, 4, 5)
-print(tp[1], len(tp))
-
-print(list(range(3)))       # [0,1,2]
-print(list(range(3,8,2)))   # [3,5,7]
-```
-### List Comprehension
-
-#### 예시 코드
-```
-    numbers = [1, 2, 3]
-    squared = [n**2 for n in numbers]
-```
-#### 2차원 리스트 생성
-```
-    matrix = [[0 for _ in range(5)] for _ in range(5)]
-```
-- **실수하기 쉬운 포인트**
-  - `range(3)`를 출력하면 range 객체가 보임 → `list(range(3))`로 확인
-  - 튜플은 값 변경 불가: `tp[0] = 10` → 오류
-
-
-## 딕셔너리(dict) / 집합(set)
-- **내용, 설명**
-  - dict: `key:value` 형태, key 중복 불가
+- non-sequence type : set, dict
+  - dict / 딕셔너리 
+    - `key:value` 형태, key 중복 불가, 순서가 없는 변경 가능 자료형
+      ```python
+      di = {
+        1: 3,
+        2: {"ㄱ": "가자", "ㄴ": "나는"},
+        3: "집",
+        "교": [2, 3, 4]
+      }
+      print(di[2]["ㄱ"]) # 가자
+      ```
   - set: 중복 제거에 매우 유용, 합집합/교집합/차집합 가능
 - **예시**
 ```python
-di = {
-  1: 3,
-  2: {"ㄱ": "가자", "ㄴ": "나는"},
-  3: "집",
-  "교": [2, 3, 4]
-}
-print(di[2]["ㄱ"])
-
 s1 = {1,2,3}
 s2 = {3,6,9}
 print(s1 | s2)  # 합집합
 print(s1 & s2)  # 교집합
 print(s1 - s2)  # 차집합
 ```
-- **실수하기 쉬운 포인트**
-  - dict 접근은 인덱스가 아니라 key 기반: `di[0]` 같은 접근 불가
-  - set은 순서가 없음 → 인덱싱 불가 (`s[0]` 안됨)
+  - **실수하기 쉬운 포인트**
+    - dict 접근은 인덱스가 아니라 key 기반: `di[0]` 같은 접근 불가
+    - set은 순서가 없음 → 인덱싱 불가 (`s[0]` 안됨)
 
 
 ## 조건문 (if / elif / else) + 중첩 조건문
@@ -426,75 +585,6 @@ print(factorial(5))  # 120
 ```
 - **실수하기 쉬운 포인트**
   - 종료 조건이 없으면 무한 재귀 → RecursionError
-
-## 가변 객체와 불변 객체
-
-### 정의
-- **가변 객체(mutable)**: 객체의 값이 변경될 수 있는 객체
-  - 예: list, dict, set
-- **불변 객체(immutable)**: 객체 생성 후 값이 변경되지 않는 객체
-  - 예: int, float, str, tuple
-
-#### 이론 설명
-- 가변 객체는 같은 객체를 여러 변수가 참조하면, 한 쪽의 변경이 모두에게 영향을 준다.
-- 불변 객체는 값이 바뀌는 것처럼 보여도 **새로운 객체가 생성**된다.
-
-#### 예시 코드
-```
-    # 가변 객체
-    a = [1, 2, 3]
-    b = a
-    b[0] = 100
-    print(a)  # [100, 2, 3]
-    print(a is b)  # True
-
-    # 불변 객체
-    a = 20
-    b = a
-    b = 10
-    print(a)  # 20
-    print(a is b)  # False
-```
-
-### 얕은 복사 (Shallow Copy)
-
-#### 정의
-- 새로운 객체를 만들지만, **내부에 포함된 객체는 원본과 공유**한다.
-
-#### 예시 코드
-```
-    # 1차원 리스트 (문제 없음)
-    a = [1, 2, 3]
-    b = a[:]
-    a[0] = 100
-    print(a)  # [100, 2, 3]
-    print(b)  # [1, 2, 3]
-
-    # 다차원 리스트 (문제 발생)
-    a = [1, 2, [3, 4]]
-    b = a[:]
-    b[2][0] = 999
-    print(a)  # [1, 2, [999, 4]]
-    print(b)  # [1, 2, [999, 4]]
-```
-
-### 깊은 복사 (Deep Copy)
-
-#### 정의
-- 객체 내부의 모든 중첩 객체까지 **완전히 새로운 객체로 복사**한다.
-
-#### 예시 코드
-```
-    import copy
-
-    a = [1, 2, [3, 4]]
-    b = copy.deepcopy(a)
-    b[2][0] = 999
-
-    print(a)  # [1, 2, [3, 4]]
-    print(b)  # [1, 2, [999, 4]]
-    print(a[2] is b[2])  # False
-```
 
 ## method
 
