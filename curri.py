@@ -519,12 +519,43 @@
 # print(st)
 
 
-a1 = [6, 3, 9]
-print(a1)
-a1.sort()
-print(a1)
+# a1 = [6, 3, 9]
+# print(a1)
+# a1.sort()
+# print(a1)
 
 
-a1 = [6, 3, 9]
-a2 = sorted(a1)
-print(a2)
+# a1 = [6, 3, 9]
+# a2 = sorted(a1)
+# print(a2)
+
+
+# a1.sort(reverse=True)
+# print(a1)
+
+
+# a3 = [4, 7, 1, 3, 2]
+# a4 = sorted(a3)
+# a5 = sorted(a3, reverse=True)
+# print(a4)
+# print(a5)
+
+
+# st1 = 'sfgq'
+# st1_list = sorted(st1)
+# print(st1_list)
+# print(''.join(st1_list))
+
+
+# lst = list(range(1, 11))
+# print(sorted(lst, reverse=True))
+
+# ret = sorted(lst, key=lambda x: -x)
+# print(ret)
+
+
+lst = [(3, 'banana'), (2, 'apple'), (1, 'carrot')]
+
+ret = sorted(lst, key=lambda lst: lst[1], reverse=True)
+
+print(ret)
