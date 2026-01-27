@@ -17,10 +17,6 @@
 # description = jsn_resp['weather'][0]['description']
 # print(f'날씨 설명 :{description}')
 
-set1 = {0, 1, 2, 3, 4}
-set2 = {1, 3, 5, 7, 9}
-set3 = {0, 1}
-print(set1.issuperset(set3))
 # ### 예 제 ###
 # # 각 혈액형의 인원수를 계산하는 딕셔너리를 생성하기.
 # from collections import defaultdict
