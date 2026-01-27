@@ -405,7 +405,6 @@ True, False
         print(even_squared)
         # 출력: {2: 4, 4: 16}
         ```
-
   - set / 세트 / 집합
     - 중복 제거에 매우 유용, 합집합/교집합/차집합 가능, 순서가 없기에 슬라이싱이나 인덱싱도 없다
     - 형식 : 중괄호 안의 쉼표로 값을 구분하여 만든다
@@ -421,6 +420,31 @@ True, False
         print(s1 & s2)  # 교집합 {3}
         print(s1 - s2)  # 차집합 {1, 2}
         ```
+  - 해시 테이블 (Hash Table)
+    - 해시란?
+      - 데이터를 **고정된 크기의 정수 값(해시값)** 으로 변환하는 것  
+      - dict와 set은 내부적으로 **해시 테이블 구조** 사용  
+      - 그래서 평균 검색 속도가 **O(1)**
+    - 해시 가능 조건
+      - 변경 불가능(immutable) 해야 함  
+      - 내부 요소도 모두 해시 가능해야 함
+      ```py
+      print(hash(1))
+      print(hash('a'))
+      print(hash((1,2,3)))
+      # 출력: (항상 동일한 정수값)
+      ```
+    - 해시 불가능 예
+      ```py
+      # print(hash([1,2,3]))  # TypeError
+      # print(hash({1,2,3}))  # TypeError
+      ```
+    - 실수하기 쉬운 포인트  
+      - list, set, dict는 키로 사용 불가  
+      - tuple은 내부가 전부 immutable일 때만 가능
+    - set.pop()이 랜덤처럼 보이는 이유
+      - set은 해시 테이블 기반이라 **저장 순서 개념이 없음**
+      - 그래서 pop()이 호출될 때마다 임의의 요소 반환
   - **실수하기 쉬운 포인트**
     - dict 접근은 인덱스가 아니라 key 기반: `di[0]` 같은 접근 불가
     - set은 순서가 없음 → 인덱싱 불가 (`s[0]` 안됨)
@@ -1072,6 +1096,204 @@ True, False
   print('Ⅳ'.isdigit())   # False
   ```
 - 딕셔너리 method
+  - .get(key[, default])
+    - 내용, 설명  
+      - 키가 존재하면 값을 반환  
+      - 키가 없으면 `None` 또는 지정한 기본값 반환  
+      - **KeyError를 방지할 때 매우 중요**
+    - 예시 코드
+      ```py
+      person = {'name': 'Alice', 'age': 25}
+      print(person.get('name'))
+      # 출력: Alice
+      print(person.get('count'))
+      # 출력: None
+      print(person.get('count', 'nothing'))
+      # 출력: nothing
+      ```
+  - .keys() / .values() / .items()
+    - 내용, 설명  
+      - `.keys()` → 키 목록  
+      - `.values()` → 값 목록  
+      - `.items()` → (key, value) 튜플 묶음  
+      - 반복문에서 매우 자주 사용
+    - 예시 코드
+      ```py
+      person = {'name': 'Alice', 'age': 25}
+
+      print(person.keys())
+      # 출력: dict_keys(['name', 'age'])
+
+      print(person.values())
+      # 출력: dict_values(['Alice', 25])
+
+      print(person.items())
+      # 출력: dict_items([('name', 'Alice'), ('age', 25)])
+
+      for k, v in person.items():
+          print(k, v)
+      # 출력:
+      # name Alice
+      # age 25
+      ```
+    - 실수하기 쉬운 포인트  
+      - 반환값은 리스트가 아니라 **뷰 객체**  
+      - 필요하면 `list(person.keys())`
+  - .pop(key[, default])
+    - 내용, 설명  
+      - 키를 제거하면서 값을 반환  
+      - default 지정 시 KeyError 방지
+    - 예시 코드
+      ```py
+      person = {'name': 'Alice', 'age': 25}
+      print(person.pop('age'))
+      # 출력: 25
+      print(person)
+      # 출력: {'name': 'Alice'}
+      print(person.pop('country', None))
+      # 출력: None
+      ```
+    - 실수하기 쉬운 포인트  
+      - 기본값 없이 없는 키 삭제 시 KeyError
+  - .setdefault(key, default)
+    - 내용, 설명  
+      - 키가 있으면 기존 값 반환  
+      - 없으면 default 넣고 그 값을 반환  
+      - **초기값 세팅에 매우 유용**
+        - defaultdict(int) : 키가 없다면 0으로 초기화
+        - defaultdict(list) : 키가 없다면 [] 으로 초기화
+    - 예시 코드
+      ```py
+      person = {'name': 'Alice'}
+      print(person.setdefault('country', 'KOREA'))
+      # 출력: KOREA
+      print(person)
+      # 출력: {'name': 'Alice', 'country': 'KOREA'}
+      ```
+    - 실수하기 쉬운 포인트  
+      - get과 달리 **딕셔너리를 수정함** 
+  - .update()
+    - 내용, 설명  
+      - 다른 딕셔너리 또는 키워드 인자를 병합  
+      - 기존 키는 덮어씀
+    - 예시 코드
+      ```py
+      person = {'name': 'Alice', 'age': 25}
+      other = {'name': 'Jane', 'country': 'KOREA'}
+      person.update(other)
+      print(person)
+      # 출력: {'name': 'Jane', 'age': 25, 'country': 'KOREA'}
+      person.update(age=100, address='SEOUL')
+      print(person)
+      # 출력: {'name': 'Jane', 'age': 100, 'country': 'KOREA', 'address': 'SEOUL'}
+      ```
+    - 실수하기 쉬운 포인트  
+      - 원본 딕셔너리 변경됨
+  - clear(), del
+    - 내용, 설명  
+      - `.clear()` → 전체 삭제  
+      - `del dict[key]` → 특정 키 삭제
+    - 예시 코드
+      ```py
+      person = {'name': 'Alice', 'age': 25}
+      person.clear()
+      print(person)
+      # 출력: {}
+      person = {'name': 'Alice', 'age': 25}
+      del person['age']
+      print(person)
+      # 출력: {'name': 'Alice'}
+      ```
+    - 실수하기 쉬운 포인트  
+      - 없는 키 `del` 하면 KeyError
+  - 심화 : defaultdict
+    - 내용, 설명  
+      - 존재하지 않는 키 접근 시 기본값 자동 생성  
+      - 키 존재 여부 검사 코드 제거 가능
+    - 예시 코드
+      ```py
+      from collections import defaultdict
+      text = 'banana'
+      counts = defaultdict(int)
+      for c in text:
+          counts[c] += 1
+      print(counts)
+      # 출력: {'b': 1, 'a': 3, 'n': 2}
+      ```
+    - 실수하기 쉬운 포인트  
+      - 기본값 함수(int, list 등) 괄호 없이 전달
+
+- Set method
+  - .add(x)
+    - 내용, 설명  
+      - 요소 하나 추가  
+      - 이미 있으면 변화 없음
+    - 예시 코드
+      ```py
+      s = {'a', 'b'}
+      s.add('c')
+      print(s)
+      # 출력: {'a', 'b', 'c'}
+
+      s.add('c')
+      print(s)
+      # 출력: {'a', 'b', 'c'}
+      ```
+  - .update(iterable)
+    - 내용, 설명  
+      - 여러 요소 한 번에 추가
+    - 예시 코드
+      ```py
+      s = {1, 2}
+      s.update([2, 3, 4])
+      print(s)
+      # 출력: {1, 2, 3, 4}
+      ```
+  - .remove(x) vs .discard(x)
+    - 내용, 설명  
+      - remove → 없으면 KeyError  
+      - discard → 없어도 에러 없음
+    - 예시 코드
+      ```py
+      s = {1, 2, 3}
+      s.remove(2)
+      print(s)
+      # 출력: {1, 3}
+      s.discard(10)
+      print(s)
+      # 출력: {1, 3}
+      ````
+  - .pop()
+    - 내용, 설명  
+      - 임의의 요소 하나 제거 후 반환  
+      - set은 순서가 없기 때문에 예측 불가
+    - 예시 코드
+      ```py
+      s = {1, 2, 3}
+      print(s.pop())
+      # 출력: (임의 값)
+      ```
+  - 집합 연산 메서드
+    ```py
+    set1 = {0,1,2,3,4}
+    set2 = {1,3,5,7,9}
+    set3 = {0, 1}
+    print(set1.intersection(set2))
+    # 출력: {1, 3} set1 & set2
+
+    print(set1.union(set2))
+    # 출력: {0,1,2,3,4,5,7,9} set1 | set2
+
+    print(set1.difference(set2))
+    # 출력: {0,2,4} set1 - set2
+
+    print(set1.issubset(set2))
+    # 출력: False // set1 <= set2
+
+    print(set1.issuperset(set3))
+    # 출력: True // set1 => set3
+
+    ```
 ## Python으로 “클라이언트 → 서버 요청” 정리 (requests 중심)
 
 - **내용, 설명**
