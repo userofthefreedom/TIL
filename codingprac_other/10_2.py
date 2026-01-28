@@ -37,32 +37,32 @@
 # print(f'{banana.price+apple.price}원')
 
 
-def main():
-    inp()
+# def main():
+#     inp()
 
 
-def inp():
-    txt = input()
-    ck_num = check(txt)
-    if ck_num == 1:
-        print("있음")
-    else:
-        print("없음")
+# def inp():
+#     txt = input()
+#     ck_num = check(txt)
+#     if ck_num == 1:
+#         print("있음")
+#     else:
+#         print("없음")
 
 
-def check(x):
-    is_num = 0
-    for i in arr:
-        for j in i:
-            if j == x:
-                is_num = 1
-    return is_num
+# def check(x):
+#     is_num = 0
+#     for i in arr:
+#         for j in i:
+#             if j == x:
+#                 is_num = 1
+#     return is_num
 
 
-arr = [
-    ['D', 'A', 'C', 'C', 'D'],
-    ['S', 'D', 'F', 'A', 'E'],
-    ['E', 'E', 'T', 'J', 'H']
-]
+# arr = [
+#     ['D', 'A', 'C', 'C', 'D'],
+#     ['S', 'D', 'F', 'A', 'E'],
+#     ['E', 'E', 'T', 'J', 'H']
+# ]
 
-main()
+# main()
