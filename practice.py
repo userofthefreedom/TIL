@@ -21,31 +21,18 @@
 # )  # {10: [1], 20: [2], 30: [3, 4]}
 # print(dict_invert({1: True, 2: True, 3: True}))  # {True: [1, 2, 3]}
 
-class Plus_minus():
-    def __init__(self, first, second):
-        self.first = first
-        self.second = second
+class Person:
+    def __init__(self):
+        self.__age = 0
 
-    def plus(self):
-        result = self.first + self.second
-        return result
+    def get_age(self):
+        return self.__age
 
-    def minus(self):
-        result = self.first - self.second
-        return result
+    def set_age(self, value):
+        if value >= 0:
+            self.__age = value
 
 
-class MoreFunction(Plus_minus):
-    def __init__(self, first, second, third):
-        super().__init__(first, second)
-        self.third = third
-
-    def mul(self):
-        result = self.first * self.second * self.third
-        return result
-
-
-b = MoreFunction(3, 4, 5)
-print(b.plus())
-print(b.minus())
-print(b.mul())
+p = Person()
+p.set_age(25)
+print(p.get_age())  # 출력: 25

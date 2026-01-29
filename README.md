@@ -161,7 +161,7 @@
         +, - (양/음수)
         *, /, //, %
         +, -
-        <, <=, =>, >, ==, !=
+        <, <=, >=, >, ==, !=
         is, is not
         in, not in
         not
@@ -247,10 +247,10 @@
     - 이스케이프 시퀀스
       - 역슬래쉬 + 문자를 통해 줄바꿈 , 탭 등 특수 기능 수행
     - f-string
-      ```
+      ```py
       name = '홍길동'
       age = 25
-      print(f'안녕하세요, {age}살 {name}입니다.")
+      print(f'안녕하세요, {age}살 {name}입니다.')
       # 안녕하세요, 25살 홍길동입니다.
       ```
     - **실수하기 쉬운 포인트**
@@ -344,6 +344,9 @@
         print(even_squared)
         # 출력: {2: 4, 4: 16}
         ```
+      - 실수하기 쉬운 포인트  
+        - list, set, dict는 키로 사용 불가  
+        - tuple은 내부가 전부 immutable일 때만 가능
   - set / 세트 / 집합
     - 중복 제거에 매우 유용, 합집합/교집합/차집합 가능, 순서가 없기에 슬라이싱이나 인덱싱도 없다
     - 형식 : 중괄호 안의 쉼표로 값을 구분하여 만든다
@@ -364,6 +367,7 @@
       - 데이터를 **고정된 크기의 정수 값(해시값)** 으로 변환하는 것  
       - dict와 set은 내부적으로 **해시 테이블 구조** 사용  
       - 그래서 평균 검색 속도가 **O(1)**
+      - hash() 값은 타입에 따라 다르며(특히 문자열은) 실행마다 달라질 수 있다
     - 해시 가능 조건
       - 변경 불가능(immutable) 해야 함  
       - 내부 요소도 모두 해시 가능해야 함
@@ -371,19 +375,22 @@
       print(hash(1))
       print(hash('a'))
       print(hash((1,2,3)))
-      # 출력: (항상 동일한 정수값)
+      # 출력: (정수값)
       ```
     - 해시 불가능 예
       ```py
       # print(hash([1,2,3]))  # TypeError
       # print(hash({1,2,3}))  # TypeError
       ```
-    - 실수하기 쉬운 포인트  
-      - list, set, dict는 키로 사용 불가  
-      - tuple은 내부가 전부 immutable일 때만 가능
     - set.pop()이 랜덤처럼 보이는 이유
       - set은 해시 테이블 기반이라 **저장 순서 개념이 없음**
       - 그래서 pop()이 호출될 때마다 임의의 요소 반환
+      - 진짜 난수(random)는 아니고, 내부 해시/버킷 상태에 따라 결정되어 예측이 어렵게 보이는 것.
+    - 해시 테이블 성능의 함정
+      - 내용, 설명  
+        - dict와 set는 평균적으로 O(1)의 빠른 속도를 가진다.
+        - 하지만 해시 충돌(collision)이 많아지면 같은 버킷에 데이터가 몰리게 된다.
+        - 이 경우 탐색이 느려져 **최악의 경우 O(n)** 까지 성능이 떨어질 수 있다.
   - **실수하기 쉬운 포인트**
     - dict 접근은 인덱스가 아니라 key 기반: `di[0]` 같은 접근 불가
     - set은 순서가 없음 → 인덱싱 불가 (`s[0]` 안됨)
@@ -1264,79 +1271,214 @@
     introduce(name, age)
     # 출력: 안녕하세요, Alice입니다. 나이는 25살입니다.
     ```
-- 클래스 기초
+- 클래스의 기본 개념
   - 내용, 설명  
-    - 클래스(Class): 객체를 만들기 위한 설계도  
-    - 인스턴스(Instance): 클래스로 만든 실제 객체  
-    - 속성(Attribute): 객체가 가지고 있는 데이터  
-    - 메서드(Method): 객체가 할 수 있는 행동
-  - 예시 코드
-    ```py
-    class Person:
-        def __init__(self, name, age):
-            self.name = name
-            self.age = age
-
-        def introduce(self):
-            print(f'{self.name}, {self.age}살')
-    p1 = Person('Alice', 25)
-    p2 = Person('Bella', 30)
-    p1.introduce()
-    p2.introduce()
-    # 출력:
-    # Alice, 25살
-    # Bella, 30살
-    ```
-  - 클래스 변수와 인스턴스 변수
+    - 클래스는 **객체를 만들기 위한 설계도(틀)** 이다.
+    - 현실 세계의 “개념”을 코드로 표현한 것이라고 생각하면 이해하기 쉽다.
+      - 예: “사람”, “자동차”, “은행계좌” 같은 개념
+    - 클래스는 **데이터(속성)** 와 **기능(메서드)** 을 하나로 묶는 역할을 한다.
+  - 왜 클래스를 사용할까?
     - 내용, 설명  
-      - 클래스 변수: 모든 인스턴스가 공유  
-      - 인스턴스 변수: 각 객체마다 독립적
+      - 관련 있는 데이터와 기능을 한 덩어리로 관리할 수 있다.
+      - 코드의 **재사용성**, **확장성**, **유지보수성**이 좋아진다.
+      - 여러 개의 비슷한 객체를 만들 때 매우 유리하다.
+    - 클래스 없이 작성하면
+      ```py
+      name1 = "Alice"
+      age1 = 25
+
+      name2 = "Bob"
+      age2 = 30
+      ```
+    - 클래스를 사용하면
+      ```py
+      class Person:
+          def __init__(self, name, age):
+              self.name = name
+              self.age = age
+
+      p1 = Person("Alice", 25)
+      p2 = Person("Bob", 30)
+
+      print(p1.name, p2.age)
+      # 출력: Alice 30
+      ```
+  - 클래스와 인스턴스의 관계
+    - 내용, 설명  
+      - 클래스 = 설계도  
+      - 인스턴스 = 설계도로 만든 실제 물건(객체)
+      - 하나의 클래스에서 여러 개의 인스턴스를 만들 수 있다.
     - 예시 코드
       ```py
-      class Circle:
-          pi = 3.14  # 클래스 변수
+      class Dog:
+          def __init__(self, name):
+              self.name = name
 
-          def __init__(self, radius):
-              self.radius = radius  # 인스턴스 변수
+      d1 = Dog("초코")
+      d2 = Dog("보리")
 
-      c1 = Circle(1)
-      c2 = Circle(2)
-
-      c1.pi = 100
-      print(c1.pi)  # 100
-      print(c2.pi)  # 3.14
-      print(Circle.pi)  # 3.14
+      print(d1.name)
+      print(d2.name)
+      # 출력:
+      # 초코
+      # 보리
       ```
-  - 클래스와 인스턴스의 이름 공간
-    - 내용, 설명  
-      - 인스턴스 → 자신의 속성 먼저 탐색  
-      - 없으면 클래스 변수 참조
+  - 클래스 안에는 무엇이 들어갈까?
+    - 속성(Attribute)
+      - 객체가 가지는 데이터
+      - 예: 이름, 나이, 잔액 등
+    - 메서드(Method)
+      - 객체가 할 수 있는 동작(함수)
+      - 예: 인사하기, 입금하기, 이동하기 등
     - 예시 코드
       ```py
       class Person:
-          name = 'unknown'
+          def __init__(self, name):
+              self.name = name  # 속성
+
+          def introduce(self):  # 메서드
+              print(f"안녕하세요, {self.name}입니다.")
+
+      p = Person("세진")
+      p.introduce()
+      # 출력: 안녕하세요, 세진입니다.
+      ```
+  - 한 줄 핵심 정리
+    - 클래스는 **데이터(속성) + 동작(메서드)을 묶는 사용자 정의 자료형**
+    - 클래스를 사용하면 “관련 있는 것들”을 하나의 객체 단위로 다룰 수 있다.
+    - 인스턴스는 클래스로부터 만들어진 실제 객체이다.
+- 속성(Attribute) 종류
+  - 클래스 속성
+    - 내용, 설명  
+      - 클래스 내부에 정의된 변수  
+      - **모든 인스턴스가 공유하는 값**
+      - “객체마다 다를 필요 없는 공통 데이터” 저장 시 사용
+    - 예시 코드
+      ```py
+      class Person:
+          species = "Human"  # 클래스 속성
 
       p1 = Person()
       p2 = Person()
-      p2.name = 'Kim'
+
+      print(p1.species)
+      print(p2.species)
+      # 출력:
+      # Human
+      # Human
+      ```
+  - 인스턴스 속성
+    - 내용, 설명  
+      - 각 객체마다 **독립적으로 가지는 변수**
+      - 보통 생성자 `__init__` 안에서 정의
+    - 예시 코드
+      ```py
+      class Person:
+          def __init__(self, name):
+              self.name = name  # 인스턴스 속성
+
+      p1 = Person("Alice")
+      p2 = Person("Bob")
 
       print(p1.name)
-      # 출력: unknown
-
       print(p2.name)
-      # 출력: Kim
-
-      print(Person.name)
-      # 출력: unknown
+      # 출력:
+      # Alice
+      # Bob
       ```
-  - 실수하기 쉬운 포인트  
-    - 각 인스턴스는 독립된 데이터를 가짐
-    - 인스턴스에서 클래스 변수 덮어쓰면 인스턴스 변수로 새로 생성됨
-- method와 클래스
+- 캡슐화
+  - 캡슐화란?
+    - 객체의 내부 데이터(속성)를 외부에서 직접 접근하지 못하게 하고  
+      메서드를 통해서만 다루도록 하는 객체지향 개념
+    - 데이터 보호 + 코드 안정성을 높이기 위해 사용
+  - 파이썬의 접근 수준 개념
+    - Public (공개)
+      - 누구나 접근 가능
+      - 이름 앞에 아무것도 붙이지 않음
+      ```py
+      class Person:
+          def __init__(self, name):
+              self.name = name  # public
+
+      p = Person("Alice")
+      print(p.name)  # 접근 가능
+      ```
+    - Protected (보호)
+      - "외부에서 쓰지 말자"는 **약속(관례)**
+      - 이름 앞에 `_` 한 개 사용
+      - 실제로는 접근 가능하지만 내부용으로 간주
+      ```py
+      class Person:
+          def __init__(self):
+              self._age = 20  # protected
+
+      p = Person()
+      print(p._age)  # 가능은 하지만 권장되지 않음
+      ```
+    - Private (비공개)
+      - 클래스 내부에서만 사용하도록 이름을 변경(Name Mangling)
+      - 이름 앞에 `__` 두 개 사용
+      ```py
+      class Person:
+          def __init__(self):
+              self.__salary = 5000  # private
+
+      p = Person()
+      # print(p.__salary)  # 에러 발생
+      print(p._Person__salary)  # 내부적으로 이름이 변경되어 접근 가능
+      ```
+  - 왜 캡슐화가 필요할까?
+    - 객체의 중요한 데이터를 실수로 바꾸는 것을 방지
+    - 내부 구현을 숨기고, 인터페이스(메서드)만 공개
+    - 코드 수정 시 외부 코드에 영향을 덜 줌
+  - getter / setter 개념 (캡슐화와 함께 사용)
+    - 내용, 설명  
+      - 속성을 직접 접근하지 않고 메서드를 통해 읽고 수정
+    - 예시 코드
+      ```py
+      class Person:
+          def __init__(self):
+              self.__age = 0
+
+          def get_age(self):
+              return self.__age
+
+          def set_age(self, value):
+              if value >= 0:
+                  self.__age = value
+
+      p = Person()
+      p.set_age(25)
+      print(p.get_age())  # 출력: 25
+      ```
+      ```py
+      class Person:
+          def __init__(self):
+              self.__age = 0  # private 속성
+
+          @property
+          def age(self):  # getter 역할
+              return self.__age
+
+          @age.setter
+          def age(self, value):  # setter 역할
+              if value >= 0:
+                  self.__age = value
+              else:
+                  print("나이는 음수가 될 수 없습니다.")
+
+      p = Person()
+      p.age = 25          # setter 호출
+      print(p.age)        # getter 호출
+      # 출력: 25
+      ```
+
+- 메서드(Method) 종류
   - 인스턴스 메서드
     - 내용, 설명  
-      - 인스턴스 상태를 변경  
-      - 첫 인자는 항상 self
+      - 객체의 상태(인스턴스 속성)를 다룰 때 사용
+      - 첫 번째 매개변수로 **self**를 받음
+      - 반드시 **인스턴스를 통해 호출**
     - 예시 코드
       ```py
       class Counter:
@@ -1351,47 +1493,12 @@
       print(c.count)
       # 출력: 1
       ```
-    - 생성자 method __init__
-      - 내용, 설명  
-        - 인스턴스 생성 시 자동 실행  
-        - 초기값 설정
-      - 예시 코드
-        ```py
-        class Person:
-            def __init__(self, name):
-                self.name = name
-                print("생성 완료")
-
-        p = Person('지민')
-        # 출력: 생성 완료
-        ```
-  - 클래스 메서드
+  - 정적 메서드 (Static Method)
     - 내용, 설명  
-      - 클래스 변수 조작  
-      - @classmethod 사용  
-      - 첫 인자는 cls
-    - 예시 코드
-      ```py
-      class Person:
-          population = 0
-
-          def __init__(self, name):
-              self.name = name
-              Person.increase_population()
-
-          @classmethod
-          def increase_population(cls):
-              cls.population += 1
-
-      p1 = Person('A')
-      p2 = Person('B')
-      print(Person.population)
-      # 출력: 2
-      ```
-  - 정적 메서드
-    - 내용, 설명  
-      - 클래스/인스턴스와 무관한 기능  
-      - @staticmethod 사용
+      - 인스턴스 속성도, 클래스 속성도 사용하지 않는 기능성 메서드
+      - 첫 매개변수로 `self`나 `cls`를 받지 않음
+      - 일반 함수와 비슷하지만, **관련 기능이라 클래스 안에 넣는 것**
+      - `@staticmethod` 데코레이터 사용
     - 예시 코드
       ```py
       class MathUtils:
@@ -1401,6 +1508,31 @@
 
       print(MathUtils.add(3, 5))
       # 출력: 8
+      ```
+  - 클래스 메서드 (Class Method)
+    - 내용, 설명  
+      - 클래스 속성을 다루거나, 클래스 단위 동작을 정의할 때 사용
+      - 첫 매개변수로 **cls**를 받음
+      - 클래스 자체에서 직접 호출 가능
+      - `@classmethod` 데코레이터 사용
+    - 예시 코드
+      ```py
+      class Person:
+          population = 0
+
+          def __init__(self, name):
+              self.name = name
+              Person.population += 1
+
+          @classmethod
+          def get_population(cls):
+              return cls.population
+
+      p1 = Person("A")
+      p2 = Person("B")
+
+      print(Person.get_population())
+      # 출력: 2
       ```
   - method 예제
     ```py
@@ -1562,7 +1694,7 @@
     p.talk()  # 반갑습니다. 박교수입니다.
     s.talk()  # 반갑습니다. 김학생입니다.
     ```
-- 메서드 오버라이딩 (Overriding)
+- 다형성, 메서드 오버라이딩 (Overriding)
   - 내용, 설명  
     - 부모의 메서드를 자식이 **재정의**하는 것  
     - 같은 이름의 메서드가 있으면 자식 것이 우선됨
@@ -1650,6 +1782,90 @@
       # ParentB
       # Child
       ```
+  - 오버로딩(Overloading) vs 오버라이딩(Overriding)
+    - 비교
+      - 오버로딩
+        - 같은 이름의 메서드를 **매개변수 개수/타입을 다르게** 여러 개 정의하는 것
+        - **Java, C++** 같은 언어에서 지원
+      - 오버라이딩
+        - 부모 클래스의 메서드를 **자식 클래스에서 재정의**하는 것
+        - 파이썬에서 상속 시 매우 자주 사용
+    - ⚠ 파이썬의 메서드 오버로딩 특징
+      - 내용, 설명  
+        - 파이썬은 **전통적인 의미의 메서드 오버로딩을 지원하지 않는다**
+        - 같은 이름의 메서드를 여러 번 정의하면 **마지막에 정의된 것만 남는다**
+        - 매개변수 타입에 따라 자동으로 다른 메서드를 호출하는 기능은 없다
+      - 잘못된 예시 (오버로딩이 안 되는 이유)
+        ```py
+        class Calculator:
+            def add(self, a, b):
+                return a + b
+
+            def add(self, a, b, c):  # 위 메서드를 덮어씀
+                return a + b + c
+
+        calc = Calculator()
+        print(calc.add(1, 2, 3))
+        # 출력: 6
+        # 하지만 add(1, 2)는 에러 발생 (첫 번째 add는 사라졌기 때문)
+        ```
+    - 파이썬에서 오버로딩을 "흉내내는" 방법
+      - 기본값(default argument) 사용
+        ```py
+        class Calculator:
+            def add(self, a, b, c=0):
+                return a + b + c
+
+        calc = Calculator()
+        print(calc.add(1, 2))      # 출력: 3
+        print(calc.add(1, 2, 3))   # 출력: 6
+        ```
+      - 가변 인자(*args) 사용
+        ```py
+        class Calculator:
+            def add(self, *nums):
+                return sum(nums)
+
+        calc = Calculator()
+        print(calc.add(1, 2))        # 출력: 3
+        print(calc.add(1, 2, 3, 4))  # 출력: 10
+        ```
+      - 타입에 따라 동작 다르게 하기
+        ```py
+        class Printer:
+            def print_data(self, data):
+                if isinstance(data, int):
+                    print("숫자:", data)
+                elif isinstance(data, str):
+                    print("문자열:", data)
+                else:
+                    print("기타 데이터")
+
+        p = Printer()
+        p.print_data(10)     # 출력: 숫자: 10
+        p.print_data("hi")   # 출력: 문자열: hi
+        ```
+    - 파이썬에서 진짜로 많이 쓰이는 것: 메서드 오버라이딩
+      - 내용, 설명  
+        - 자식 클래스가 부모의 메서드를 **자기 방식대로 다시 정의**하는 것
+        - 상속에서 핵심 개념
+      - 예시 코드
+        ```py
+        class Animal:
+            def speak(self):
+                print("동물이 소리를 냅니다.")
+
+        class Dog(Animal):
+            def speak(self):  # 부모 메서드 재정의 (오버라이딩)
+                print("멍멍!")
+
+        a = Animal()
+        d = Dog()
+
+        a.speak()  # 출력: 동물이 소리를 냅니다.
+        d.speak()  # 출력: 멍멍!
+        ```
+
 ## 에러(Error)와 예외(Exception) 처리
 - 에러 vs 예외
   - 내용, 설명  
@@ -1727,6 +1943,29 @@
     else:
         print('Key가 존재하지 않습니다.')
     ```
+  - dict 안전하게 값 가져오기 패턴
+    - get() 사용
+      - 키가 없어도 에러 없이 기본값 반환
+      ```py
+      d = {'a': 1}
+      print(d.get('b', 0))  # 출력: 0
+      ```
+    - setdefault()
+      - 키가 없으면 기본값을 넣고 반환
+      ```py
+      d = {}
+      d.setdefault('count', 0)
+      print(d)  # 출력: {'count': 0}
+      ```
+    - defaultdict (collections 모듈)
+      - 기본값 자동 생성
+      ```py
+      from collections import defaultdict
+
+      d = defaultdict(int)
+      d['a'] += 1
+      print(d)  # 출력: {'a': 1}
+      ```
   - 이해 포인트  
     - 파이썬에서는 EAFP 스타일을 더 많이 사용
 - 예외 처리 순서가 중요한 이유
