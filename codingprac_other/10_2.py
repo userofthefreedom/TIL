@@ -66,3 +66,16 @@
 # ]
 
 # main()
+
+
+# num_list = list(map(int, input().split()))
+
+# arr = []
+# for i in num_list:
+#     ad_lst = []
+#     for j in range(i, i+4):
+#         ad_lst.append(j)
+#     arr.append(ad_lst)
+
+# for i in arr:
+#     print(*i)

@@ -21,47 +21,31 @@
 # )  # {10: [1], 20: [2], 30: [3, 4]}
 # print(dict_invert({1: True, 2: True, 3: True}))  # {True: [1, 2, 3]}
 
+class Plus_minus():
+    def __init__(self, first, second):
+        self.first = first
+        self.second = second
 
-# class PlusMinus:
-#     # def data(self, first, second):
-#     #     self.first = first
-#     #     self.second = second
-#     def __init__(self, first, second):
-#         self.first = first
-#         self.second = second
-
-#     def plus(self):
-#         return self.first + self.second
-
-#     def minus(self):
-#         return self.first - self.second
-
-
-# a = PlusMinus(5, 3)
-
-# b = PlusMinus(7, 1)
-
-# print(a.first, b.second)
-
-
-# print(a.plus())
-# print(b.minus())
-
-
-class Car:
-    def __init__(self, name, price):
-        self.name = name
-        self.price = price
-
-    def __add__(self, other):
-        result = self.price + other.price
+    def plus(self):
+        result = self.first + self.second
         return result
 
-    def __str__(self):
-        return f'{self.name}의 가격은 {self.price}입니다.'
+    def minus(self):
+        result = self.first - self.second
+        return result
 
 
-kia = Car('k8', 300)
-bmw = Car('m5', 500)
-print(kia + bmw)
-print(kia)
+class MoreFunction(Plus_minus):
+    def __init__(self, first, second, third):
+        super().__init__(first, second)
+        self.third = third
+
+    def mul(self):
+        result = self.first * self.second * self.third
+        return result
+
+
+b = MoreFunction(3, 4, 5)
+print(b.plus())
+print(b.minus())
+print(b.mul())
