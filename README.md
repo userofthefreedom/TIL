@@ -19,76 +19,15 @@
   - [모듈](#모듈)
   - [제어문](#제어문)
   - [method](#method)
+  - [class](#클래스)
+  - [상속](#상속-inheritance)
   - [Python으로 “클라이언트 → 서버 요청” 정리 (requests 중심)](#python으로-클라이언트--서버-요청-정리-requests-중심)
-    - [0) 용어 한눈에 보기](#0-용어-한눈에-보기)
-    - [1) requests 설치 및 기본 사용 흐름](#1-requests-설치-및-기본-사용-흐름)
-    - [2) GET 요청: 서버에서 “조회”하기](#2-get-요청-서버에서-조회하기)
-    - [3) POST 요청: 서버에 “생성/전송”하기 (JSON 바디)](#3-post-요청-서버에-생성전송하기-json-바디)
-    - [4) POST 요청: form 데이터 전송 (`data=`)](#4-post-요청-form-데이터-전송-data)
-    - [5) 헤더(headers): 인증/콘텐츠 타입/커스텀 헤더](#5-헤더headers-인증콘텐츠-타입커스텀-헤더)
-    - [6) 상태코드와 에러 처리: raise\_for\_status()](#6-상태코드와-에러-처리-raise_for_status)
-    - [7) 응답(response) 다루기: text / json / headers / encoding](#7-응답response-다루기-text--json--headers--encoding)
-    - [8) timeout과 재시도(기본 전략)](#8-timeout과-재시도기본-전략)
-    - [9) Session 사용: 쿠키/연결 재사용(성능/로그인 유지)](#9-session-사용-쿠키연결-재사용성능로그인-유지)
-    - [10) 파일 다운로드/업로드 기초](#10-파일-다운로드업로드-기초)
-      - [10-1) 다운로드(간단)](#10-1-다운로드간단)
-      - [10-2) 업로드(파일 전송)](#10-2-업로드파일-전송)
-    - [11) 실전 템플릿: 안전한 요청 함수 만들기](#11-실전-템플릿-안전한-요청-함수-만들기)
-    - [참고 (연습용 테스트 API)](#참고-연습용-테스트-api)
 - [CLI 기본 명령어](#cli-기본-명령어)
-  - [1) `pwd`](#1-pwd)
-  - [2) `ls`](#2-ls)
-  - [3) `cd`](#3-cd)
-  - [4) `mkdir`](#4-mkdir)
-  - [5) `touch`](#5-touch)
-  - [6) `cat`](#6-cat)
-  - [7) `echo`](#7-echo)
-  - [8) `cp`](#8-cp)
-  - [9) `mv`](#9-mv)
-  - [10) `rm`](#10-rm)
-  - [11) `clear`](#11-clear)
-  - [12) `history`](#12-history)
-  - [추가 팁: 경로 기호 정리](#추가-팁-경로-기호-정리)
 - [Git 활용법 정리 (기능 + 예시)](#git-활용법-정리-기능--예시)
-  - [0) Git 작업 흐름 한눈에 보기](#0-git-작업-흐름-한눈에-보기)
-  - [1) `git init` : Git 저장소 시작하기](#1-git-init--git-저장소-시작하기)
-  - [2) `git status` : 현재 상태 확인](#2-git-status--현재-상태-확인)
-  - [3) `git add` : 스테이징(커밋 후보 등록)](#3-git-add--스테이징커밋-후보-등록)
-  - [4) `git commit` : 버전 저장(기록 남기기)](#4-git-commit--버전-저장기록-남기기)
-  - [5) `git log` : 커밋 기록 보기](#5-git-log--커밋-기록-보기)
-  - [6) `git diff` : 변경 내용 비교하기](#6-git-diff--변경-내용-비교하기)
-  - [7) `git remote` / `git push` : 원격 저장소 연결 \& 업로드](#7-git-remote--git-push--원격-저장소-연결--업로드)
-  - [8) `git pull` : 원격 변경](#8-git-pull--원격-변경)
-  - [9) `git clone` : 원격 저장소 복제](#9-git-clone--원격-저장소-복제)
-  - [10) 브랜치 기초: `git branch` / `git switch` / `git checkout`](#10-브랜치-기초-git-branch--git-switch--git-checkout)
-  - [11) 병합: `git merge`](#11-병합-git-merge)
-  - [12) 충돌(conflict) 해결 기본](#12-충돌conflict-해결-기본)
-  - [13) 되돌리기(복구) 핵심: reset / revert / restore](#13-되돌리기복구-핵심-reset--revert--restore)
-    - [13-1) `git restore`](#13-1-git-restore)
-    - [13-2) `git reset`](#13-2-git-reset)
-    - [13-3) `git revert`](#13-3-git-revert)
-  - [14) `.gitignore` : 추적 제외 파일 설정](#14-gitignore--추적-제외-파일-설정)
 - [Markdown / README 작성법 정리](#markdown--readme-작성법-정리)
-  - [목차 (내부 링크)](#목차-내부-링크)
-  - [내부링크](#내부링크)
-  - [헤더적기](#헤더적기)
-  - [순서 리스트 적기](#순서-리스트-적기)
-  - [그냥 리스트 적기](#그냥-리스트-적기)
-  - [체크 리스트 적기](#체크-리스트-적기)
-  - [코드블럭](#코드블럭)
-  - [링크걸기](#링크걸기)
-  - [이미지걸기](#이미지걸기)
-  - [텍스트 꾸미기](#텍스트-꾸미기)
-    - [굵게 표현하기](#굵게-표현하기)
-    - [기울임](#기울임)
-    - [취소선](#취소선)
-  - [수평선](#수평선)
-  - [줄바꿈/구분](#줄바꿈구분)
-  - [참고 링크](#참고-링크)
 
 ---
 # Python Study Notes
-
 
 ## Basic
  - 실행과정
@@ -99,17 +38,17 @@
   - 오류 시 즉시 중단
   - python, JS의 방식 (C, C++의 경우 전체 변환 후 실행하는 컴파일러 사용)
 - 표현식 : 하나의 값으로 평가될 수 있는 모든 코드 
-```python
-3+5
-x>10
-5*4
-```
+  ```python
+  3+5
+  x>10
+  5*4
+  ```
 - 값 : 표현식이 평가된 결과, 더 이상 계산/평가될 수 없는 프로그램 가장 기본 데이터 조각
-```python
-13.14
-"안녕하세요"
-True, False
-```
+  ```python
+  13.14
+  "안녕하세요"
+  True, False
+  ```
   - 모든 값은 그 자체로 가장 단순한 표현식
 - 변수 : 값을 나중에 활용하기 위해 값에 붙이는 고유한 이름
   - 변수 할당 : 표현식이 만들어 낸 값이 이름을 붙이는 것
@@ -460,7 +399,6 @@ True, False
       print( 10 > 5 ) # True
       print(10 == 5) # False
   - collection : 여러개를 묶는 자료형 [str, list, tuple, range, set, dict]
-  
 - 형변환
   - 암시적 형변환 : Boolean과 Numeric Type만 가능하다
       ```python
@@ -514,8 +452,7 @@ True, False
       - 여러개의 인자를 tuple로 처리한다
     - arbitrary keyword arguments list : `**kwargs` 가변 키워드 인자
       - 여러개의 인자를 dictionary로 처리
-  - 기본 순서 : 위치 > 기본 > 가변 > 가변 키워드
-
+    - 기본 순서 : 위치 > 기본 > 가변 > 가변 키워드
   - **예시**
   ```python
   def func(pos1, pos2, default_arg='default', *args, **kwargs):
@@ -1222,7 +1159,6 @@ True, False
       ```
     - 실수하기 쉬운 포인트  
       - 기본값 함수(int, list 등) 괄호 없이 전달
-
 - Set method
   - .add(x)
     - 내용, 설명  
@@ -1294,104 +1230,620 @@ True, False
     # 출력: True // set1 => set3
 
     ```
+
+## 클래스
+- 객체지향 프로그래밍(OOP) vs 절차지향 프로그래밍
+  - 내용, 설명  
+    - 절차지향 프로그래밍은 데이터와 함수가 서로 분리되어 있음  
+      → 함수에 데이터를 계속 전달해야 함  
+    - 객체지향 프로그래밍(OOP)은 데이터(속성)와 기능(메서드)을 하나로 묶음  
+      → 현실 세계의 “객체” 개념을 코드로 표현  
+      → 유지보수와 확장에 유리
+  - 객체지향
+    ```py
+    class Person:
+        def __init__(self, name, age):
+            self.name = name
+            self.age = age
+
+        def introduce(self):
+            print(f'안녕하세요, {self.name}입니다. 나이는 {self.age}살입니다.')
+
+    alice = Person('Alice', 25)
+    alice.introduce()
+    # 출력: 안녕하세요, Alice입니다. 나이는 25살입니다.
+    ```
+  - 절차지향
+    ```py
+    name = 'Alice'
+    age = 25
+
+    def introduce(name, age):
+        print(f'안녕하세요, {name}입니다. 나이는 {age}살입니다.')
+
+    introduce(name, age)
+    # 출력: 안녕하세요, Alice입니다. 나이는 25살입니다.
+    ```
+- 클래스 기초
+  - 내용, 설명  
+    - 클래스(Class): 객체를 만들기 위한 설계도  
+    - 인스턴스(Instance): 클래스로 만든 실제 객체  
+    - 속성(Attribute): 객체가 가지고 있는 데이터  
+    - 메서드(Method): 객체가 할 수 있는 행동
+  - 예시 코드
+    ```py
+    class Person:
+        def __init__(self, name, age):
+            self.name = name
+            self.age = age
+
+        def introduce(self):
+            print(f'{self.name}, {self.age}살')
+    p1 = Person('Alice', 25)
+    p2 = Person('Bella', 30)
+    p1.introduce()
+    p2.introduce()
+    # 출력:
+    # Alice, 25살
+    # Bella, 30살
+    ```
+  - 클래스 변수와 인스턴스 변수
+    - 내용, 설명  
+      - 클래스 변수: 모든 인스턴스가 공유  
+      - 인스턴스 변수: 각 객체마다 독립적
+    - 예시 코드
+      ```py
+      class Circle:
+          pi = 3.14  # 클래스 변수
+
+          def __init__(self, radius):
+              self.radius = radius  # 인스턴스 변수
+
+      c1 = Circle(1)
+      c2 = Circle(2)
+
+      c1.pi = 100
+      print(c1.pi)  # 100
+      print(c2.pi)  # 3.14
+      print(Circle.pi)  # 3.14
+      ```
+  - 클래스와 인스턴스의 이름 공간
+    - 내용, 설명  
+      - 인스턴스 → 자신의 속성 먼저 탐색  
+      - 없으면 클래스 변수 참조
+    - 예시 코드
+      ```py
+      class Person:
+          name = 'unknown'
+
+      p1 = Person()
+      p2 = Person()
+      p2.name = 'Kim'
+
+      print(p1.name)
+      # 출력: unknown
+
+      print(p2.name)
+      # 출력: Kim
+
+      print(Person.name)
+      # 출력: unknown
+      ```
+  - 실수하기 쉬운 포인트  
+    - 각 인스턴스는 독립된 데이터를 가짐
+    - 인스턴스에서 클래스 변수 덮어쓰면 인스턴스 변수로 새로 생성됨
+- method와 클래스
+  - 인스턴스 메서드
+    - 내용, 설명  
+      - 인스턴스 상태를 변경  
+      - 첫 인자는 항상 self
+    - 예시 코드
+      ```py
+      class Counter:
+          def __init__(self):
+              self.count = 0
+
+          def increment(self):
+              self.count += 1
+
+      c = Counter()
+      c.increment()
+      print(c.count)
+      # 출력: 1
+      ```
+    - 생성자 method __init__
+      - 내용, 설명  
+        - 인스턴스 생성 시 자동 실행  
+        - 초기값 설정
+      - 예시 코드
+        ```py
+        class Person:
+            def __init__(self, name):
+                self.name = name
+                print("생성 완료")
+
+        p = Person('지민')
+        # 출력: 생성 완료
+        ```
+  - 클래스 메서드
+    - 내용, 설명  
+      - 클래스 변수 조작  
+      - @classmethod 사용  
+      - 첫 인자는 cls
+    - 예시 코드
+      ```py
+      class Person:
+          population = 0
+
+          def __init__(self, name):
+              self.name = name
+              Person.increase_population()
+
+          @classmethod
+          def increase_population(cls):
+              cls.population += 1
+
+      p1 = Person('A')
+      p2 = Person('B')
+      print(Person.population)
+      # 출력: 2
+      ```
+  - 정적 메서드
+    - 내용, 설명  
+      - 클래스/인스턴스와 무관한 기능  
+      - @staticmethod 사용
+    - 예시 코드
+      ```py
+      class MathUtils:
+          @staticmethod
+          def add(a, b):
+              return a + b
+
+      print(MathUtils.add(3, 5))
+      # 출력: 8
+      ```
+  - method 예제
+    ```py
+    class BankAccount:
+      interest_rate = 0.02
+
+      def __init__(self, owner, balance=0):
+          self.owner = owner
+          self.balance = balance
+
+      def deposit(self, amount):
+          self.balance += amount
+
+      def withdraw(self, amount):
+          if self.balance >= amount:
+              self.balance -= amount
+          else:
+              print('잔액 부족!')
+
+      @classmethod
+      def set_interest_rate(cls, rate):
+          cls.interest_rate = rate
+
+      @staticmethod
+      def is_positive(amount):
+          return amount > 0
+
+    acc = BankAccount('Alice', 1000)
+    acc.deposit(500)
+    acc.withdraw(200)
+    print(acc.balance)
+    # 출력: 1300
+    ```
+  - 데코레이터
+    - 내용, 설명  
+      - 기존 함수 기능을 수정/확장  
+      - @classmethod, @staticmethod도 데코레이터의 예
+    ```py
+    def deco(func):
+    def wapping(v):
+        print('shine'*3)
+        func(v)
+        print('화이팅'*3)
+    return wapping
+
+    @deco
+    def call_name(name):
+        print(name)
+        
+    @deco
+    def call_age(age):
+        print(age)
+
+    call_name('세진')
+    call_age(30)
+    ```
+  - 매직 메서드 (Magic Method)
+    - 내용, 설명  
+      - __로 시작하고 __로 끝나는 특수 메서드  
+      - 객체의 동작을 정의
+    - __str__
+      ```py
+      class Circle:
+          def __init__(self, r):
+              self.r = r
+
+          def __str__(self):
+              return f'반지름: {self.r}'
+
+      c = Circle(10)
+      print(c)
+      # 출력: 반지름: 10
+      ```
+    - 연산자 오버로딩 (__add__)
+      ```py
+      class Car:
+          def __init__(self, price):
+              self.price = price
+
+          def __add__(self, other):
+              return self.price + other.price
+
+      a = Car(300)
+      b = Car(500)
+      print(a + b)
+      # 출력: 800
+      ```
+
+## 상속 (Inheritance)
+- 상속이란?
+  - 기존 클래스(부모, Superclass)의 속성과 메서드를  
+    새로운 클래스(자식, Subclass)가 물려받는 것
+  - 목적: **코드 재사용 + 중복 제거 + 계층 구조 표현**
+  - 상속 = 기존 클래스 기능 재사용
+  - 오버라이딩 = 부모 메서드 재정의
+  - super() = 부모 기능을 이어서 실행
+  - 다중 상속에서는 MRO 순서가 매우 중요
+- 기본 상속 구조
+  - 내용, 설명  
+    - 자식 클래스는 부모 클래스의 기능을 그대로 사용 가능  
+    - 새로운 기능을 추가할 수도 있음
+  - 예시 코드
+    ```py
+    class Animal:
+        def eat(self):
+            print('먹는 중')
+
+    class Dog(Animal):  # Animal을 상속
+        def bark(self):
+            print('멍멍')
+
+    my_dog = Dog()
+    my_dog.bark()  # 멍멍
+    my_dog.eat()   # 부모 메서드 사용 가능
+    ```
+- 상속을 사용하는 이유 (중복 제거)
+  - 상속 없을 때
+    ```py
+    class Professor:
+        def __init__(self, name, age, department):
+            self.name = name
+            self.age = age
+            self.department = department
+
+        def talk(self):
+            print(f'반갑습니다. {self.name}입니다.')
+
+    class Student:
+        def __init__(self, name, age, gpa):
+            self.name = name
+            self.age = age
+            self.gpa = gpa
+
+        def talk(self):  # 중복
+            print(f'반갑습니다. {self.name}입니다.')
+    ```
+  - 상속 사용
+    ```py
+    class Person:
+        def __init__(self, name, age):
+            self.name = name
+            self.age = age
+
+        def talk(self):
+            print(f'반갑습니다. {self.name}입니다.')
+
+    class Professor(Person):
+        def __init__(self, name, age, department):
+            super().__init__(name, age)
+            self.department = department
+
+    class Student(Person):
+        def __init__(self, name, age, gpa):
+            super().__init__(name, age)
+            self.gpa = gpa
+
+    p = Professor('박교수', 49, '컴공')
+    s = Student('김학생', 20, 3.5)
+    p.talk()  # 반갑습니다. 박교수입니다.
+    s.talk()  # 반갑습니다. 김학생입니다.
+    ```
+- 메서드 오버라이딩 (Overriding)
+  - 내용, 설명  
+    - 부모의 메서드를 자식이 **재정의**하는 것  
+    - 같은 이름의 메서드가 있으면 자식 것이 우선됨
+  ```py
+  class Animal:
+      def eat(self):
+          print('Animal이 먹는 중')
+
+  class Dog(Animal):
+      def eat(self):  # 오버라이딩
+          print('Dog가 먹는 중')
+
+  my_dog = Dog()
+  my_dog.eat()  # Dog가 먹는 중
+  ```
+- 다중 상속
+  - 내용, 설명  
+    - 여러 부모 클래스를 동시에 상속 가능  
+    - 하지만 **메서드 탐색 순서(MRO)** 가 중요
+  ```py
+  class Mom:
+      def swim(self):
+          return '엄마 수영'
+
+  class Dad:
+      def walk(self):
+          return '아빠 걷기'
+
+  class Child(Mom, Dad):
+      pass
+
+  baby = Child()
+  print(baby.swim())  # 엄마 수영
+  print(baby.walk())  # 아빠 걷기
+  ```
+  - MRO (Method Resolution Order)
+    - 내용, 설명  
+      - 파이썬이 메서드를 찾는 순서  
+      - 다중 상속에서 매우 중요
+      ```py
+      class A: pass
+      class B(A): pass
+      class C(A): pass
+      class D(B, C): pass
+
+      print(D.mro())
+      # 출력: [D, B, C, A, object]
+      ```
+      → D에서 메서드를 찾을 때 B → C → A 순으로 탐색
+  - super()
+    - 내용, 설명  
+      - 부모 클래스의 메서드를 호출할 때 사용  
+      - 상속 구조에서 **중복 코드 제거 핵심 도구**
+      ```py
+      class Person:
+          def __init__(self, name, age):
+              self.name = name
+              self.age = age
+
+      class Student(Person):
+          def __init__(self, name, age, student_id):
+              super().__init__(name, age)  # 부모 생성자 호출
+              self.student_id = student_id
+      ```
+    - super()는 “직계 부모”가 아니라  
+      **MRO에서 다음 순서의 클래스**를 가리킴
+      ```py
+      class ParentA:
+          def __init__(self):
+              print('ParentA')
+              super().__init__()
+
+      class ParentB:
+          def __init__(self):
+              print('ParentB')
+
+      class Child(ParentA, ParentB):
+          def __init__(self):
+              super().__init__()
+              print('Child')
+
+      c = Child()
+      # 출력:
+      # ParentA
+      # ParentB
+      # Child
+      ```
+## 에러(Error)와 예외(Exception) 처리
+- 에러 vs 예외
+  - 내용, 설명  
+    - 에러(Error): 프로그램이 실행 자체를 못 하는 심각한 문제 (문법 오류 등)
+    - 예외(Exception): 실행 중 발생하는 문제 → 코드로 “처리 가능”
+    - 파이썬에서는 예외를 처리하지 않으면 프로그램이 중단된다.
+- try - except 기본 구조
+  - 내용, 설명  
+    - 예외가 발생할 수 있는 코드를 `try` 블록에 작성
+    - 문제가 생기면 `except` 블록이 실행됨
+  - 예시 코드
+    ```py
+    try:
+        num = int(input('100을 나눌 값을 입력하시오 : '))
+        print(100 / num)
+    except:
+        print('에러가 발생했습니다.')
+    ```
+  - 실수하기 쉬운 포인트  
+    - except만 쓰면 어떤 에러인지 구분이 어려움 → 구체적 예외 작성 권장
+- 복수 예외 처리
+  - 내용, 설명  
+    - 여러 종류의 예외를 하나의 except에서 묶어 처리 가능
+  - 예시 코드
+    ```py
+    try:
+        num = int(input('100을 나눌 값을 입력하시오 : '))
+        print(100 / num)
+    except (ValueError, ZeroDivisionError):
+        print('제대로 입력해주세요.')
+    ```
+- 예외를 각각 따로 처리
+  - 내용, 설명  
+    - 예외마다 다른 메시지를 줄 수 있음
+  - 예시 코드
+    ```py
+    try:
+        x = int(input('숫자를 입력하세요: '))
+        y = 10 / x
+    except ZeroDivisionError:
+        print('0으로 나눌 수 없습니다.')
+    except ValueError:
+        print('유효한 숫자가 아닙니다.')
+    ```
+- 예외 객체 사용 (as)
+  - 내용, 설명  
+    - 예외 내용을 변수로 받아 출력 가능
+  - 예시 코드
+    ```py
+    my_list = []
+
+    try:
+        number = my_list[1]
+    except IndexError as error:
+        print(f'{error}가 발생했습니다.')
+    ```
+- EAFP vs LBYL
+  - EAFP (Easier to Ask Forgiveness than Permission)
+    - 일단 시도하고 실패하면 예외 처리
+    ```py
+    my_dict = {'key': 'value'}
+
+    try:
+        result = my_dict['key']
+        print(result)
+    except KeyError:
+        print('Key가 존재하지 않습니다.')
+    ```
+  - LBYL (Look Before You Leap)
+    - 미리 조건을 검사한 후 실행
+    ```py
+    if 'key' in my_dict:
+        result = my_dict['key']
+        print(result)
+    else:
+        print('Key가 존재하지 않습니다.')
+    ```
+  - 이해 포인트  
+    - 파이썬에서는 EAFP 스타일을 더 많이 사용
+- 예외 처리 순서가 중요한 이유
+  - 내용, 설명  
+    - 예외는 **상속 구조**를 가짐
+    - 부모 예외를 먼저 쓰면 자식 예외는 절대 도달하지 못함
+  - 잘못된 예시
+    ```py
+    try:
+        num = int(input('100으로 나눌 값을 입력하시오 : '))
+        print(100 / num)
+    except Exception:
+        print('숫자를 넣어주세요.')
+    except ZeroDivisionError:
+        print('0으로 나눌 수 없습니다.')
+    ```
+  - 올바른 순서 (구체적인 예외 → 범용 예외)
+    ```py
+    try:
+        num = int(input('100으로 나눌 값을 입력하시오 : '))
+        print(100 / num)
+    except ZeroDivisionError:
+        print('0으로 나눌 수 없습니다.')
+    except ValueError:
+        print('숫자를 넣어주세요.')
+    except Exception:
+        print('에러가 발생하였습니다.')
+    ```
+- finally (항상 실행되는 블록)
+  - 내용, 설명  
+    - 예외 발생 여부와 관계없이 반드시 실행됨
+    - 파일 닫기, 자원 정리에 자주 사용
+  - 예시 코드
+    ```py
+    try:
+        print('시도')
+    except:
+        print('에러 발생')
+    finally:
+        print('항상 실행')
+    ```
+- else (예외가 없을 때 실행)
+  - 내용, 설명  
+    - try 블록이 성공했을 때만 실행
+  - 예시 코드
+    ```py
+    try:
+        x = int(input())
+    except ValueError:
+        print('숫자 아님')
+    else:
+        print('정상 입력:', x)
+    ```
+- 핵심 정리
+  - 예외는 프로그램을 멈추지 않게 하는 안전장치
+  - 구체적인 예외부터 처리
+  - Exception은 마지막에
+  - EAFP 스타일이 파이썬스럽다
+  - finally는 정리용, else는 성공 시 실행
+
 ## Python으로 “클라이언트 → 서버 요청” 정리 (requests 중심)
-
-- **내용, 설명**
-  - 클라이언트(내 파이썬 코드)가 서버(API)에 요청(request)을 보내면, 서버는 응답(response)을 반환한다.
-  - 보통 HTTP/HTTPS 프로토콜을 사용하며, 요청에는 **메서드(GET/POST/PUT/PATCH/DELETE)**, **URL**, **헤더**, **쿼리/바디**, **인증 정보** 등이 포함된다.
-  - `requests` 라이브러리는 이 과정을 파이썬에서 쉽게 처리하게 해준다.
-
-- **실수하기 쉬운 포인트**
-  - “요청이 성공했다”는 건 단순히 통신이 됐다는 의미가 아니라, **상태코드(status code)** 를 반드시 확인해야 한다.
-  - 응답이 JSON이라고 가정하고 `.json()`을 호출했는데 사실 HTML/텍스트면 에러가 날 수 있다.
-  - 네트워크 요청은 언제든 실패할 수 있으니 **timeout**과 **예외 처리**는 기본이다.
-
-
-### 0) 용어 한눈에 보기
-
-- **내용, 설명**
-  - **Endpoint**: 서버가 제공하는 API 주소(예: `/v1/users`)
-  - **URL**: 전체 주소(프로토콜 + 도메인 + 경로 + 쿼리)
-  - **Query String(쿼리스트링)**: URL 뒤 `?key=value&...` 형태
-  - **Headers(헤더)**: 메타데이터(인증, 콘텐츠 타입 등)
-  - **Body(바디)**: 요청 본문(POST/PUT/PATCH에서 주로 사용)
-  - **Status Code**:
-    - `2xx` 성공 (예: 200 OK, 201 Created)
-    - `3xx` 리다이렉트
-    - `4xx` 클라이언트 오류 (예: 400, 401, 403, 404)
-    - `5xx` 서버 오류 (예: 500)
-
-- **예시**
-
-    URL 예시:
-    https://api.example.com/v1/users?limit=10&page=2
-
-    - 프로토콜: https
-    - 도메인: api.example.com
-    - 경로: /v1/users
-    - 쿼리: limit=10&page=2
-
-- **실수하기 쉬운 포인트**
-  - `401`은 인증 실패(토큰/키 문제), `403`은 권한 없음, `404`는 경로 틀림 가능성.
-  - “서버가 죽었다” 판단 전에 URL/인증/파라미터부터 점검하기.
-
-### 1) requests 설치 및 기본 사용 흐름
-
-- **내용, 설명**
-  - `requests`는 표준 라이브러리가 아니라 설치가 필요할 수 있다.
-  - 기본 흐름:
-    1) 요청 보내기 (`requests.get/post/...`)
-    2) 응답 객체 확인 (`status_code`, `headers`, `text`)
-    3) 필요하면 JSON 파싱 (`.json()`)
-    4) 예외 처리/타임아웃/재시도 고려
-
-- **예시**
-
-    pip install requests
-
+- 기초 
+  - 내용, 설명
+    - 클라이언트(내 파이썬 코드)가 서버(API)에 요청(request)을 보내면 서버는 응답(response)을 반환한다.
+    - 이 통신은 보통 HTTP/HTTPS 프로토콜을 사용한다.
+    - 요청에는 **메서드(GET/POST 등)**, **URL**, **헤더**, **쿼리/바디**, **인증 정보** 등이 포함된다.
+    - `requests` 라이브러리는 이 과정을 파이썬 코드로 쉽게 처리하게 해준다.
+  - 실수하기 쉬운 포인트
+    - 요청 성공 여부는 반드시 **상태코드(status code)** 로 확인해야 한다.
+    - 응답이 JSON이 아닐 수도 있으니 `.json()` 호출 전에 주의.
+    - 네트워크는 언제든 실패할 수 있으므로 **timeout + 예외 처리 필수**.
+  - 용어 한눈에 보기
+    - 내용, 설명
+      - Endpoint: 서버 API 경로 (예: `/v1/users`)
+      - URL: 전체 주소 (프로토콜 + 도메인 + 경로 + 쿼리)
+      - Query String: URL 뒤 `?key=value&...`
+      - Headers: 인증/콘텐츠 타입 등 메타데이터
+      - Body: 요청 본문(POST/PUT/PATCH 등에서 사용)
+      - Status Code
+        - 2xx 성공 (200, 201)
+        - 4xx 클라이언트 오류 (400, 401, 403, 404)
+        - 5xx 서버 오류 (500 등)
+    - 실수하기 쉬운 포인트
+      - 401 = 인증 문제, 403 = 권한 문제, 404 = URL 경로 오류 가능성
+- requests 기본 흐름
+  - 내용, 설명
+    - 1) 요청 보내기 → 2) 응답 확인 → 3) JSON 파싱 → 4) 예외 처리
+  - 예시 코드
+    ```py
     import requests
 
-    r = requests.get("https://httpbin.org/get")
+    r = requests.get("https://httpbin.org/get", timeout=5)
     print(r.status_code)
-    print(r.text)
-
-- **실수하기 쉬운 포인트**
-  - `requests.get()`은 기본적으로 오래 기다릴 수 있음 → `timeout`을 주는 습관.
-
-
-### 2) GET 요청: 서버에서 “조회”하기
-
-- **내용, 설명**
-  - GET은 주로 “데이터 조회”에 사용한다.
-  - 파라미터는 보통 쿼리스트링으로 전달한다.
-  - `params={...}`를 사용하면 requests가 URL 인코딩까지 처리한다.
-
-- **예시**
-
+    print(r.text[:80])
+    ```
+- GET 요청 (조회)
+  - 내용, 설명
+    - 서버에서 데이터를 조회할 때 사용
+    - 쿼리 파라미터는 `params` 사용
+  - 예시 코드
+    ```py
     import requests
 
     url = "https://httpbin.org/get"
     params = {"q": "python", "page": 1}
 
     r = requests.get(url, params=params, timeout=5)
-    print(r.url)          # 실제 요청된 URL 확인 가능
+    print(r.url)
     print(r.status_code)
-
-    data = r.json()
-    print(data["args"])   # {"q": "python", "page": "1"}
-
-- **실수하기 쉬운 포인트**
-  - `params`를 문자열로 직접 붙이면 인코딩 문제/오타가 나기 쉽다 → `params` 사용 권장.
-  - `r.json()`은 응답이 JSON일 때만 가능.
-
-### 3) POST 요청: 서버에 “생성/전송”하기 (JSON 바디)
-
-- **내용, 설명**
-  - POST는 서버에 데이터를 생성하거나 전송할 때 사용한다.
-  - JSON API는 보통 `json={...}`로 보내며, requests가 `Content-Type: application/json` 처리까지 해준다.
-
-- **예시**
-
+    print(r.json()["args"])
+    ```
+- POST 요청 (JSON 전송)
+  - 내용, 설명
+    - 서버에 데이터를 생성/전송할 때 사용
+    - JSON 바디는 `json=` 사용
+  - 예시 코드
+    ```py
     import requests
 
     url = "https://httpbin.org/post"
@@ -1399,25 +1851,13 @@ True, False
 
     r = requests.post(url, json=payload, timeout=5)
     print(r.status_code)
-
-    data = r.json()
-    print(data["json"])  # {"name": "...", "role": "..."}
-
-- **실수하기 쉬운 포인트**
-  - `data=`와 `json=`은 다름:
-    - `json=`: JSON으로 인코딩
-    - `data=`: 보통 form 형태(또는 raw 문자열)
-  - API 문서가 요구하는 형식(JSON vs form)을 확인해야 한다.
-
-
-### 4) POST 요청: form 데이터 전송 (`data=`)
-
-- **내용, 설명**
-  - `application/x-www-form-urlencoded` 형태로 전송할 때 `data=`를 사용한다.
-  - 로그인 폼 등 레거시 시스템에서 자주 사용.
-
-- **예시**
-
+    print(r.json()["json"])
+    ```
+- POST 요청 (form 데이터)
+  - 내용, 설명
+    - `application/x-www-form-urlencoded` 전송 시 사용
+  - 예시 코드
+    ```py
     import requests
 
     url = "https://httpbin.org/post"
@@ -1426,121 +1866,73 @@ True, False
     r = requests.post(url, data=form, timeout=5)
     print(r.status_code)
     print(r.json()["form"])
-
-- **실수하기 쉬운 포인트**
-  - JSON API인데 `data=`로 보내면 서버가 바디를 해석 못 할 수 있다.
-
-
-### 5) 헤더(headers): 인증/콘텐츠 타입/커스텀 헤더
-
-- **내용, 설명**
-  - 헤더는 요청에 대한 “부가 정보”를 담는다.
-  - 대표적으로 인증 토큰(Authorization), 사용자 에이전트(User-Agent) 등이 있다.
-
-- **예시**
-
+    ```
+- 헤더(headers)
+  - 내용, 설명
+    - 인증 토큰, User-Agent 등 전달
+  - 예시 코드
+    ```py
     import requests
 
-    url = "https://httpbin.org/headers"
     headers = {
       "Authorization": "Bearer YOUR_TOKEN",
       "User-Agent": "MyPythonClient/1.0",
     }
 
-    r = requests.get(url, headers=headers, timeout=5)
+    r = requests.get("https://httpbin.org/headers", headers=headers, timeout=5)
     print(r.status_code)
     print(r.json())
-
-- **실수하기 쉬운 포인트**
-  - 토큰 앞에 `Bearer `가 필요한지(혹은 다른 스킴인지) API 문서 확인 필수.
-  - 헤더 키 오타(Authorization vs Authorisation 등) 주의.
-
-
-### 6) 상태코드와 에러 처리: raise_for_status()
-
-- **내용, 설명**
-  - 상태코드를 직접 체크하거나, `raise_for_status()`로 4xx/5xx를 예외로 처리할 수 있다.
-
-- **예시**
-
+    ```
+- 상태코드 & 에러 처리
+  - 내용, 설명
+    - `raise_for_status()` 사용 시 4xx/5xx를 예외로 처리 가능
+  - 예시 코드
+    ```py
     import requests
 
     try:
         r = requests.get("https://httpbin.org/status/404", timeout=5)
-        r.raise_for_status()  # 4xx/5xx면 HTTPError 발생
-        print("OK:", r.status_code)
+        r.raise_for_status()
     except requests.exceptions.HTTPError as e:
         print("HTTPError:", e)
-    except requests.exceptions.Timeout:
-        print("Timeout")
-    except requests.exceptions.RequestException as e:
-        print("RequestException:", e)
-
-- **실수하기 쉬운 포인트**
-  - `raise_for_status()`를 쓰면 실패를 놓치지 않아서 안정적인 코드가 된다.
-
-### 7) 응답(response) 다루기: text / json / headers / encoding
-
-- **내용, 설명**
-  - `r.text`: 문자열(디코딩된 텍스트)
-  - `r.content`: 바이트(이미지/파일 등)
-  - `r.json()`: JSON 파싱
-  - `r.headers`: 응답 헤더 딕셔너리
-  - `r.encoding`: 텍스트 인코딩(필요 시 수동 설정)
-
-- **예시**
-
+    ```
+- 응답 다루기
+  - 내용, 설명
+    - `r.text` 문자열
+    - `r.json()` JSON 파싱
+    - `r.content` 바이트 데이터
+    - `r.headers` 응답 헤더
+  - 예시 코드
+    ```py
     import requests
 
     r = requests.get("https://httpbin.org/get", timeout=5)
-    print(r.status_code)
     print(r.headers.get("Content-Type"))
-    print(r.text[:100])
-
-    data = r.json()
-    print(data.keys())
-
-- **실수하기 쉬운 포인트**
-  - 응답이 JSON이 아닐 때 `r.json()` 호출하면 ValueError가 날 수 있다.
-  - 파일 다운로드는 `r.content`/`stream=True` 사용이 안전.
-
-### 8) timeout과 재시도(기본 전략)
-
-- **내용, 설명**
-  - 네트워크 요청은 지연/실패가 발생할 수 있으므로 `timeout`은 필수.
-  - 단순 재시도는 서버에 부담이 될 수 있어, 제한적으로 사용한다.
-
-- **예시**
-
-    import time
-    import requests
-
-    url = "https://httpbin.org/delay/2"
+    print(r.text[:80])
+    print(r.json().keys())
+    ```
+- timeout & 재시도
+  - 내용, 설명
+    - timeout은 필수
+    - 재시도는 제한적으로
+  - 예시 코드
+    ```py
+    import time, requests
 
     for i in range(3):
         try:
-            r = requests.get(url, timeout=1)  # 일부러 타임아웃 유도
-            print("Success:", r.status_code)
+            r = requests.get("https://httpbin.org/delay/2", timeout=1)
+            print("Success")
             break
         except requests.exceptions.Timeout:
-            print("Timeout, retry:", i + 1)
+            print("Timeout retry:", i+1)
             time.sleep(1)
-
-- **실수하기 쉬운 포인트**
-  - timeout을 너무 짧게 잡으면 정상 요청도 실패할 수 있다.
-  - 무한 재시도는 금지(서버/클라이언트 모두 위험).
-
-
-### 9) Session 사용: 쿠키/연결 재사용(성능/로그인 유지)
-
-- **내용, 설명**
-  - `requests.Session()`을 쓰면:
-    - 같은 서버에 여러 요청 시 연결 재사용(성능 향상)
-    - 쿠키 유지(로그인 세션 유지 등)
-    - 공통 헤더/파라미터 관리 용이
-
-- **예시**
-
+    ```
+- Session 사용
+  - 내용, 설명
+    - 연결 재사용, 쿠키 유지, 공통 헤더 관리
+  - 예시 코드
+    ```py
     import requests
 
     session = requests.Session()
@@ -1548,53 +1940,31 @@ True, False
 
     r1 = session.get("https://httpbin.org/get", timeout=5)
     r2 = session.get("https://httpbin.org/get", timeout=5)
-
     print(r1.status_code, r2.status_code)
-
-- **실수하기 쉬운 포인트**
-  - 세션은 “상태”를 가지므로, 다른 계정/다른 토큰을 섞어 쓰지 않게 주의.
-
-### 10) 파일 다운로드/업로드 기초
-
-#### 10-1) 다운로드(간단)
-- **내용, 설명**
-  - 작은 파일은 `r.content`로 받아 저장 가능
-
-- **예시**
-
+    ```
+- 파일 다운로드/업로드
+  - 다운로드 예시
+    ```py
     import requests
 
     r = requests.get("https://httpbin.org/image/png", timeout=5)
     with open("image.png", "wb") as f:
         f.write(r.content)
-
-- **실수하기 쉬운 포인트**
-  - 큰 파일은 `stream=True`로 나눠 받는 것이 안전.
-
-#### 10-2) 업로드(파일 전송)
-- **내용, 설명**
-  - `files=` 파라미터로 multipart/form-data 업로드 가능
-
-- **예시**
-
+    ```
+  - 업로드 예시
+    ```py
     import requests
 
-    url = "https://httpbin.org/post"
     with open("image.png", "rb") as f:
-        r = requests.post(url, files={"file": f}, timeout=10)
+        r = requests.post("https://httpbin.org/post", files={"file": f}, timeout=10)
 
     print(r.status_code)
-
-- **실수하기 쉬운 포인트**
-  - 서버가 요구하는 필드명(예: file, upload 등)이 다를 수 있음 → API 문서 확인.
-
-### 11) 실전 템플릿: 안전한 요청 함수 만들기
-
-- **내용, 설명**
-  - 자주 쓰는 패턴(타임아웃/에러처리/JSON 파싱)을 함수로 묶으면 실수가 줄어든다.
-
-- **예시**
-
+    ```
+- 실전 템플릿 함수
+  - 내용, 설명
+    - 자주 쓰는 패턴을 함수로 묶으면 안정적
+  - 예시 코드
+    ```py
     import requests
 
     def get_json(url, params=None, headers=None, timeout=5):
@@ -1605,733 +1975,383 @@ True, False
         except requests.exceptions.Timeout:
             return {"error": "timeout"}
         except requests.exceptions.HTTPError as e:
-            return {"error": "http_error", "detail": str(e), "status": r.status_code}
+            return {"error": "http_error", "detail": str(e)}
         except ValueError:
             return {"error": "not_json"}
         except requests.exceptions.RequestException as e:
             return {"error": "request_exception", "detail": str(e)}
 
-    data = get_json("https://httpbin.org/get", params={"q": "python"})
-    print(data)
-
-- **실수하기 쉬운 포인트**
-  - 실패 케이스를 먼저 설계하면(Timeout/HTTPError/Not JSON) 디버깅이 쉬워진다.
-
-### 참고 (연습용 테스트 API)
-
-- **내용, 설명**
-  - 실제 서비스 API가 없어도 연습할 수 있는 공개 테스트 서버
-  - 요청/응답 구조를 확인하기 좋다.
-
-- **예시**
-
-    https://httpbin.org/
-    https://jsonplaceholder.typicode.com/
-
-- **실수하기 쉬운 포인트**
-  - 테스트 API는 실제 서비스와 인증/제한이 다를 수 있다.
-
-
-
-
-
-
-
+    print(get_json("https://httpbin.org/get", params={"q": "python"}))
+    ```
 
 ---
 # CLI 기본 명령어
-
-CLI(Command Line Interface)는 터미널에서 명령어로 컴퓨터를 조작하는 방식이다.  
-폴더 이동/파일 생성/삭제/복사 같은 작업을 빠르게 할 수 있다.
-
-## 1) `pwd`
-
-- **내용, 설명**
-  - 현재 내가 위치한 폴더(경로)를 출력한다.
-
-- **예시**
-
-    pwd
-
-- **실수하기 쉬운 포인트**
-  - “어디 있는지 모르겠다” 싶으면 제일 먼저 `pwd`로 위치 확인!
-
-
-## 2) `ls`
-
-- **내용, 설명**
-  - 현재 폴더에 있는 파일/폴더 목록을 출력한다.
-  - 옵션을 붙이면 더 자세히 확인 가능
-
-- **예시**
-
-    ls
-    ls -a      # 숨김 파일 포함
-    ls -l      # 자세히 보기
-    ls -al     # 숨김+자세히
-
-- **실수하기 쉬운 포인트**
-  - 숨김 파일은 기본 `ls`로 안 보이므로 `ls -a`를 자주 사용한다.
-
-## 3) `cd`
-
-- **내용, 설명**
-  - 디렉토리를 이동하는 명령어
-
-- **예시**
-
-    cd 폴더이름
-    cd ..     # 상위 폴더
-    cd .      # 현재 폴더
-    cd ~      # 홈 디렉토리
-    cd /      # 루트 디렉토리
-
-- **실수하기 쉬운 포인트**
-  - `cd ..`와 `cd .` 헷갈리기 쉬움  
-    - `..` = 상위 폴더  
-    - `.` = 현재 폴더(변화 없음)
-
-## 4) `mkdir`
-
-- **내용, 설명**
-  - 폴더(디렉토리)를 생성한다.
-  - `-p` 옵션을 사용하면 중간 경로도 함께 생성 가능
-
-- **예시**
-
-    mkdir my_folder
-    mkdir -p a/b/c
-
-- **실수하기 쉬운 포인트**
-  - 중간 폴더가 없으면 생성 실패 → `mkdir -p` 사용
-
-## 5) `touch`
-
-- **내용, 설명**
-  - 파일이 없으면 빈 파일을 만들고, 있으면 수정 시간을 갱신한다.
-
-- **예시**
-
-    touch test.txt
-    touch main.py
-
-- **실수하기 쉬운 포인트**
-  - 폴더는 만들 수 없음 → 폴더는 `mkdir`
-
-## 6) `cat`
-
-- **내용, 설명**
-  - 텍스트 파일의 내용을 터미널에 출력한다.
-
-- **예시**
-
-    cat README.md
-    cat test.txt
-
-- **실수하기 쉬운 포인트**
-  - 이미지/바이너리 파일에는 사용하지 말기 (깨진 출력 나옴)
-
-## 7) `echo`
-
-- **내용, 설명**
-  - 문자열 출력
-  - 리다이렉션(`>`, `>>`)으로 파일에 저장 가능
-
-- **예시**
-
-    echo "hello"
-    echo "hello" > hello.txt     # 덮어쓰기
-    echo "world" >> hello.txt    # 이어쓰기
-
-- **실수하기 쉬운 포인트**
-  - `>` 는 **덮어쓰기**, `>>`는 **이어쓰기** (자주 실수!)
-
-## 8) `cp`
-
-- **내용, 설명**
-  - 파일/폴더를 복사한다.
-  - 폴더는 `-r` 옵션이 필요하다.
-
-- **예시**
-
-    cp a.txt b.txt
-    cp a.txt folder/
-    cp -r my_folder backup/
-
-- **실수하기 쉬운 포인트**
-  - 폴더 복사할 때 `-r` 안 붙이면 실패
-
-## 9) `mv`
-
-- **내용, 설명**
-  - 파일/폴더 이동 또는 이름 변경
-
-- **예시**
-
-    mv a.txt folder/          # 이동
-    mv old.txt new.txt        # 이름 변경
-    mv my_folder backup_folder
-
-- **실수하기 쉬운 포인트**
-  - 덮어쓰기 위험 있음 → 중요한 파일은 확인하고 실행
-
-## 10) `rm`
-
-- **내용, 설명**
-  - 파일/폴더 삭제
-  - 삭제는 보통 휴지통으로 가지 않아서 복구가 어렵다.
-
-- **예시**
-
-    rm a.txt
-    rm -r folder/
-    rm -rf folder/   # ⚠ 위험: 강제 전체 삭제
-
-- **실수하기 쉬운 포인트**
-  - `rm -rf`는 매우 위험함 (실수로 큰 폴더 삭제 가능)
-
-## 11) `clear`
-
-- **내용, 설명**
-  - 터미널 화면을 깨끗하게 정리
-
-- **예시**
-
-    clear
-
-- **실수하기 쉬운 포인트**
-  - 기록 자체를 삭제하진 않음 → 단지 화면만 정리
-
-## 12) `history`
-
-- **내용, 설명**
-  - 이전에 입력했던 명령어 기록을 보여준다.
-
-- **예시**
-
-    history
-
-- **실수하기 쉬운 포인트**
-  - 이전 명령이 기억 안 날 때 `history`로 찾아서 복사하면 편함
-
-## 추가 팁: 경로 기호 정리
-
-- **내용, 설명**
-  - CLI에서 경로는 아래 기호를 자주 사용한다.
-
-- **예시**
-
-    cd ../..      # 상위 폴더 2번 올라가기
-    cd ~/Desktop  # 홈 디렉토리 → Desktop 이동
-
-- **실수하기 쉬운 포인트**
-  - `.` / `..` / `~` 의미 헷갈리지 않기
-
+- CLI(Command Line Interface)
+  - 내용, 설명  
+    - 터미널에서 명령어로 컴퓨터를 조작하는 방식  
+    - 폴더 이동, 파일 생성/삭제/복사 등을 빠르게 수행 가능
+- 📍 현재 위치 & 파일 목록 확인
+  - pwd
+    - 내용, 설명  
+      - 현재 내가 위치한 폴더(경로)를 출력
+    - 예시
+      ```bash
+      pwd
+      ```
+    - 실수하기 쉬운 포인트  
+      - 위치 헷갈릴 때 제일 먼저 실행
+  - ls
+    - 내용, 설명  
+      - 현재 폴더의 파일/폴더 목록 출력
+    - 예시
+      ```bash
+      ls
+      ls -a     # 숨김 파일 포함
+      ls -l     # 자세히 보기
+      ls -al    # 숨김 + 자세히
+      ```
+    - 실수하기 쉬운 포인트  
+      - 숨김 파일은 기본 `ls`에 안 보임 → `ls -a` 사용
+- 📂 폴더 이동
+  - cd
+    - 내용, 설명  
+      - 디렉토리를 이동하는 명령어
+    - 예시
+      ```bash
+      cd 폴더이름
+      cd ..     # 상위 폴더
+      cd .      # 현재 폴더
+      cd ~      # 홈 디렉토리
+      cd /      # 루트 디렉토리
+      ```
+    - 실수하기 쉬운 포인트  
+      - `..` = 상위, `.` = 현재 (변화 없음)
+- 🏗 파일/폴더 생성
+  - mkdir
+    - 내용, 설명  
+      - 폴더(디렉토리) 생성
+      - `-p` 옵션 사용 시 중간 경로까지 한 번에 생성
+    - 예시
+      ```bash
+      mkdir my_folder
+      mkdir -p a/b/c
+      ```
+    - 실수하기 쉬운 포인트  
+      - 중간 경로 없으면 실패 → `mkdir -p`
+  - touch
+    - 내용, 설명  
+      - 파일이 없으면 새 파일 생성, 있으면 수정 시간 갱신
+    - 예시
+      ```bash
+      touch test.txt
+      touch main.py
+      ```
+    - 실수하기 쉬운 포인트  
+      - 폴더는 만들 수 없음 → 폴더는 `mkdir`
+- 📄 파일 내용 확인 & 출력
+  - cat
+    - 내용, 설명  
+      - 텍스트 파일 내용을 터미널에 출력
+    - 예시
+      ```bash
+      cat README.md
+      cat test.txt
+      ```
+    - 실수하기 쉬운 포인트  
+      - 이미지/바이너리 파일에는 사용 금지
+  - echo
+    - 내용, 설명  
+      - 문자열 출력  
+      - 리다이렉션으로 파일 저장 가능
+    - 예시
+      ```bash
+      echo "hello"
+      echo "hello" > hello.txt     # 덮어쓰기
+      echo "world" >> hello.txt    # 이어쓰기
+      ```
+    - 실수하기 쉬운 포인트  
+      - `>` 덮어쓰기 / `>>` 이어쓰기
+- 📦 파일/폴더 복사 & 이동
+  - cp
+    - 내용, 설명  
+      - 파일/폴더 복사
+    - 예시
+      ```bash
+      cp a.txt b.txt
+      cp a.txt folder/
+      cp -r my_folder backup/
+      ```
+    - 실수하기 쉬운 포인트  
+      - 폴더 복사 시 `-r` 필수
+  - mv
+    - 내용, 설명  
+      - 파일/폴더 이동 또는 이름 변경
+    - 예시
+      ```bash
+      mv a.txt folder/       # 이동
+      mv old.txt new.txt     # 이름 변경
+      mv my_folder backup_folder
+      ```
+    - 실수하기 쉬운 포인트  
+      - 덮어쓰기 위험 있음
+- 🗑 삭제 관련
+  - rm
+    - 내용, 설명  
+      - 파일/폴더 삭제 (휴지통 안 거침)
+    - 예시
+      ```bash
+      rm a.txt
+      rm -r folder/
+      rm -rf folder/   # ⚠ 강제 전체 삭제
+      ```
+    - 실수하기 쉬운 포인트  
+      - `rm -rf`는 매우 위험
+- 🧹 터미널 관리
+  - clear
+    - 내용, 설명  
+      - 터미널 화면 정리
+    - 예시
+      ```bash
+      clear
+      ```
+    - 실수하기 쉬운 포인트  
+      - 기록이 삭제되는 건 아님
+  - history
+    - 내용, 설명  
+      - 이전 명령어 기록 확인
+    - 예시
+      ```bash
+      history
+      ```
+    - 실수하기 쉬운 포인트  
+      - 이전 명령 재사용할 때 매우 유용
+- 🧭 경로 기호 정리
+  - 내용, 설명  
+    - CLI에서 자주 사용하는 경로 기호
+  - 예시
+    ```bash
+    cd ../..       # 상위 폴더 두 번 이동
+    cd ~/Desktop   # 홈 디렉토리 → Desktop
+    ```
+  - 실수하기 쉬운 포인트  
+    - `.` 현재 / `..` 상위 / `~` 홈 디렉토리
 
 ---
 # Git 활용법 정리 (기능 + 예시)
+- Git이란
+  - 내용, 설명  
+    - 코드 변경 사항을 기록하는 버전 관리 도구  
+    - 협업 시 변경 이력을 안전하게 관리 가능  
+    - 작업 흐름: 수정 → add → commit → push
+- 📦 저장소 시작 & 복제
+  - git init
+    - 내용, 설명  
+      - 현재 폴더를 Git 저장소로 초기화
+    - 예시
+      ```bash
+      git init
+      ```
+    - 실수하기 쉬운 포인트  
+      - 이미 Git 폴더에서 다시 init 주의  
+      - `.git` 폴더 삭제 금지
+  - git clone
+    - 내용, 설명  
+      - 원격 저장소를 내 컴퓨터로 복제
+    - 예시
+      ```bash
+      git clone https://github.com/유저명/레포명.git
+      ```
+    - 실수하기 쉬운 포인트  
+      - clone하면 remote 자동 연결됨
+- 🔍 현재 상태 확인 & 변경 내용 보기
+  - git status
+    - 내용, 설명  
+      - 변경 파일, 스테이징 여부 확인
+    - 예시
+      ```bash
+      git status
+      ```
+  - git diff
+    - 내용, 설명  
+      - 변경된 코드 비교
+    - 예시
+      ```bash
+      git diff
+      git diff --staged
+      ```
+  - git log
+    - 내용, 설명  
+      - 커밋 기록 확인
+    - 예시
+      ```bash
+      git log --oneline --graph --decorate
+      ```
+- 📝 변경 사항 저장 과정
+  - git add
+    - 내용, 설명  
+      - 커밋할 변경 사항을 스테이징
+    - 예시
+      ```bash
+      git add 파일이름
+      git add .
+      git add -A
+      ```
+  - git commit
+    - 내용, 설명  
+      - 스테이징된 변경을 하나의 버전으로 저장
+    - 예시
+      ```bash
+      git commit -m "메시지"
+      ```
+- 🌍 원격 저장소 연결 & 동기화
+  - git remote
+    - 내용, 설명  
+      - 원격 저장소 확인/등록
+    - 예시
+      ```bash
+      git remote add origin URL
+      git remote -v
+      ```
+  - git push
+    - 내용, 설명  
+      - 내 커밋을 원격 저장소에 업로드
+    - 예시
+      ```bash
+      git push origin main
+      ```
+  - git pull
+    - 내용, 설명  
+      - 원격 저장소 최신 내용 가져오
 
-Git은 **코드 변경 사항을 기록하고(버전 관리)**, 다른 사람과 **협업**할 수 있게 도와주는 도구다.  
-프로젝트의 “저장(커밋)” 단위로 기록하며, 브랜치/병합을 통해 안전하게 작업을 나눌 수 있다.
-
-## 0) Git 작업 흐름 한눈에 보기
-
-- **내용, 설명**
-  - Git은 보통 아래 순서로 작업한다.
-    1) 작업(파일 수정)
-    2) 스테이징(add)
-    3) 커밋(commit)
-    4) 원격 저장소에 푸시(push)
-
-- **예시**
-
-    git status
-    git add .
-    git commit -m "메시지"
-    git push origin main
-
-- **실수하기 쉬운 포인트**
-  - `git add`를 하지 않으면 커밋에 변경 사항이 포함되지 않는다.
-
-## 1) `git init` : Git 저장소 시작하기
-
-- **내용, 설명**
-  - 현재 폴더를 Git 저장소로 만든다.
-  - `.git` 폴더가 생성되며 버전 관리가 시작된다.
-
-- **예시**
-
-    git init
-
-- **실수하기 쉬운 포인트**
-  - 이미 Git 저장소인 폴더에서 다시 init하면 꼬일 수 있음  
-  - `.git` 폴더를 함부로 삭제하지 말기
-
-
-## 2) `git status` : 현재 상태 확인
-
-- **내용, 설명**
-  - 변경된 파일 / 스테이징 여부 / 브랜치 상태를 확인한다.
-  - Git이 “현재 무엇을 알고 있는지” 보는 가장 중요한 명령어
-
-- **예시**
-
-    git status
-
-- **실수하기 쉬운 포인트**
-  - 문제 생기면 무조건 `git status`부터 확인하면 해결이 빨라진다.
-
-## 3) `git add` : 스테이징(커밋 후보 등록)
-
-- **내용, 설명**
-  - 커밋에 포함할 변경사항을 스테이징 영역에 올린다.
-
-- **예시**
-
-    git add 파일이름
-    git add .          # 현재 폴더 기준 전체 변경사항 스테이징
-    git add -A         # 삭제까지 포함해서 전체 반영
-
-- **실수하기 쉬운 포인트**
-  - `git add .`는 “변경사항 저장”이 아니라 “커밋 후보로 등록”이다.
-
-
-## 4) `git commit` : 버전 저장(기록 남기기)
-
-- **내용, 설명**
-  - 스테이징된 변경사항을 하나의 버전으로 저장한다.
-  - 커밋 메시지는 “무엇을 했는지” 명확히 적는다.
-
-- **예시**
-
-    git commit -m "Add CLI section to README"
-    git commit -m "Fix input parsing bug"
-
-- **실수하기 쉬운 포인트**
-  - commit 메시지를 “수정”처럼 애매하게 쓰면 나중에 추적이 어려움  
-  - 커밋 전에 `git status`로 add가 되었는지 확인하기
-
-
-## 5) `git log` : 커밋 기록 보기
-
-- **내용, 설명**
-  - 지금까지 저장된 커밋(버전) 이력을 확인한다.
-
-- **예시**
-
-    git log
-    git log --oneline
-    git log --oneline --graph --decorate
-
-- **실수하기 쉬운 포인트**
-  - 해시값(커밋 ID)은 되돌리기/비교할 때 필요하니 익숙해지기
-
-## 6) `git diff` : 변경 내용 비교하기
-
-- **내용, 설명**
-  - 커밋 전후로 “어떤 부분이 바뀌었는지” 확인한다.
-
-- **예시**
-
-    git diff            # add 하기 전 변경 내용
-    git diff --staged   # add 후 스테이징된 변경 내용
-
-- **실수하기 쉬운 포인트**
-  - 커밋 전에 `git diff`로 확인하면 실수를 크게 줄일 수 있다.
-
-## 7) `git remote` / `git push` : 원격 저장소 연결 & 업로드
-
-- **내용, 설명**
-  - GitHub 같은 원격 저장소(remote)에 연결하고 업로드(push)한다.
-
-- **예시**
-
-    git remote add origin https://github.com/유저명/레포명.git
-    git remote -v
-    git push origin main
-
-- **실수하기 쉬운 포인트**
-  - 원격 저장소 연결이 없으면 push 불가  
-  - 기본 브랜치는 `main`인 경우가 많지만 레포마다 다를 수 있음
-
-
-## 8) `git pull` : 원격 변경
-
-- **내용, 설명**
-  - 원격 저장소 최신 커밋을 내려받아 현재 브랜치에 반영한다.
-
-- **예시**
-
-    git pull origin main
-
-- **실수하기 쉬운 포인트**
-  - 협업 중에는 작업 시작 전에 `git pull` 먼저 하는 습관이 중요!
-
-
-## 9) `git clone` : 원격 저장소 복제
-
-- **내용, 설명**
-  - 원격 저장소 내용을 내 컴퓨터로 통째로 복사한다.
-
-- **예시**
-
-    git clone https://github.com/유저명/레포명.git
-
-- **실수하기 쉬운 포인트**
-  - clone은 이미 remote까지 설정된 상태로 시작함 (`git remote -v` 확인 가능)
-
-
-## 10) 브랜치 기초: `git branch` / `git switch` / `git checkout`
-
-- **내용, 설명**
-  - 브랜치는 “독립된 작업 공간”
-  - 새 기능 개발/버그 수정은 브랜치에서 하고 완료되면 main에 합친다.
-
-- **예시**
-
-    git branch                 # 브랜치 목록
-    git branch new-feature     # 브랜치 생성
-    git switch new-feature     # 브랜치 이동
-    git switch -c hotfix       # 생성 + 이동
-
-- **실수하기 쉬운 포인트**
-  - main에서 작업하다 꼬이면 힘들어짐 → 새 작업은 브랜치에서 진행!
-
-## 11) 병합: `git merge`
-
-- **내용, 설명**
-  - 다른 브랜치 작업 내용을 현재 브랜치로 합친다.
-
-- **예시**
-
-    git switch main
-    git merge new-feature
-
-- **실수하기 쉬운 포인트**
-  - merge 전에 항상 `git status`로 깨끗한 상태인지 확인
-  - 충돌(conflict)이 나면 당황하지 말고 수정 → add → commit
-
-
-## 12) 충돌(conflict) 해결 기본
-
-- **내용, 설명**
-  - 서로 다른 브랜치에서 같은 파일/같은 줄을 수정하면 충돌 발생 가능
-  - Git이 자동으로 합치지 못해서 사람이 선택해야 함
-
-- **예시**
-
-    # 충돌 발생 시 파일에 아래 표시가 생김
-    <<<<<<< HEAD
-    내 변경 내용
-    =======
-    상대 변경 내용
-    >>>>>>> branch-name
-
-    # 수정 후
-    git add .
-    git commit -m "Resolve merge conflict"
-
-- **실수하기 쉬운 포인트**
-  - 충돌 표시(<<<<<<<, =======, >>>>>>>)를 반드시 제거하고 저장해야 함
-
-## 13) 되돌리기(복구) 핵심: reset / revert / restore
-
-### 13-1) `git restore`
-- **내용, 설명**
-  - 워킹 디렉토리의 변경 사항을 버린다(되돌림)
-
-- **예시**
-
-    git restore 파일이름
-    git restore .
-
-- **실수하기 쉬운 포인트**
-  - 되돌린 변경 내용은 복구가 어려움 → 신중히 사용
-
-### 13-2) `git reset`
-- **내용, 설명**
-  - 커밋을 과거로 “이동”하는 명령
-  - 옵션에 따라 기록도 변경됨(주의!)
-
-- **예시**
-
-    git reset --soft HEAD~1    # 커밋만 취소(변경사항 유지)
-    git reset --mixed HEAD~1   # add까지 취소(변경사항 유지)
-    git reset --hard HEAD~1    # ⚠ 변경사항까지 삭제
-
-- **실수하기 쉬운 포인트**
-  - `--hard`는 복구 어려움 (진짜 조심)
-
-### 13-3) `git revert`
-- **내용, 설명**
-  - 특정 커밋을 “취소하는 커밋”을 새로 만든다.
-  - 협업(푸시된 기록)에서는 reset보다 안전
-
-- **예시**
-
-    git revert 커밋해시
-
-- **실수하기 쉬운 포인트**
-  - 협업 레포에서 reset으로 과거를 강제로 바꾸면 팀원 기록이 꼬일 수 있음  
-  - 공유된 커밋은 보통 revert 사용 권장
-
-## 14) `.gitignore` : 추적 제외 파일 설정
-
-- **내용, 설명**
-  - Git이 추적하지 않아야 할 파일(캐시, 비밀키, 빌드 결과물)을 등록한다.
-
-- **예시**
-
-    # .gitignore 예시
-    __pycache__/
-    *.pyc
-    .env
-    .vscode/
-
-- **실수하기 쉬운 포인트**
-  - 이미 추적 중인 파일은 `.gitignore`에 추가해도 계속 추적됨  
-  - 해결:
-
-    git rm -r --cached .
-    git add .
-    git commit -m "Apply .gitignore"
 
 ---
 # Markdown / README 작성법 정리
-
-  - 마크다운은 “렌더링되는 곳(README.md 미리보기)”에서만 제대로 보인다.
-  - 메모장처럼 일반 텍스트에서는 서식이 안 보이는 게 정상이다.
-
-
-
-## 목차 (내부 링크)
-
-- **내용, 설명**
-  - 문서 상단에 목차를 만들면 빠르게 원하는 위치로 이동할 수 있다.
-  - 링크는 보통 `(#헤더이름)` 형태로 작성한다.
-  - 영어는 소문자, 띄어쓰기는 `-` 로 변환된다.
-
-- **예시**
-
-    - [헤더](#헤더적기)
-    - [순서 리스트](#순서-리스트-적기)
-    - [그냥 리스트](#그냥-리스트-적기)
-    - [체크 리스트](#체크-리스트-적기)
-    - [코드 블럭](#코드블럭)
-    - [링크 걸기](#링크걸기)
-    - [이미지 걸기](#이미지걸기)
-    - [텍스트 꾸미기](#텍스트-꾸미기)
-    - [수평선](#수평선)
-    - [참고 링크](#참고-링크)
-
-- **실수하기 쉬운 포인트**
-  - 내부 링크는 “헤더 이름”을 기준으로 자동 생성된다.
-  - 띄어쓰기가 있으면 `-`로 바뀐다.
-
-## 내부링크
-
-- **내용, 설명**
-  - 문서 안에서 특정 위치로 이동하는 링크를 말한다.
-  - 기본 구조는 `[표시될 글자](#이동할-헤더)` 이다.
-  - 이동할 헤더는 보통:
-    - 영어는 소문자
-    - 띄어쓰기는 `-` 처리
-
-- **예시**
-
-    [맨 위로 이동](#markdown--readme-작성법-정리)
-
-- **실수하기 쉬운 포인트**
-  - 링크 괄호 사이에 띄어쓰기 넣으면 동작이 깨질 수 있다.
-  - 헤더 글자를 수정하면 내부 링크도 함께 수정해야 한다.
-
-## 헤더적기
-
-- **내용, 설명**
-  - `#` 개수에 따라 제목 크기(레벨)가 달라진다.
-  - 보통 문서 제목은 `#`, 큰 섹션은 `##`, 하위는 `###`로 구성한다.
-
-- **예시**
-
-    # 헤더 1
-    ## 헤더 2
-    ### 헤더 3
-    #### 헤더 4
-    ##### 헤더 5
-
-- **실수하기 쉬운 포인트**
-  - `#` 뒤에는 공백 한 칸이 있어야 한다.  
-    (`#헤더` ❌ / `# 헤더` ✅)
-
-## 순서 리스트 적기
-
-- **내용, 설명**
-  - 숫자 + `.` 을 붙이면 순서 리스트를 만들 수 있다.
-  - `Tab` 키로 들여쓰기하면 하위 리스트를 만들 수 있다.
-
-- **예시**
-
-    1. 첫 번째
-    2. 두 번째
-       1. 두 번째-하위 1
-       2. 두 번째-하위 2
-
-- **실수하기 쉬운 포인트**
-  - 하위 리스트는 들여쓰기 공백이 맞지 않으면 깨질 수 있다.
-  - 줄바꿈을 많이 하면 리스트 구조가 풀릴 수 있다.
-
-## 그냥 리스트 적기
-
-- **내용, 설명**
-  - 순서가 없는 리스트는 `-`, `*`, `+` 중 하나로 만들 수 있다.
-  - 한 문서에서는 **한 가지 기호로 통일**하는 것이 좋다.
-
-- **예시**
-
-    - 순서가 없는 리스트
-      - 엔터 후 탭을 한 번 누르면 하위 리스트 가능
-        - 다시 돌아가려면 `Shift + Tab`
-
-- **실수하기 쉬운 포인트**
-  - 섞어 쓰면 에디터에서 경고가 뜨기도 한다.
-  - 들여쓰기(탭/공백)가 깨지면 구조가 무너진다.
-
-## 체크 리스트 적기
-
-- **내용, 설명**
-  - 작업 목록(todo) 정리에 자주 사용한다.
-  - `- [ ]` : 미완료
-  - `- [x]` : 완료
-
-- **예시**
-
-    - [x] 계란
-    - [ ] 당근
-    - [x] 우유
-    - [ ] 과자
-
-- **실수하기 쉬운 포인트**
-  - `[ ]` 안의 공백이 빠지면 체크박스로 인식되지 않는다.
-  - 반드시 대괄호 앞에 `-` 또는 `*`가 필요하다.
-
-
-## 코드블럭
-
-- **내용, 설명**
-  - 코드 블럭은 백틱(`) 3개로 감싸서 만든다.
-  - 언어를 함께 적으면 문법 하이라이팅이 된다.
-
-- **예시**
-
-    ```python
-    print("안")
+- Markdown 기본 이해
+  - 내용, 설명  
+    - 마크다운은 “렌더링되는 환경(README 미리보기)”에서 서식이 적용된다.
+    - 일반 메모장에서는 기호만 보이는 것이 정상이다.
+- 📑 문서 구조 잡기 (목차 & 내부 링크)
+  - 목차 만들기
+    - 내용, 설명  
+      - 문서 상단에 목차를 두면 긴 문서를 빠르게 탐색 가능
+      - 내부 링크는 `(#헤더이름)` 형식 사용
+      - 영어는 소문자, 띄어쓰기는 `-`로 변환됨
+    - 예시
+      ```md
+      - [헤더](#헤더적기)
+      - [코드 블럭](#코드블럭)
+      - [링크 걸기](#링크걸기)
+      ```
+  - 내부 링크
+    - 내용, 설명  
+      - 문서 내 특정 위치로 이동하는 링크
+      - 구조: `[보여질 글자](#이동할-헤더)`
+    - 예시
+      ```md
+      [맨 위로 이동](#markdown--readme-작성법-정리)
+      ```
+    - 실수하기 쉬운 포인트  
+      - 헤더 이름 바꾸면 내부 링크도 수정해야 함
+- 🏷 제목(헤더) 작성
+  - 내용, 설명  
+    - `#` 개수로 제목 크기 결정
+    - 보통: `# 문서 제목 → ## 섹션 → ### 하위 섹션`
+  - 예시
+    ```md
+    # 제목1
+    ## 제목2
+    ### 제목3
     ```
-
-- **실수하기 쉬운 포인트**
-  - 백틱 3개 시작/끝이 정확히 닫혀야 한다.
-  - 중간에 닫히면 문서 아래가 전부 코드처럼 보일 수 있다.
-
-
-## 링크걸기
-
-- **내용, 설명**
-  - `[링크이름](URL)` 형태로 링크를 작성한다.
-  - README에서는 참고 자료 링크를 자주 붙인다.
-
-- **예시**
-
-    [네이버](https://www.naver.com)  
-    [왕초보를 위한 Python](https://www.python.org)
-
-- **실수하기 쉬운 포인트**
-  - `[]()` 사이 순서가 바뀌면 링크가 깨진다.
-  - URL에 공백이 있으면 동작이 안 한다.
-
-
-## 이미지걸기
-
-- **내용, 설명**
-  - 이미지 문법은 링크와 비슷하지만 앞에 `!`가 붙는다.
-  - `![이미지이름](이미지URL)`
-
-- **예시**
-
-    ![example](https://via.placeholder.com/150)
-
-- **실수하기 쉬운 포인트**
-  - 이미지 URL이 실제 이미지 파일 링크여야 한다.
-  - 로컬 경로도 가능하지만 경로가 맞아야 한다.
-
-
-## 텍스트 꾸미기
-
-### 굵게 표현하기
-- **내용, 설명**
-  - `**굵게**` 또는 `__굵게__`
-
-- **예시**
-
-    **글자강조**
-    __글자강조__
-
-- **실수하기 쉬운 포인트**
-  - 기호 사이에 공백이 있으면 적용이 깨질 수 있다.
-
-### 기울임
-- **내용, 설명**
-  - `*기울임*` 또는 `_기울임_`
-  - 별 또는 언더바 뒤에는 공백을 두지 않는다.
-
-- **예시**
-
-    *기울임*
-    _기울임_
-
-### 취소선
-- **내용, 설명**
-  - `~~취소선~~`
-
-- **예시**
-
+  - 실수하기 쉬운 포인트  
+    - `#` 뒤에 공백 필요 (`#제목` ❌ / `# 제목` ✅)
+- 📋 리스트 작성
+  - 순서 리스트
+    - 내용, 설명  
+      - 숫자 + `.` 사용
+      - 들여쓰기로 하위 목록 가능
+    - 예시
+      ```md
+      1. 첫 번째
+      2. 두 번째
+         1. 하위 항목
+      ```
+  - 일반 리스트
+    - 내용, 설명  
+      - `-`, `*`, `+` 중 하나 사용 (한 문서에서 통일 권장)
+    - 예시
+      ```md
+      - 항목
+        - 하위 항목
+      ```
+  - 체크 리스트
+    - 내용, 설명  
+      - `- [ ]` 미완료 / `- [x]` 완료
+    - 예시
+      ```md
+      - [x] 완료
+      - [ ] 미완료
+      ```
+    - 실수하기 쉬운 포인트  
+      - `[ ]` 사이 공백 필요
+- 💻 코드 작성
+  - 코드 블럭
+    - 내용, 설명  
+      - 백틱 3개로 감싸기
+      - 언어 지정 시 하이라이팅 가능
+    - 예시
+      ```md
+      ```python
+      print("hello")
+      ```
+      ```
+    - 실수하기 쉬운 포인트  
+      - 시작/끝 백틱 개수 맞아야 함
+  - 인라인 코드
+    - 내용, 설명  
+      - 문장 중 코드 강조는 백틱 1개
+    - 예시  
+      \`git status\` 명령어 실행
+- 🔗 링크 & 이미지
+  - 링크 걸기
+    - 내용, 설명  
+      - `[텍스트](URL)` 형식
+    - 예시
+      ```md
+      [네이버](https://www.naver.com)
+      ```
+  - 이미지 넣기
+    - 내용, 설명  
+      - 링크 앞에 `!` 추가
+    - 예시
+      ```md
+      ![이미지설명](https://via.placeholder.com/150)
+      ```
+- ✨ 텍스트 꾸미기
+  - 굵게  
+    ```md
+    **굵게** 또는 __굵게__
+    ```
+  - 기울임  
+    ```md
+    *기울임* 또는 _기울임_
+    ```
+  - 취소선  
+    ```md
     ~~취소선~~
-
-- **실수하기 쉬운 포인트**
-  - `~~`와 글자 사이에 띄어쓰기 넣으면 이상해질 수 있다.
-
-## 수평선
-
-- **내용, 설명**
-  - 문서 구분용 수평선을 넣을 수 있다.
-  - `---` / `***` / `___` 모두 동일하게 동작한다(3개 이상)
-
-- **예시**
-
+    ```
+- ➖ 문서 구분 요소
+  - 수평선
+    ```md
     ---
     ***
     ___
-
-- **실수하기 쉬운 포인트**
-  - 에디터에서 안 보이면 README 미리보기로 확인해야 한다.
-
-## 줄바꿈/구분
-
-- **내용, 설명**
-  - Markdown에서 줄바꿈은 방식이 여러 가지다.
-  - `<br>` 태그를 쓰면 확실하게 줄바꿈 된다.
-
-- **예시**
-
+    ```
+  - 줄바꿈
+    ```md
     첫 줄<br>
     둘째 줄
+    ```
+- 📚 참고 링크
 
-- **실수하기 쉬운 포인트**
-  - 엔터만 누르면 줄바꿈이 안 되는 경우가 있어 `<br>`이 안전하다.
-
-## 참고 링크
-
-- **내용, 설명**
-  - 마크다운 공식 문법 참고 사이트
-
-- **예시**
-
+  - Markdown 공식 가이드  
     https://www.markdownguide.org/
