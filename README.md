@@ -66,17 +66,17 @@
     - 영문,언더스코어(_),숫자로 구성 / 숫자로 시작 불가 / 대소문자 구분 / 예약어 사용 불가
 - 객체
   - 객체란 값 + 타입 + 주소 정보(고유id)를 묶은 것
-    - 변수는 특정 객체를 가리치는 이름표
+    - 변수는 특정 객체를 가리키는 이름표
   - 재할당 : 변수가 가리키는 대상을 새로운 값으로 변경하는 행위
     ```python
     number = 10
-    double = 2*number
-    print(double) # 20
+    double = 2 * number
+    print(double)  # 20
 
     number = 5
-    print(double) # 20
+    print(double)  # 20
     ```
-    - 즉 , 객체란 실제 사람, 메모리 주소는 사람이 사는 주소, 변수는 사람의 주소록 상 이름표
+    - 즉, 객체란 실제 사람 / 메모리 주소는 사람이 사는 주소 / 변수는 사람의 주소록 상 이름표
   - 가변 객체와 불변 객체
     - 정의
       - **가변 객체(mutable)**: 객체의 값이 변경될 수 있는 객체
@@ -617,10 +617,10 @@
     ```python
     for idx, fruit in enumerate(['apple', 'banana'], start=1):
         print(idx, fruit)
-        ```
+        """
         1 apple
         2 banana
-        ```
+        """
     ```
   - 지연평가
     - map은 리스트를 받아서 **"어떻게 처리할지에 대한 계획"**만 만들고, 실제 계산은 나중으로
@@ -790,7 +790,7 @@
     - `continue`: 현재 회차 스킵
       ```py
       for i in range(10):
-        if % 2 == 0 :
+        if i % 2 == 0 :
           continue
         print(i) # 1 3 5 7 9
       ```
@@ -1580,7 +1580,7 @@
         print('shine'*3)
         func(v)
         print('화이팅'*3)
-    return wapping
+        return wapping
 
     @deco
     def call_name(name):
@@ -3632,6 +3632,122 @@
     - 특징  
       - DP, 행렬 문제에서 자주 등장  
       - 인덱스 규칙을 이해하는 연습에 좋음
+    
+  - 함수를 통한 순회
+    - 공통 유틸 함수(경계 체크)
+      ```python
+      def in_range(r, c, n, m):
+          """좌표 (r, c)가 n*m 격자 범위 안이면 True"""
+          return 0 <= r < n and 0 <= c < m
+    
+    
+      # 간단 테스트
+      n, m = 3, 4
+      print(in_range(2, 3, n, m))  # True
+      print(in_range(3, 0, n, m))  # False
+      ```
+    - 델타 탐색(4방향) 이웃 좌표 생성 함수
+      - 설명
+        - 현재 위치 (r, c)에서 상/하/좌/우로 이동한 좌표를 만들어준다
+        - 범위를 벗어나는 좌표는 제외한다
+      ```python
+      # 4방향(상, 하, 좌, 우)
+      DR4 = [-1, 1, 0, 0]
+      DC4 = [0, 0, -1, 1]
+    
+      def neighbors_4(r, c, n, m):
+          """(r, c)의 4방향 유효 이웃 좌표 리스트 반환"""
+          res = []
+          for d in range(4):
+              nr = r + DR4[d]
+              nc = c + DC4[d]
+              if in_range(nr, nc, n, m):
+                  res.append((nr, nc))
+          return res
+    
+      # 예시
+      n, m = 3, 3
+      r, c = 1, 1
+      print(neighbors_4(r, c, n, m))
+      # 출력: [(0, 1), (2, 1), (1, 0), (1, 2)]
+      ```
+    - 대각선 탐색(4방향) 이웃 좌표 생성 함수
+      - 설명
+        - 현재 위치 (r, c)에서 4개의 대각선 방향으로 이동한 좌표를 만든다
+        - 범위를 벗어나는 좌표는 제외한다
+    
+      ```python
+      # 4대각선(좌상, 우상, 좌하, 우하)
+      DRD = [-1, -1, 1, 1]
+      DCD = [-1, 1, -1, 1]
+    
+      def neighbors_diag(r, c, n, m):
+          """(r, c)의 대각선(4방향) 유효 이웃 좌표 리스트 반환"""
+          res = []
+          for d in range(4):
+              nr = r + DRD[d]
+              nc = c + DCD[d]
+              if in_range(nr, nc, n, m):
+                  res.append((nr, nc))
+          return res
+    
+    
+      # 예시
+      n, m = 3, 3
+      r, c = 1, 1
+      print(neighbors_diag(r, c, n, m))
+      # 출력: [(0, 0), (0, 2), (2, 0), (2, 2)]
+      ```
+    - 8방향(4방향 + 대각선) 이웃 좌표 생성 함수
+      - 설명
+        - 8방향은 격자 BFS/DFS에서 자주 등장한다
+        - “상하좌우 + 대각선”을 한 번에 다루고 싶을 때 사용
+      ```python
+      DR8 = [-1, 1, 0, 0, -1, -1, 1, 1]
+      DC8 = [0, 0, -1, 1, -1, 1, -1, 1]
+    
+      def neighbors_8(r, c, n, m):
+          """(r, c)의 8방향 유효 이웃 좌표 리스트 반환"""
+          res = []
+          for d in range(8):
+              nr = r + DR8[d]
+              nc = c + DC8[d]
+              if in_range(nr, nc, n, m):
+                  res.append((nr, nc))
+          return res
+    
+    
+      # 예시
+      n, m = 3, 3
+      r, c = 1, 1
+      print(neighbors_8(r, c, n, m))
+      # 출력: [(0, 1), (2, 1), (1, 0), (1, 2), (0, 0), (0, 2), (2, 0), (2, 2)]
+      ```
+    - “값까지” 같이 꺼내는 패턴 (좌표 + 값)
+      - 설명
+        - 이웃 좌표만 뽑는 게 아니라, 그 칸의 값도 같이 쓰는 경우가 많다
+        - 그래서 (nr, nc, grid[nr][nc]) 형태로 반환하면 편하다
+    
+      ```python
+      def neighbors_4_with_value(grid, r, c):
+          n, m = len(grid), len(grid[0])
+          res = []
+          for d in range(4):
+              nr = r + DR4[d]
+              nc = c + DC4[d]
+              if in_range(nr, nc, n, m):
+                  res.append((nr, nc, grid[nr][nc]))
+          return res
+    
+    
+      grid = [
+          [1, 2, 3],
+          [4, 5, 6],
+          [7, 8, 9]
+      ]
+      print(neighbors_4_with_value(grid, 1, 1))
+      # 출력: [(0, 1, 2), (2, 1, 8), (1, 0, 4), (1, 2, 6)]
+      ```
   - ⏱ 시간 복잡도
     - 대부분의 2차원 배열 전체 순회는 **O(N × M)**  
       (행 개수 N, 열 개수 M)
