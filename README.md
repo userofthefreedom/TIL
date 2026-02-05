@@ -3369,7 +3369,7 @@
   | 연산자 | 의미 | 예시 | 결과 |
   |------:|------|------|-----:|
   | `&`   | AND (둘 다 1이면 1) | `5 & 3` | `1` |
-  | `|`   | OR (하나라도 1이면 1) | `5 | 3` | `7` |
+  | &#124; | OR (하나라도 1이면 1) | 5 &#124; 3 | `7` |
   | `^`   | XOR (서로 다르면 1) | `5 ^ 3` | `6` |
   | `~`   | NOT (비트 반전) | `~5` | `-6` |
   | `<<`  | 왼쪽 시프트 | `1 << 3` | `8` |
@@ -4615,9 +4615,79 @@
 
   - 대표 예시  
     - 병합 정렬 (Merge Sort)  
-    - 퀵 정렬 (Quick Sort)  
+    - 퀵 정렬 (Quick Sort)
+    - 선택 알고리즘
     - 이진 탐색  
+  
+  - 선택 알고리즘 (Selection Algorithm, Quick Select)
 
+    - 개념
+      - 전체를 정렬하지 않고 **k번째로 작은(또는 큰) 원소를 찾는 알고리즘**
+      - 퀵 정렬과 같은 "피벗 기준 분할" 아이디어를 사용한다
+
+    - 왜 필요한가?
+      - 정렬하면 O(N log N)이 걸리지만  
+        k번째 값 하나만 필요하면 더 빠르게 찾을 수 있다
+      - 예:
+        - 시험 점수 중 3등 점수 찾기
+        - 데이터의 중앙값(Median) 찾기
+
+    - 핵심 아이디어
+      1. 배열에서 피벗(pivot) 하나 선택
+      2. 피벗보다 작은 값은 왼쪽, 큰 값은 오른쪽으로 분할
+      3. 피벗의 위치가 k와 같으면 정답
+      4. k가 왼쪽에 있으면 왼쪽 부분만 다시 탐색
+      5. k가 오른쪽에 있으면 오른쪽 부분만 탐색
+
+      👉 전체를 정렬하지 않고 필요한 구간만 계속 줄여간다
+
+    - 예시
+
+      ```python
+      arr = [7, 2, 1, 6, 8, 5, 3, 4]
+      k = 3  # 3번째로 작은 수
+
+      # 정렬하면: [1,2,3,4,5,6,7,8]
+      # 정답: 3
+      ```
+
+    - 예시 코드 (Quick Select)
+
+      ```python
+      import random
+
+      def quick_select(arr, k):
+          if len(arr) == 1:
+              return arr[0]
+
+          pivot = random.choice(arr)
+
+          left = [x for x in arr if x < pivot]
+          mid = [x for x in arr if x == pivot]
+          right = [x for x in arr if x > pivot]
+
+          if k <= len(left):
+              return quick_select(left, k)
+          elif k <= len(left) + len(mid):
+              return pivot
+          else:
+              return quick_select(right, k - len(left) - len(mid))
+
+
+      arr = [7, 2, 1, 6, 8, 5, 3, 4]
+      print(quick_select(arr, 3))  # 3
+      ```
+
+    - 시간 복잡도
+      - 평균: O(N)
+      - 최악: O(N²) (피벗이 계속 한쪽으로 치우칠 때)
+
+    - 특징
+      - 정렬 없이 순위 기반 값을 찾을 수 있다
+      - 퀵 정렬과 구조가 매우 비슷하다
+      - 중앙값 찾기 문제와 연결된다
+      - "k번째"라는 말이 나오면 떠올려야 하는 알고리즘
+  
 - 동적 계획법 (Dynamic Programming, DP)
   - 개념  
     - 큰 문제를 작은 문제로 나누되, **한 번 계산한 결과를 저장해서 재사용**하는 방법
