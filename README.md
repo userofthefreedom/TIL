@@ -3094,8 +3094,9 @@
     | O(N log N) | 선형 로그 | 정렬 알고리즘에서 자주 등장 |
     | O(N²) | 이차 시간 | 이중 반복문 |
     | O(2ⁿ) | 지수 시간 | 완전 탐색(비효율적) |
+    
     ```buildoutcfg
-    O(1) < O(log N) < O(N) < O(N log N) < O(N²) < O(N³) < O(2ⁿ) < O(N!)
+       증가율 : O(1) < O(log N) < O(N) < O(N log N) < O(N²) < O(N³) < O(2ⁿ) < O(N!)
     ```    
     
     - O(1) — 상수 시간 (Constant Time)
@@ -4417,6 +4418,30 @@
   - 대표 예시  
     - 비밀번호 모든 조합 찾기  
     - 부분집합 전부 구하기  
+    - 문자 비교 ( 패턴 검색 )
+  ```python
+  def bruteforce(p, t):
+    N = len(t)
+    M = len(p)
+    i = j = 0
+    while i < N and j < M:
+        if t[i] != p[j]:  # 다르면
+            i = i - j + 1  # i - j 비교를 시작했던 위치
+            j = 0
+        else:  # 같으면
+            i += 1
+            j += 1
+    if j == M:
+        return i - j  # 패턴의 시작 인덱스
+    else:
+        return -1       # 패턴이 없는 경우
+
+  t = 'TTTTTATTAATA'
+  p = 'TTA'
+  
+  print(bruteforce(p, t))
+  ```
+
 
 - 탐욕 알고리즘 (Greedy Algorithm)
   
