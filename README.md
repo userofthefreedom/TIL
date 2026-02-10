@@ -431,22 +431,6 @@
     - int(), float(), str(), list(), tuple(), set()
 
 ## 함수(Function)
-
-### 제너레이터 (Generator)
-```python
-def count_up(n):
-    i=1
-    while i<=n:
-        yield i
-        i+=1
-```
-
-### 타입 힌트 (Type Hint)
-```python
-def add(x: int, y: int) -> int:
-    return x+y
-```
-
 - What?
   - 특정 작업을 수행하기 위한 재사용 가능 코드 묶음
   - 구조
@@ -712,23 +696,32 @@ def add(x: int, y: int) -> int:
         # 출력: [('철수', 90), ('영희', 85)]
         ```
 
-## 모듈
+- 제너레이터 (Generator)
+  - `yield`를 사용해서 값을 **한 번에 다 만들지 않고**, 필요할 때 하나씩 생성(지연 생성)
+  - 큰 데이터/무한 시퀀스 처리에 유리
+  - 예시
+    ```py
+    def count_up(n):
+        i = 1
+        while i <= n:
+            yield i
+            i += 1
 
-### 파일 입출력
+    for x in count_up(3):
+        print(x)
+    # 1
+    # 2
+    # 3
+    ```
 
-### 자주 쓰는 표준 라이브러리
-```python
-from pathlib import Path
-from datetime import datetime
-import random
-import logging
-```
-
-```python
-with open("example.txt","w",encoding="utf-8") as f:
-    f.write("Hello Python")
-```
- 
+- 타입 힌트 (Type Hint)
+  - 실행 성능/동작을 바꾸는 게 아니라, **가독성과 협업**을 위해 타입을 표시
+  - 예시
+    ```py
+    def add(x: int, y: int) -> int:
+        return x + y
+    ```
+## 모듈 
 - what ?
   - 한 파일로 묶인 변수와 함수의 모음
   ```python
@@ -782,8 +775,30 @@ with open("example.txt","w",encoding="utf-8") as f:
       response = requests.get(url).json()
       print(response)
       ```
-- help ( 모듈 명 ) 을 통해 모듈 안에 든 것을 확인할 수 있다
 
+- 파일 입출력 (File I/O)
+  - 파일을 읽고/쓰는 기능 (실무/코테 모두 자주 등장)
+  - `with open(...) as f:` 형태를 가장 많이 사용 (자동 close)
+  - 기본 모드
+    - `"r"` 읽기 / `"w"` 덮어쓰기 / `"a"` 이어쓰기
+  - 자주 쓰는 메서드
+    - `read()` 전체 읽기
+    - `readline()` 한 줄 읽기
+    - `readlines()` 모든 줄 리스트
+    - `write()` 쓰기
+  - 예시
+    ```py
+    # 쓰기
+    with open("example.txt", "w", encoding="utf-8") as f:
+        f.write("Hello Python\n")
+
+    # 읽기
+    with open("example.txt", "r", encoding="utf-8") as f:
+        print(f.read())
+        # Hello Python
+    ```
+
+- help ( 모듈 명 ) 을 통해 모듈 안에 든 것을 확인할 수 있다
 
 
 ## 제어문
@@ -1287,17 +1302,6 @@ with open("example.txt","w",encoding="utf-8") as f:
     ```
 
 ## 클래스
-
-### dataclass
-```python
-from dataclasses import dataclass
-
-@dataclass
-class Person:
-    name: str
-    age: int
-```
-
 - 객체지향 프로그래밍(OOP) vs 절차지향 프로그래밍
   - 내용, 설명  
     - 절차지향 프로그래밍은 데이터와 함수가 서로 분리되어 있음  
@@ -1680,6 +1684,28 @@ class Person:
       # 출력: 800
       ```
 
+- dataclass
+  - 데이터(속성) 중심 클래스를 만들 때 `__init__`, `__repr__`, 비교 메서드 등을 자동 생성해주는 도구
+  - 언제 쓰나?
+    - “필드(속성)만 있는 객체”를 자주 만들 때 (DTO, 설정 값, 결과 구조 등)
+  - 핵심 포인트
+    - `@dataclass` 데코레이터 사용
+    - 기본값/기본 팩토리: `field(default=...)`, `field(default_factory=list)`
+    - 불변 객체로 만들기: `@dataclass(frozen=True)`
+  - 예시
+    ```py
+    from dataclasses import dataclass, field
+
+    @dataclass
+    class Person:
+        name: str
+        age: int
+        tags: list[str] = field(default_factory=list)
+
+    p = Person("Alice", 25)
+    print(p)
+    # Person(name='Alice', age=25, tags=[])
+    ```
 ## 상속 (Inheritance)
 - 상속이란?
   - 기존 클래스(부모, Superclass)의 속성과 메서드를  
@@ -2650,8 +2676,6 @@ class Person:
 
   - Markdown 공식 가이드  
     https://www.markdownguide.org/
-
-
 
 
 # 알고리즘(Algorithm) 기초
@@ -4610,8 +4634,6 @@ class Person:
 # 라이브러리
 
 ## Numpy
-
-
 - Numpy를 왜 쓰나?
 
   - 파이썬 리스트도 숫자 배열을 담을 수 있지만, Numpy는 **대량의 숫자 계산**을 빠르게 하기 위해 만들어졌어요.
@@ -4785,10 +4807,7 @@ class Person:
     np.hstack((a,b))
     ```
 
-
 ## Pandas
-
-
 - Pandas를 왜 쓰나?
 
   - Pandas는 **표 형태(엑셀 같은)** 데이터를 다루는 데 특화된 라이브러리예요.
@@ -4930,38 +4949,7 @@ class Person:
     df["year"] = df["date"].dt.year
     ```
 
-
-
 ## Matplotlib
-
-## collections
-
-## itertools
-- 반복 가능한 객체를 조합/순열 등으로 다루는 모듈
-```python
-from itertools import permutations, combinations
-
-print(list(permutations([1,2,3],2)))
-print(list(combinations([1,2,3],2)))
-```
-
-- 파이썬 표준 라이브러리로, 자료구조를 더 효율적으로 다루기 위한 모듈
-- 자주 사용하는 구조
-  - Counter: 요소 개수 세기
-  - deque: 양방향 큐 (BFS에서 자주 사용)
-
-```python
-from collections import Counter, deque
-
-print(Counter("banana"))  # Counter({'a': 3, 'n': 2, 'b': 1})
-
-dq = deque([1,2,3])
-dq.appendleft(0)
-print(dq)  # deque([0,1,2,3])
-```
-
-
-
 - Matplotlib의 포인트
   - Matplotlib는 데이터 시각화(그래프)를 위한 기본 라이브러리예요.
     - 흐름: 데이터 준비 → `plt.plot/scatter/bar/...` → `plt.title/xlabel/ylabel` → `plt.show()`
@@ -5085,4 +5073,110 @@ print(dq)  # deque([0,1,2,3])
   - 그래프 종류에 따라 bar, scatter, hist, pie 사용
   - 제목, 축 이름, 범례를 넣으면 가독성이 좋아짐
 
+## collections
+- 파이썬 **표준 라이브러리** 모듈로, 자주 쓰는 자료구조를 더 편하게/빠르게 쓰기 위한 도구 모음
+- 핵심 포인트
+  - `Counter` : 요소 빈도(개수) 세기
+  - `deque` : 양방향 큐(앞/뒤 삽입·삭제가 빠름) → BFS에서 자주 사용
 
+- 예시
+```py
+from collections import Counter, deque
+
+print(Counter("banana"))
+# Counter({'a': 3, 'n': 2, 'b': 1})
+
+dq = deque([1, 2, 3])
+dq.appendleft(0)
+dq.append(4)
+print(dq)
+# deque([0, 1, 2, 3, 4])
+```
+
+## itertools
+- 반복 가능한 객체(iterable)를 **조합/순열** 같은 패턴으로 다루는 표준 라이브러리 모듈
+- 자주 쓰는 것
+  - `permutations` : 순열(순서 O)
+  - `combinations` : 조합(순서 X)
+
+- 예시
+```py
+from itertools import permutations, combinations
+
+print(list(permutations([1, 2, 3], 2)))
+# [(1, 2), (1, 3), (2, 1), (2, 3), (3, 1), (3, 2)]
+
+print(list(combinations([1, 2, 3], 2)))
+# [(1, 2), (1, 3), (2, 3)]
+```
+
+## pathlib (Path)
+- 파일/폴더 경로를 문자열로 다루지 않고, **객체로 안전하게** 다루는 표준 라이브러리
+- 자주 하는 일
+  - 존재 확인: `Path(...).exists()`
+  - 경로 합치기: `/` 연산자
+  - 확장자 확인: `.suffix`
+
+- 예시
+```py
+from pathlib import Path
+
+p = Path("data") / "input.txt"
+print(p)           # data/input.txt
+print(p.suffix)    # .txt
+print(p.exists())  # True/False
+```
+
+## datetime
+- 날짜/시간을 다루는 표준 라이브러리
+- 자주 하는 일
+  - 현재 시각: `datetime.now()`
+  - 문자열 ↔ datetime 변환: `strptime` / `strftime`
+  - 시간 차이 계산: `timedelta`
+
+- 예시
+```py
+from datetime import datetime, timedelta
+
+now = datetime.now()
+print(now)
+
+parsed = datetime.strptime("2026-02-10", "%Y-%m-%d")
+print(parsed)
+
+print((now + timedelta(days=7)).date())
+```
+
+## random
+- 난수(랜덤)를 다루는 표준 라이브러리
+- 자주 하는 일
+  - 정수 뽑기: `randint(a, b)` (a~b 포함)
+  - 섞기: `shuffle`
+  - 샘플링: `sample`
+
+- 예시
+```py
+import random
+
+print(random.randint(1, 6))  # 1~6
+
+arr = [1, 2, 3, 4, 5]
+random.shuffle(arr)
+print(arr)
+
+print(random.sample([1, 2, 3, 4, 5], 2))
+```
+
+## logging
+- `print()` 대신 **로그 레벨/형식**을 갖춘 기록을 남기는 표준 라이브러리
+- 로그 레벨(대표)
+  - DEBUG / INFO / WARNING / ERROR / CRITICAL
+
+- 예시
+```py
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logging.info("INFO 로그")
+logging.warning("WARNING 로그")
+```
