@@ -13,11 +13,6 @@
 - [CLI 기본 명령어](#cli-기본-명령어)
 - [Git 활용법 정리 (기능 + 예시)](#git-활용법-정리-기능-예시)
 - [Markdown / README 작성법 정리](#markdown-readme-작성법-정리)
-- [Numpy](#numpy)
-- [Pandas](#pandas)
-  - [기초](#기초)
-  - [고급](#고급)
-- [Matplotlib](#matplotlib)
 - [알고리즘(Algorithm) 기초](#알고리즘algorithm-기초)
   - [개념](#개념)
   - [시간 복잡도](#시간-복잡도)
@@ -25,9 +20,19 @@
   - [배열(Array)](#배열array)
   - [정렬(Sorting)](#정렬sorting)
   - [검색](#검색)
-  - [🥞 Stack (스택)](#stack-스택)
-  - [🔁 재귀 호출 (Recursion)](#재귀-호출-recursion)
-  - [🧠 알고리즘 설계 전략](#알고리즘-설계-전략)
+  - [Stack (스택)](#stack-스택)
+  - [재귀 호출 (Recursion)](#재귀-호출-recursion)
+  - [알고리즘 설계 전략](#알고리즘-설계-전략)
+- [라이브러리](#라이브러리)
+  - [Numpy](#numpy)
+  - [Pandas](#pandas)
+  - [Matplotlib](#matplotlib)
+  - [collections](#collections)
+  - [itertools](#itertools)
+  - [pathlib (Path)](#pathlib-path)
+  - [datetime](#datetime)
+  - [random](#random)
+  - [logging](#logging)
 
 # Python Study Notes
 
@@ -154,11 +159,11 @@
         - == 연산자는 값을 비교하고, is 연산자는 객체 그 자체(주소)를 비교한다
         - is 연산자는 주로 싱글턴 객체 (None, True, False 등 파이썬에 단 하나뿐인 객체) 비교에 사용 
       - 논리 연산자 : and, or, not
-          ```python
-            print(True and False) # False
-            print(True or False) # True
-            print(not 0) # True
-          ```
+      ```python
+      print(True and False) # False
+      print(True or False) # True
+      print(not 0) # True
+      ```
         - 단축 평가
           - and 연산자 : 처음 만나는 거짓 값을 반환, 아니면 마지막 참 값을 반환
           - or 연산자 : 처음 만나는 참 값을 반환, 아니라면 마지막 거짓 값을 반환
@@ -364,18 +369,18 @@
   - set / 세트 / 집합
     - 중복 제거에 매우 유용, 합집합/교집합/차집합 가능, 순서가 없기에 슬라이싱이나 인덱싱도 없다
     - 형식 : 중괄호 안의 쉼표로 값을 구분하여 만든다
-        ```python
-        my_set1 = set() # 빈 딕셔너리와 구분을 위해 빈 세트는 반드시 이렇게
-        my_set2 = {1, 1, 2, 2, 2, 3}
-        print(my_set1) # set() 
-        print(my_set2) # {1, 2, 3}
-
-        s1 = {1,2,3}
-        s2 = {3,6,9}
-        print(s1 | s2)  # 합집합 {1, 2, 3, 6, 9}
-        print(s1 & s2)  # 교집합 {3}
-        print(s1 - s2)  # 차집합 {1, 2}
-        ```
+      ```python
+      my_set1 = set() # 빈 딕셔너리와 구분을 위해 빈 세트는 반드시 이렇게
+      my_set2 = {1, 1, 2, 2, 2, 3}
+      print(my_set1) # set() 
+      print(my_set2) # {1, 2, 3}
+      
+      s1 = {1,2,3}
+      s2 = {3,6,9}
+      print(s1 | s2)  # 합집합 {1, 2, 3, 6, 9}
+      print(s1 & s2)  # 교집합 {3}
+      print(s1 - s2)  # 차집합 {1, 2}
+      ```
   - 해시 테이블 (Hash Table)
     - 해시란?
       - 데이터를 **고정된 크기의 정수 값(해시값)** 으로 변환하는 것  
@@ -422,11 +427,11 @@
   - collection : 여러개를 묶는 자료형 [str, list, tuple, range, set, dict]
 - 형변환
   - 암시적 형변환 : Boolean과 Numeric Type만 가능하다
-      ```python
-      print( 3 + 5.0 ) # 8.0 float로 자동 변환
-      print(True + 3) # 4 True를 1로 자동 변환
-      print(True + False) # 1 False를 0으로 변환
-      ```
+    ```python
+    print( 3 + 5.0 ) # 8.0 float로 자동 변환
+    print(True + 3) # 4 True를 1로 자동 변환
+    print(True + False) # 1 False를 0으로 변환
+    ```
   - 명시적 형변환 : 함수를 통해 지적하여 변환
     - int(), float(), str(), list(), tuple(), set()
 
@@ -766,16 +771,17 @@
   - 외부 패키지
     - 직접 다운하여 사용
     - 설치할때 pip 사용
-      ```py
-      $ pip install requests
+      ```bash
+      pip install requests
+      ```
 
+      ```py
       import requests
 
       url = "사이트 주소"
       response = requests.get(url).json()
       print(response)
       ```
-
 - 파일 입출력 (File I/O)
   - 파일을 읽고/쓰는 기능 (실무/코테 모두 자주 등장)
   - `with open(...) as f:` 형태를 가장 많이 사용 (자동 close)
@@ -886,23 +892,21 @@
     - `객체.메서드()` 형태로 호출한다.
     - class 내부 정의되는 함수
   - 호출 방식
-      - 함수
-      ```python
-    
+    - 함수
+      ```py
       def func():
           pass
 
-    
       func()
       # 출력: None (아무것도 반환하지 않음)
       ```
       - 메서드
-      ```py
-      numbers = [1, 2, 3]
-      numbers.append(4)
-      print(numbers)
-      # 출력: [1, 2, 3, 4]
-      ```
+    ```python
+    numbers = [1, 2, 3]
+    numbers.append(4)
+    print(numbers)
+    # 출력: [1, 2, 3, 4]
+    ```
 - 공통 시퀀스 메서드
   - `.index()`
     - 특정 값이 **처음 등장하는 위치(인덱스)** 를 반환한다.
@@ -943,22 +947,22 @@
         ```
     - `.isupper()` / `.islower()`
       - 모든 케이스가 대문자인지 / 소문자인지 확인
-          ```py
-          print('HELLO'.isupper())
-          # 출력: True
+      ```python
+      print('HELLO'.isupper())
+      # 출력: True
 
-          print('Hello'.islower())
-          # 출력: False
-          ```
+      print('Hello'.islower())
+      # 출력: False
+      ```
     -  `.isalpha()`
       - 모든 문자가 알파벳이고 하나 이상의 문자가 포함되어 있다면 True
-        ```py
-        print('Hello'.isalpha())
-        # 출력: True
+       ```py
+       print('Hello'.isalpha())
+       # 출력: True
 
-        print('123abc'.isalpha())
-        # 출력: False
-        ```
+       print('123abc'.isalpha())
+       # 출력: False
+       ```
   - 문자열 조작 메서드
     - `.replace()`
       - str. replace(old, new[,count])
@@ -969,11 +973,12 @@
       ```
     -  `.strip()`
       - str.strip([chars])
-      ```py
-      text = '   Hello World   '
-      print(text.strip())
-      # 출력: Hello World
-      ```
+        
+    ```py
+    text = '   Hello World   '
+    print(text.strip())
+    # 출력: Hello World
+    ```
     - `.split()`
       - str.split(sep=None, maxsplit= -1)
       ```py
@@ -1008,16 +1013,17 @@
   - 값 추가 및 삭제
     - `.append()`
       - **원본 리스트 변경**, 반환값은 `None`
-          ```py
-          nums = [1, 2]
-          result = nums.append(3)
+      ```py
+      nums = [1, 2]
+      result = nums.append(3)
 
-          print(nums)
-          # 출력: [1, 2, 3]
+      print(nums)
+      # 출력: [1, 2, 3]
 
-          print(result)
-          # 출력: None
-          ```
+      print(result)
+      # 출력: None
+      ```
+        
     - `.extend()`
       - 리스트에 다른 반복 가능 객체 모든 항목 추가
         ```py
@@ -1635,22 +1641,27 @@
       - @classmethod, @staticmethod도 데코레이터의 예
     ```py
     def deco(func):
-    def wapping(v):
-        print('shine'*3)
-        func(v)
-        print('화이팅'*3)
-        return wapping
-
+        def wrapping(*args, **kwargs):
+            print("shine" * 3)
+            result = func(*args, **kwargs)
+            print("화이팅" * 3)
+            return result
+        return wrapping
+    
+    
     @deco
     def call_name(name):
         print(name)
-        
+    
+    
     @deco
     def call_age(age):
         print(age)
-
-    call_name('세진')
+    
+    
+    call_name("세진")
     call_age(30)
+
     ```
   - 매직 메서드 (Magic Method)
     - 내용, 설명  
