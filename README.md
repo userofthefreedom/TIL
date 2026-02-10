@@ -4393,6 +4393,162 @@
     - 메모리를 더 사용함  
     - 해시 충돌이 발생할 수 있음
 
+## 🥞 Stack (스택)
+
+- 개념
+  - 스택은 **나중에 들어온 것이 먼저 나가는 구조(LIFO: Last In First Out)**
+  - 접시를 쌓아두는 구조와 비슷하다
+
+- 기본 연산
+  - push: 데이터 넣기
+  - pop: 가장 위 데이터 꺼내기
+  - top/peek: 맨 위 데이터 확인
+  - isEmpty: 비었는지 확인
+
+- 예시 코드
+
+  ```python
+  stack = []
+
+  stack.append(10)  # push
+  stack.append(20)
+  stack.append(30)
+
+  print(stack.pop())  # 30
+  print(stack[-1])    # 20 (peek)
+  ```
+
+- 특징
+  - 뒤로 가기(undo), 괄호 검사, DFS 등에 사용
+
+- 🧠 Stack 기반 문제 해결 패턴
+
+  - 대표 유형
+    - 괄호 짝 맞추기
+    - 이전/다음 큰 수 찾기
+    - 문자열 뒤집기
+    - DFS (재귀 대신 스택 사용)
+  
+  - 예시: 괄호 검사
+  
+    ```python
+    def is_valid_parentheses(s):
+        stack = []
+  
+        for ch in s:
+            if ch == '(':
+                stack.append(ch)
+            else:
+                if not stack:
+                    return False
+                stack.pop()
+  
+        return len(stack) == 0
+  
+  
+    print(is_valid_parentheses("(())"))  # True
+    print(is_valid_parentheses("(()"))   # False
+    ```
+## 🔁 재귀 호출 (Recursion)
+
+- 개념
+  - 함수가 자기 자신을 다시 호출하는 방식
+  - 문제를 더 작은 문제로 쪼개 해결
+
+- 필수 요소
+  1. 종료 조건 (Base Case)
+  2. 자기 자신 호출 (Recursive Case)
+
+- 예시: 팩토리얼
+
+  ```python
+  def factorial(n):
+      if n == 1:
+          return 1
+      return n * factorial(n - 1)
+
+  print(factorial(5))  # 120
+  ```
+
+- 특징
+  - 코드가 간결해진다
+  - 스택 메모리를 사용한다
+  - DFS, 백트래킹, 분할정복의 기반
+  
+- 🌳 DFS (Depth-First Search)
+
+  - 개념
+    - 한 방향으로 끝까지 탐색한 뒤 돌아오는 탐색 방식
+    - 스택 구조 또는 재귀를 이용한다
+  
+  - 동작 방식
+    1. 현재 노드 방문
+    2. 갈 수 있는 곳 끝까지 탐색
+    3. 더 이상 갈 곳 없으면 되돌아감
+  
+  - 재귀 구현 예시
+  
+    ```python
+    def dfs(graph, node, visited):
+        visited[node] = True
+        print(node, end=' ')
+  
+        for next_node in graph[node]:
+            if not visited[next_node]:
+                dfs(graph, next_node, visited)
+  
+  
+    graph = {
+        1: [2, 3],
+        2: [4],
+        3: [],
+        4: []
+    }
+  
+    visited = {i: False for i in graph}
+    dfs(graph, 1, visited)  # 1 2 4 3
+    ```
+  
+  - 특징
+    - 완전탐색에 사용
+    - 재귀 구조와 매우 잘 어울림
+    - 경로 찾기, 사이클 탐지 등에 활용
+
+- 🧠 Memoization (메모이제이션)
+
+  - 개념
+    - 이미 계산한 결과를 저장해두고 다시 계산하지 않는 기법
+    - 재귀 호출의 중복 계산을 줄이기 위해 사용된다
+  
+  - 왜 필요한가?
+    - 재귀는 같은 계산을 여러 번 반복할 수 있다
+    - 저장해두면 시간 복잡도를 크게 줄일 수 있다
+  
+  - 예시: 피보나치 수열 (메모이제이션 적용)
+  
+    ```python
+    memo = {}
+  
+    def fib(n):
+        if n in memo:
+            return memo[n]
+  
+        if n <= 2:
+            return 1
+  
+        memo[n] = fib(n-1) + fib(n-2)
+        return memo[n]
+  
+  
+    print(fib(10))  # 55
+    ```
+  
+  - 특징
+    - 재귀 + 저장(캐시)의 조합
+    - Top-Down DP의 핵심 기술
+    - 시간 복잡도를 지수 → 선형으로 줄일 수 있다
+
+
 ## 🧠 알고리즘 설계 전략
 
 - 개념
@@ -4714,23 +4870,64 @@
       - "k번째"라는 말이 나오면 떠올려야 하는 알고리즘
   
 - 동적 계획법 (Dynamic Programming, DP)
-  - 개념  
-    - 큰 문제를 작은 문제로 나누되, **한 번 계산한 결과를 저장해서 재사용**하는 방법
 
-  - 설명  
-    - 같은 계산을 여러 번 하지 않도록 메모이제이션 사용  
-    - 완전탐색을 효율적으로 개선한 형태
-
-  - 사용 느낌  
-    - "이미 구한 건 다시 계산하지 말자"
-
-  - 시간 복잡도 특징  
-    - 지수 시간 → 다항 시간으로 줄어드는 경우 많음
-
-  - 대표 예시  
-    - 피보나치 수열 최적화  
-    - 배낭 문제 (Knapsack)  
-    - 최단 거리 문제 일부  
+  - 개념
+    - 큰 문제를 작은 문제로 나누어 해결하고,
+      그 결과를 저장하여 다시 사용하지 않도록 하는 알고리즘 기법
+  
+  - 사용 조건
+    1. **중복되는 부분 문제 (Overlapping Subproblems)**
+    2. **최적 부분 구조 (Optimal Substructure)**
+  
+  - Memoization과의 차이
+    
+    | 구분 | Memoization | DP |
+    |------|-------------|----|
+    | 방식 | 재귀 기반 (Top-Down) | 반복문 기반 (Bottom-Up) |
+    | 계산 순서 | 필요할 때 계산 | 작은 문제부터 차례로 계산 |
+  
+  - 예시 1: 피보나치 수열 (DP 방식)
+  
+  ```python
+  def fib(n):
+      dp = [0] * (n + 1)
+      dp[1] = dp[2] = 1
+  
+      for i in range(3, n + 1):
+          dp[i] = dp[i-1] + dp[i-2]
+  
+      return dp[n]
+  
+  
+  print(fib(10))  # 55
+  ```
+  
+  - 예시 2: 계단 오르기 문제
+    - 한 번에 1칸 또는 2칸 오를 수 있을 때  
+      n칸을 오르는 방법의 수 구하기
+  
+  ```python
+  def climb(n):
+      dp = [0] * (n + 1)
+      dp[1], dp[2] = 1, 2
+  
+      for i in range(3, n + 1):
+          dp[i] = dp[i-1] + dp[i-2]
+  
+      return dp[n]
+  
+  
+  print(climb(5))  # 8
+  ```
+  
+  - 시간 복잡도
+    - 대부분 O(N) 또는 O(N²)
+    - 중복 계산 제거가 핵심
+  
+  - 특징 요약
+    - 재귀의 비효율을 해결한 기법
+    - "최적해", "최소/최대", "경우의 수" 문제에 자주 등장
+    - 메모이제이션과 같은 개념에서 출발하지만 구현 방식이 다름
 
 - 백트래킹 (Backtracking)
   - 개념  
