@@ -431,6 +431,22 @@
     - int(), float(), str(), list(), tuple(), set()
 
 ## 함수(Function)
+
+### 제너레이터 (Generator)
+```python
+def count_up(n):
+    i=1
+    while i<=n:
+        yield i
+        i+=1
+```
+
+### 타입 힌트 (Type Hint)
+```python
+def add(x: int, y: int) -> int:
+    return x+y
+```
+
 - What?
   - 특정 작업을 수행하기 위한 재사용 가능 코드 묶음
   - 구조
@@ -696,7 +712,23 @@
         # 출력: [('철수', 90), ('영희', 85)]
         ```
 
-## 모듈 
+## 모듈
+
+### 파일 입출력
+
+### 자주 쓰는 표준 라이브러리
+```python
+from pathlib import Path
+from datetime import datetime
+import random
+import logging
+```
+
+```python
+with open("example.txt","w",encoding="utf-8") as f:
+    f.write("Hello Python")
+```
+ 
 - what ?
   - 한 파일로 묶인 변수와 함수의 모음
   ```python
@@ -1255,6 +1287,17 @@
     ```
 
 ## 클래스
+
+### dataclass
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Person:
+    name: str
+    age: int
+```
+
 - 객체지향 프로그래밍(OOP) vs 절차지향 프로그래밍
   - 내용, 설명  
     - 절차지향 프로그래밍은 데이터와 함수가 서로 분리되어 있음  
@@ -4891,6 +4934,33 @@
 
 ## Matplotlib
 
+## collections
+
+## itertools
+- 반복 가능한 객체를 조합/순열 등으로 다루는 모듈
+```python
+from itertools import permutations, combinations
+
+print(list(permutations([1,2,3],2)))
+print(list(combinations([1,2,3],2)))
+```
+
+- 파이썬 표준 라이브러리로, 자료구조를 더 효율적으로 다루기 위한 모듈
+- 자주 사용하는 구조
+  - Counter: 요소 개수 세기
+  - deque: 양방향 큐 (BFS에서 자주 사용)
+
+```python
+from collections import Counter, deque
+
+print(Counter("banana"))  # Counter({'a': 3, 'n': 2, 'b': 1})
+
+dq = deque([1,2,3])
+dq.appendleft(0)
+print(dq)  # deque([0,1,2,3])
+```
+
+
 
 - Matplotlib의 포인트
   - Matplotlib는 데이터 시각화(그래프)를 위한 기본 라이브러리예요.
@@ -5016,48 +5086,3 @@
   - 제목, 축 이름, 범례를 넣으면 가독성이 좋아짐
 
 
-# Python 실무 · 중급 보강
-
-## 파일 입출력
-- 파일을 읽고 쓰는 기능은 실무와 알고리즘 모두에서 중요
-```python
-with open("data.txt", "w", encoding="utf-8") as f:
-    f.write("Hello")
-```
-
-## 제너레이터 (yield)
-```python
-def gen(n):
-    for i in range(n):
-        yield i
-```
-
-## 타입 힌트
-```python
-def add(a: int, b: int) -> int:
-    return a + b
-```
-
-## dataclass
-```python
-from dataclasses import dataclass
-
-@dataclass
-class Person:
-    name: str
-    age: int
-```
-
-## collections / itertools
-```python
-from collections import Counter, deque
-from itertools import permutations, combinations
-```
-
-## 표준 라이브러리
-```python
-from pathlib import Path
-from datetime import datetime
-import random
-import logging
-```
