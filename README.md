@@ -155,9 +155,9 @@
         - is 연산자는 주로 싱글턴 객체 (None, True, False 등 파이썬에 단 하나뿐인 객체) 비교에 사용 
       - 논리 연산자 : and, or, not
           ```python
-          print(True and False) # False
-          print(True or False) # True
-          print(not 0) # True
+            print(True and False) # False
+            print(True or False) # True
+            print(not 0) # True
           ```
         - 단축 평가
           - and 연산자 : 처음 만나는 거짓 값을 반환, 아니면 마지막 참 값을 반환
@@ -841,9 +841,11 @@
   - 호출 방식
       - 함수
       ```python
+    
       def func():
           pass
 
+    
       func()
       # 출력: None (아무것도 반환하지 않음)
       ```
@@ -2612,6 +2614,9 @@
 
 # Numpy
 
+
+# 라이브러리
+
 ## Numpy를 왜 쓰나?
 - 파이썬 리스트도 숫자 배열을 담을 수 있지만, Numpy는 **대량의 숫자 계산**을 빠르게 하기 위해 만들어졌어요.
   - 내부적으로 C로 최적화되어 있고, 벡터/행렬 연산이 강함
@@ -2788,7 +2793,7 @@
 
 # Pandas
 
-## Pandas를 왜 쓰나?
+## Pandas## Pandas를 왜 쓰나?
 - Pandas는 **표 형태(엑셀 같은)** 데이터를 다루는 데 특화된 라이브러리예요.
   - `DataFrame`(표), `Series`(한 열) 중심
   - 결측치 처리, 그룹 연산, 시간 데이터 처리 등이 강점
@@ -5009,4 +5014,61 @@
   | 백트래킹 | 되돌아가기 | 가지치기 |
   | 그래프 탐색 | 연결 따라 탐색 | DFS, BFS |
 
-  
+---
+
+# Python 실무 · 중급 보강
+
+## 파일 입출력
+```python
+with open("test.txt", "w", encoding="utf-8") as f:
+    f.write("Hello Python")
+```
+
+## 제너레이터
+```python
+def count_up(n):
+    i = 1
+    while i <= n:
+        yield i
+        i += 1
+```
+
+## 타입 힌트
+```python
+def add(x: int, y: int) -> int:
+    return x + y
+```
+
+## dataclass
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Person:
+    name: str
+    age: int
+```
+
+## collections
+```python
+from collections import Counter, deque
+```
+
+## itertools
+```python
+from itertools import permutations, combinations
+```
+
+## __name__ == "__main__"
+```python
+if __name__ == "__main__":
+    print("실행 파일로 동작")
+```
+
+## pathlib / datetime / random / logging
+```python
+from pathlib import Path
+from datetime import datetime
+import random
+import logging
+```
