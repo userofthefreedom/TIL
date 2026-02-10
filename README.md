@@ -4571,9 +4571,9 @@
 
 - Numpy를 왜 쓰나?
 
-- 파이썬 리스트도 숫자 배열을 담을 수 있지만, Numpy는 **대량의 숫자 계산**을 빠르게 하기 위해 만들어졌어요.
-  - 내부적으로 C로 최적화되어 있고, 벡터/행렬 연산이 강함
-  - 데이터 분석/머신러닝에서 Pandas의 바닥 데이터로도 자주 쓰임
+  - 파이썬 리스트도 숫자 배열을 담을 수 있지만, Numpy는 **대량의 숫자 계산**을 빠르게 하기 위해 만들어졌어요.
+    - 내부적으로 C로 최적화되어 있고, 벡터/행렬 연산이 강함
+    - 데이터 분석/머신러닝에서 Pandas의 바닥 데이터로도 자주 쓰임
 
 - Numpy란?
   - 내용, 설명  
@@ -4748,9 +4748,9 @@
 
 - Pandas를 왜 쓰나?
 
-- Pandas는 **표 형태(엑셀 같은)** 데이터를 다루는 데 특화된 라이브러리예요.
-  - `DataFrame`(표), `Series`(한 열) 중심
-  - 결측치 처리, 그룹 연산, 시간 데이터 처리 등이 강점
+  - Pandas는 **표 형태(엑셀 같은)** 데이터를 다루는 데 특화된 라이브러리예요.
+    - `DataFrame`(표), `Series`(한 열) 중심
+    - 결측치 처리, 그룹 연산, 시간 데이터 처리 등이 강점
 
 
 - Pandas란?
@@ -4762,131 +4762,130 @@
 
 - 기초
 
-
-- Pandas 불러오기
-  ```py
-  import pandas as pd
-  ```
-- Series 생성
-  - 내용, 설명  
-    - 1차원 데이터 구조
-    - 인덱스 + 값 구조
-  ```py
-  s = pd.Series([10, 20, 30])
-  print(s)
-  # 출력:
-  # 0    10
-  # 1    20
-  # 2    30
-  # dtype: int64
-  ```
-  - 주의점  
-    - 리스트와 다르게 인덱스가 함께 존재
-- DataFrame 생성
-  - 내용, 설명  
-    - 2차원 테이블 구조
-    - 열(column)은 각각 Series로 구성됨
-  ```py
-  data = {"name": ["Alice", "Bob"], "age": [25, 30]}
-  df = pd.DataFrame(data)
-  print(df)
-  # 출력:
-  #     name  age
-  # 0  Alice   25
-  # 1    Bob   30
-  ```
-- 데이터 확인 함수
-  - 원리  
-    - 데이터 구조와 상태를 빠르게 파악하기 위한 함수들
-  ```py
-  df.head()      # 상위 5행
-  df.info()      # 데이터 타입과 결측치
-  df.describe()  # 숫자형 통계 요약
-  ```
-- 열 선택
-  ```py
-  df["name"]
-  # 출력: name 열 Series
-
-  df[["name","age"]]
-  # 출력: 두 열로 구성된 DataFrame
-  ```
-  - 주의점  
-    - 대괄호 2개 쓰면 DataFrame 유지
-- 행 선택 (loc vs iloc)
-  - loc → 인덱스 기준 / iloc → 위치 기준
-  ```py
-  df.loc[0]
-  df.iloc[0]
-  ```
-  - 주의점  
-    - loc은 라벨, iloc은 숫자 위치
-- 조건 필터링
-  ```py
-  df[df["age"] > 25]
-  # 출력: age가 25 초과인 행만 표시
-  ```
-  - 원리  
-    - 조건식이 True인 행만 남김
-- 결측치 처리
-  ```py
-  df.isnull()
-  df.dropna()
-  df.fillna(0)
-  ```
-  - 주의점  
-    - dropna()는 기본적으로 행 삭제
+  
+  - Pandas 불러오기
+    ```py
+    import pandas as pd
+    ```
+  - Series 생성
+    - 내용, 설명  
+      - 1차원 데이터 구조
+      - 인덱스 + 값 구조
+    ```py
+    s = pd.Series([10, 20, 30])
+    print(s)
+    # 출력:
+    # 0    10
+    # 1    20
+    # 2    30
+    # dtype: int64
+    ```
+    - 주의점  
+      - 리스트와 다르게 인덱스가 함께 존재
+  - DataFrame 생성
+    - 내용, 설명  
+      - 2차원 테이블 구조
+      - 열(column)은 각각 Series로 구성됨
+    ```py
+    data = {"name": ["Alice", "Bob"], "age": [25, 30]}
+    df = pd.DataFrame(data)
+    print(df)
+    # 출력:
+    #     name  age
+    # 0  Alice   25
+    # 1    Bob   30
+    ```
+  - 데이터 확인 함수
+    - 원리  
+      - 데이터 구조와 상태를 빠르게 파악하기 위한 함수들
+    ```py
+    df.head()      # 상위 5행
+    df.info()      # 데이터 타입과 결측치
+    df.describe()  # 숫자형 통계 요약
+    ```
+  - 열 선택
+    ```py
+    df["name"]
+    # 출력: name 열 Series
+  
+    df[["name","age"]]
+    # 출력: 두 열로 구성된 DataFrame
+    ```
+    - 주의점  
+      - 대괄호 2개 쓰면 DataFrame 유지
+  - 행 선택 (loc vs iloc)
+    - loc → 인덱스 기준 / iloc → 위치 기준
+    ```py
+    df.loc[0]
+    df.iloc[0]
+    ```
+    - 주의점  
+      - loc은 라벨, iloc은 숫자 위치
+  - 조건 필터링
+    ```py
+    df[df["age"] > 25]
+    # 출력: age가 25 초과인 행만 표시
+    ```
+    - 원리  
+      - 조건식이 True인 행만 남김
+  - 결측치 처리
+    ```py
+    df.isnull()
+    df.dropna()
+    df.fillna(0)
+    ```
+    - 주의점  
+      - dropna()는 기본적으로 행 삭제
 
 - 고급
-
-
-- 열 추가
-  ```py
-  df["age_plus_5"] = df["age"] + 5
-  ```
-  - 원리  
-    - 벡터 연산으로 전체 열에 적용됨
-- 정렬
-  ```py
-  df.sort_values("age")
-  ```
-  - 주의점  
-    - 원본 변경 안 됨 → 필요시 inplace=True
-- 그룹 연산 (groupby)
-  - 원리  
-    - 특정 기준으로 묶고 집계 수행
-  ```py
-  df.groupby("name")["age"].mean()
-  ```
-  - 출력: 이름별 평균 나이
-- 여러 집계
-  ```py
-  df.groupby("name")["age"].agg(["mean","max"])
-  ```
-- 병합 (merge)
-  - 원리  
-    - SQL의 JOIN과 동일한 개념
-  ```py
-  pd.merge(df1, df2, on="id", how="inner")
-  ```
-- 연결 (concat)
-  ```py
-  pd.concat([df1, df2])        # 행 방향
-  pd.concat([df1, df2], axis=1) # 열 방향
-  ```
-- 피벗 테이블
-  ```py
-  df.pivot_table(values="age", index="name", aggfunc="mean")
-  ```
-- 문자열 처리
-  ```py
-  df["name"].str.upper()
-  ```
-- 날짜 처리
-  ```py
-  df["date"] = pd.to_datetime(df["date"])
-  df["year"] = df["date"].dt.year
-  ```
+  
+  - 열 추가
+    ```py
+    df["age_plus_5"] = df["age"] + 5
+    ```
+    - 원리  
+      - 벡터 연산으로 전체 열에 적용됨
+  - 정렬
+    ```py
+    df.sort_values("age")
+    ```
+    - 주의점  
+      - 원본 변경 안 됨 → 필요시 inplace=True
+  - 그룹 연산 (groupby)
+    - 원리  
+      - 특정 기준으로 묶고 집계 수행
+    ```py
+    df.groupby("name")["age"].mean()
+    ```
+    - 출력: 이름별 평균 나이
+  - 여러 집계
+    ```py
+    df.groupby("name")["age"].agg(["mean","max"])
+    ```
+  - 병합 (merge)
+    - 원리  
+      - SQL의 JOIN과 동일한 개념
+    ```py
+    pd.merge(df1, df2, on="id", how="inner")
+    ```
+  - 연결 (concat)
+    ```py
+    pd.concat([df1, df2])        # 행 방향
+    pd.concat([df1, df2], axis=1) # 열 방향
+    ```
+  - 피벗 테이블
+    ```py
+    df.pivot_table(values="age", index="name", aggfunc="mean")
+    ```
+  - 문자열 처리
+    ```py
+    df["name"].str.upper()
+    ```
+  - 날짜 처리
+    ```py
+    df["date"] = pd.to_datetime(df["date"])
+    df["year"] = df["date"].dt.year
+    ```
 
 
 
@@ -4894,11 +4893,9 @@
 
 
 - Matplotlib의 포인트
-
-- Matplotlib는 데이터 시각화(그래프)를 위한 기본 라이브러리예요.
-  - 흐름: 데이터 준비 → `plt.plot/scatter/bar/...` → `plt.title/xlabel/ylabel` → `plt.show()`
-  - 그래프가 안 뜨면(주로 노트북/환경 문제) `plt.show()` 호출 여부부터 체크
-
+  - Matplotlib는 데이터 시각화(그래프)를 위한 기본 라이브러리예요.
+    - 흐름: 데이터 준비 → `plt.plot/scatter/bar/...` → `plt.title/xlabel/ylabel` → `plt.show()`
+    - 그래프가 안 뜨면(주로 노트북/환경 문제) `plt.show()` 호출 여부부터 체크
 
 - Matplotlib란?
   - 내용, 설명  
