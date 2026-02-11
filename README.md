@@ -726,29 +726,167 @@
     def add(x: int, y: int) -> int:
         return x + y
     ```
+  
+- 재바인딩(Rebinding) vs 뮤테이션(Mutation) + global/스코프 정리
+  - 핵심 요약
+    - **뮤테이션**: “같은 객체” 내부를 바꿈 (list/dict/set 등 mutable)
+      - 예: `lst.append(1)`, `d["k"]=v`, `s.add(x)`
+      - ✅ 함수 안에서 해도 바깥(호출자)에서 변화가 보일 수 있음 (같은 객체를 공유하면)
+      - ❌ global 필요 없음 (이름 재할당이 아니라 객체 내부 변경이기 때문)
+    - **재바인딩**: “이름(변수)”이 가리키는 대상을 바꿈 (새 객체로 연결)
+      - 예: `x = x + 1`, `lst = lst + [1]`, `d = {"a":1}`
+      - ⚠️ 함수 안에서 지역변수로 처리됨(기본) → 바깥 변수와 다른 이름이 됨
+      - ✅ global/nonlocal이 필요한 대표 케이스
 
+  - 왜 이런 차이가 생기나? (원리/이론)
+    - 파이썬에서 “변수”는 값 그 자체가 아니라 **객체를 가리키는 이름표(reference)**에 가깝다
+      - `x`라는 이름이 어떤 객체를 가리키고 있을 뿐
+    - 함수 스코프에서 중요한 규칙
+      - 함수 안에서 어떤 이름에 **대입(=)** 이 한 번이라도 등장하면,
+        그 이름은 그 함수 안에서 **지역 변수(local)** 로 취급된다 (컴파일 단계에서 결정)
+      - 그래서 “대입 전에 읽기”가 나오면 `UnboundLocalError`가 터질 수 있다
+    - 반면, `lst.append(...)` 같은 건
+      - `lst`라는 이름에 대입하는 게 아니라
+      - `lst`가 가리키는 객체의 메서드를 호출해서 내부를 바꾸는 것(뮤테이션)이라
+      - 스코프 규칙에 의해 `lst`가 local로 바뀌지 않는다
 
-- 재바인딩(Rebinding) vs 뮤테이션(Mutation)
-  - 재바인딩: 변수가 다른 객체를 가리키도록 변경
-  - 뮤테이션: 같은 객체 내부 데이터를 변경
-  - 예시
+  - global 이 “필요한 상황 / 아닌 상황”
+    - ✅ global이 필요한 상황(함수 안에서 “모듈 전역 변수 이름”을 재바인딩해야 할 때)
+      - 전역 숫자 카운터 증가: `cnt += 1`
+      - 전역 리스트를 “새 리스트로 교체”: `nums = nums + [x]` 또는 `nums = []`
+      - 전역 dict를 “새 dict로 교체”: `d = {**d, "k": v}`
+    - ❌ global이 필요 없는 상황(전역 객체를 “뮤테이션”만 할 때)
+      - `nums.append(x)`, `nums.pop()`, `nums.sort()`
+      - `d["k"]=v`, `d.update(...)`, `d.pop(...)`
+      - `s.add(x)`, `s.remove(x)`
+      - `visited[y][x] = 1` 처럼 “전역 리스트/2차원 리스트 내부 값 변경”
+    - ⚠️ global은 필요 없지만, 실무적으로 조심해야 하는 상황
+      - 함수가 전역 리스트를 직접 append 해버리면 “부작용(side effect)”이 커짐
+      - 테스트/재사용성이 떨어질 수 있음 → 복사본으로 작업하거나 반환값으로 처리 권장
+
+  - 가장 헷갈리는 포인트: `+=` 는 재바인딩? 뮤테이션?
+    - 결론: 타입에 따라 다르다
+      - `int/str/tuple` (immutable)에서 `+=`는 **재바인딩**
+        - `x += 1`  → 새 int를 만들고 x가 그걸 가리킴 → 함수 안이면 global 필요
+        - `s += "a"` → 새 str 생성 → global 필요
+      - `list` (mutable)에서 `+=`는 보통 **in-place 확장(뮤테이션)** (`list.__iadd__`)
+        - `lst += [1]`는 대개 리스트를 제자리에서 확장 → global 없이도 동작할 수 있음
+      - 하지만 코드 가독성/혼란 때문에
+        - 전역을 다룰 땐 `+=` 대신 `append/extend` 또는 명시적 재할당을 추천
+
+  - 예시 1) UnboundLocalError: “읽기 + 대입” 조합이 만드는 함정
     ```py
-    def rebinding(lst):
-        lst = lst + [99]
-        return lst
+    cnt = 0
 
-    def mutation(lst):
-        lst.append(99)
-        return lst
+    def inc():
+        # cnt += 1 은 내부적으로 cnt = cnt + 1 과 같음 (대입 발생)
+        # 따라서 cnt를 local로 판단함
+        # 그런데 오른쪽에서 cnt를 읽으려 하니 (로컬 cnt는 아직 없음)
+        # UnboundLocalError 발생
+        cnt += 1
 
+    inc()
+    # UnboundLocalError: local variable 'cnt' referenced before assignment
+    ```
+
+  - 예시 2) global로 재바인딩 허용하기
+    ```py
+    cnt = 0
+
+    def inc():
+        global cnt
+        cnt += 1
+
+    inc()
+    inc()
+    print(cnt)  # 2
+    ```
+
+  - 예시 3) 전역 리스트 “뮤테이션”은 global 없이 된다
+    ```py
     nums = [1, 2]
 
-    print(rebinding(nums))  # [1, 2, 99]
-    print(nums)             # [1, 2]
+    def add_value():
+        nums.append(3)  # 뮤테이션(객체 내부 변경) → global 불필요
 
-    print(mutation(nums))   # [1, 2, 99]
-    print(nums)             # [1, 2, 99]
+    add_value()
+    print(nums)  # [1, 2, 3]
     ```
+
+  - 예시 4) 전역 리스트를 “교체(재바인딩)”하면 global 필요
+    ```py
+    nums = [1, 2]
+
+    def replace_list():
+        # nums = nums + [3] 는 새 리스트를 만들어 nums 이름을 새 객체로 바꿈(재바인딩)
+        # 함수 안에서는 nums가 local로 간주되어 에러가 나거나(읽기 포함 시)
+        # 혹은 전역이 안 바뀜
+        # nums = nums + [3]  # (대개 UnboundLocalError)
+
+        global nums
+        nums = nums + [3]
+
+    replace_list()
+    print(nums)  # [1, 2, 3]
+    ```
+
+  - 예시 5) 전역 2차원 배열 visited는 왜 global 없이 되나? (너가 질문했던 케이스!)
+    - 포인트: `visited` 이름을 바꾸는 게 아니라, **visited가 가리키는 리스트 내부 값을 바꾸는 것**
+    ```py
+    visited = [[0, 0], [0, 0]]
+
+    def mark():
+        visited[0][1] = 1  # 내부 원소 변경(뮤테이션) → global 불필요
+
+    mark()
+    print(visited)  # [[0, 1], [0, 0]]
+    ```
+
+  - 예시 6) dict도 동일한 규칙
+    ```py
+    d = {"a": 1}
+
+    def mutate_dict():
+        d["b"] = 2  # 뮤테이션 → global 불필요
+
+    def rebind_dict():
+        global d
+        d = {"a": 1, "b": 2}  # 재바인딩 → global 필요
+
+    mutate_dict()
+    print(d)  # {'a': 1, 'b': 2}
+    ```
+
+  - 예시 7) “전역을 굳이 global로 쓰지 않는” 더 좋은 패턴(추천)
+    - (1) 값을 반환해서 바깥에서 갱신
+    ```py
+    def inc(cnt):
+        return cnt + 1
+
+    cnt = 0
+    cnt = inc(cnt)
+    print(cnt)  # 1
+    ```
+
+    - (2) mutable을 수정하되, 명시적으로 “부작용 함수”임을 드러내기
+    ```py
+    def add_inplace(nums, x):
+        nums.append(x)  # 이 함수는 nums를 직접 바꿈(부작용)
+        # 반환을 안 해도 됨(혹은 return None)
+
+    nums = [1, 2]
+    add_inplace(nums, 3)
+    print(nums)  # [1, 2, 3]
+    ```
+
+  - 결론 체크리스트 (global 판단 빠르게)
+    - 함수 안에서 어떤 이름에 `=` / `+=` / `-=` / `*=` / `/=` 가 나오나?
+      - 나오면 “재바인딩 가능성” ↑ → 전역을 바꿔야 하면 global 고려
+    - `.append`, `.extend`, `d[k]=v`, `visited[y][x]=...` 처럼 “내부 수정”인가?
+      - 그럼 뮤테이션 → global 필요 없음
+    - 전역 변수를 직접 바꾸는 설계가 계속 필요해 보이나?
+      - 가능하면 “반환값으로 갱신” 패턴이 더 안전하고 테스트하기 좋음
+
 
 
 ## 모듈 
