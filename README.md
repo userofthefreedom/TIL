@@ -9,10 +9,10 @@
   - [클래스](#클래스)
   - [상속 (Inheritance)](#상속-inheritance)
   - [에러(Error)와 예외(Exception) 처리](#에러error와-예외exception-처리)
-  - [Python으로 “클라이언트 → 서버 요청” 정리 (requests 중심)](#python으로-클라이언트-서버-요청-정리-requests-중심)
+  - [Python으로 “클라이언트 → 서버 요청” 정리 (requests 중심)](#python으로-클라이언트--서버-요청-정리-requests-중심)
 - [CLI 기본 명령어](#cli-기본-명령어)
-- [Git 활용법 정리 (기능 + 예시)](#git-활용법-정리-기능-예시)
-- [Markdown / README 작성법 정리](#markdown-readme-작성법-정리)
+- [Git 활용법 정리 (기능 + 예시)](#git-활용법-정리-기능--예시)
+- [Markdown / README 작성법 정리](#markdown--readme-작성법-정리)
 - [알고리즘(Algorithm) 기초](#알고리즘algorithm-기초)
   - [개념](#개념)
   - [시간 복잡도](#시간-복잡도)
@@ -24,15 +24,15 @@
   - [재귀 호출 (Recursion)](#재귀-호출-recursion)
   - [알고리즘 설계 전략](#알고리즘-설계-전략)
 - [라이브러리](#라이브러리)
-  - [Numpy](#numpy)
-  - [Pandas](#pandas)
-  - [Matplotlib](#matplotlib)
   - [collections](#collections)
   - [itertools](#itertools)
   - [pathlib (Path)](#pathlib-path)
   - [datetime](#datetime)
   - [random](#random)
   - [logging](#logging)
+  - [Numpy](#numpy)
+  - [Pandas](#pandas)
+  - [Matplotlib](#matplotlib)
 
 # Python Study Notes
 
@@ -726,6 +726,31 @@
     def add(x: int, y: int) -> int:
         return x + y
     ```
+
+
+- 재바인딩(Rebinding) vs 뮤테이션(Mutation)
+  - 재바인딩: 변수가 다른 객체를 가리키도록 변경
+  - 뮤테이션: 같은 객체 내부 데이터를 변경
+  - 예시
+    ```py
+    def rebinding(lst):
+        lst = lst + [99]
+        return lst
+
+    def mutation(lst):
+        lst.append(99)
+        return lst
+
+    nums = [1, 2]
+
+    print(rebinding(nums))  # [1, 2, 99]
+    print(nums)             # [1, 2]
+
+    print(mutation(nums))   # [1, 2, 99]
+    print(nums)             # [1, 2, 99]
+    ```
+
+
 ## 모듈 
 - what ?
   - 한 파일로 묶인 변수와 함수의 모음
