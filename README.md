@@ -4793,7 +4793,106 @@
   - 대표 알고리즘  
     - DFS (깊이 우선 탐색)  
     - BFS (너비 우선 탐색)
+  - 위상정렬 (Topological Sort)
+    - what?
+      - 방향 그래프에서 “선후 관계(의존성)”를 지키면서 노드를 나열하는 방법
+      - 반드시 **DAG (Directed Acyclic Graph)** 에서만 가능
+      - 사이클이 존재하면 위상정렬 불가능
   
+    - 언제 쓰나?
+      - 선수 과목 문제
+      - 작업 순서 결정
+      - 빌드 순서
+      - 이벤트 처리 순서
+  
+    - 핵심 개념
+      - 진입차수 (in-degree)
+        - 한 노드로 들어오는 간선 개수
+        - 진입차수 0 → 지금 당장 수행 가능
+      - 모든 선행 조건이 끝나야 다음 작업 가능
+      - 진입차수 0이 여러 개면 여러 정답 존재 가능
+  
+    - 예시 그래프
+      - 1 → 3
+      - 2 → 3
+      - 3 → 4
+      - 2 → 5
+      - 5 → 4
+  
+    - 코드 구현 (Kahn 알고리즘)
+      ```py
+      from collections import deque
+  
+      n = 5
+      edges = [
+          (1, 3),
+          (2, 3),
+          (3, 4),
+          (2, 5),
+          (5, 4)
+      ]
+  
+      graph = [[] for _ in range(n + 1)]
+      indegree = [0] * (n + 1)
+  
+      for a, b in edges:
+          graph[a].append(b)
+          indegree[b] += 1
+  
+      queue = deque()
+  
+      for i in range(1, n + 1):
+          if indegree[i] == 0:
+              queue.append(i)
+  
+      result = []
+  
+      while queue:
+          now = queue.popleft()
+          result.append(now)
+  
+          for next_node in graph[now]:
+              indegree[next_node] -= 1
+              if indegree[next_node] == 0:
+                  queue.append(next_node)
+  
+      print(result)
+      ```
+  
+      실행 결과:
+      ```
+      [1, 2, 3, 5, 4]
+      ```
+      (1과 2의 순서에 따라 다른 결과가 나올 수도 있음)
+  
+    - 사이클 판별
+      ```py
+      if len(result) != n:
+          print("사이클 존재")
+      ```
+  
+      예시 (사이클 존재하는 경우)
+      ```py
+      n = 3
+      edges = [(1, 2), (2, 3), (3, 1)]
+      ```
+  
+      실행 결과:
+      ```
+      []
+      사이클 존재
+      ```
+  
+    - 시간 복잡도
+      - O(V + E)
+        - V: 노드 개수
+        - E: 간선 개수
+  
+    - 이해 포인트
+      - 큐에는 항상 “지금 당장 가능한 것”이 들어간다
+      - 부모 하나가 아니라 “모든 부모”가 끝나야 가능
+      - 순서가 여러 개 존재할 수 있다
+    
 - 한눈에 비교
 
   | 전략 | 핵심 아이디어 | 대표 키워드 |
