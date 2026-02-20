@@ -4388,6 +4388,7 @@
     - N개의 노드는 N-1개의 간선을 가짐
     - 선형 자료구조(배열, 스택, 큐)와 달리
       계층 구조를 표현하기 위한 비선형 자료구조
+      
   - 트리가 필요한 이유
     - 파일 시스템
     - 조직도
@@ -4433,8 +4434,207 @@
            /   \      /   \
          D(4) E(5)  F(6) G(7)
         ```
-    
+  - 이진 트리 구조 구분
+
+    - 일반 이진 트리 (Binary Tree)
+      - 각 노드는 최대 2개의 자식을 가질 수 있음
+      - 자식이 0개, 1개, 2개 모두 가능
+      - 구조에 대한 제한은 없음
   
+      예시
+          A
+         /
+        B
+         \
+          C
+  
+    - 완전 이진 트리 (Complete Binary Tree)
+      - 마지막 레벨을 제외한 모든 레벨이 꽉 차 있음
+      - 마지막 레벨은 왼쪽부터 채워짐
+      - 중간 인덱스가 비지 않음
+  
+      예시
+      ```
+      (O)
+              A
+            /   \
+           B     C
+          / \   /
+         D  E  F
+      
+
+  
+      (X)
+              A
+            /   \
+           B     C
+            \   /
+             E F
+      → 왼쪽이 비었는데 오른쪽이 먼저 채워짐
+      ```
+      - 힙 (Heap)
+      
+        - 정의
+          - 완전 이진 트리 구조
+          - 부모와 자식 사이에만 대소 관계를 만족
+          - 전체가 정렬된 구조는 아니다
+      
+        - 종류
+          - Max Heap
+            - 부모 ≥ 자식
+            - 루트가 가장 큰 값
+          - Min Heap
+            - 부모 ≤ 자식
+            - 루트가 가장 작은 값
+      
+        - 왜 완전 이진 트리인가
+          - 마지막 레벨까지 왼쪽부터 채워진 구조
+          - 배열로 안전하게 표현 가능
+          - 트리 높이가 최소가 되어 연산이 빠르다
+          - 높이 ≈ log N
+      
+        - 배열 기반 표현
+      
+          - 왼쪽 자식 = i * 2
+          - 오른쪽 자식 = i * 2 + 1
+          - 부모 = i // 2
+      
+        - Max Heap 구현
+      
+          ```python
+          arr = [6,4,2,34,6,5,3,2,43]
+          heap = [0] * 20
+          hindex = 1
+      
+      
+          def Insert(value):
+              global hindex
+              heap[hindex] = value
+              now = hindex
+              hindex += 1
+      
+              # heapify up
+              while True:
+                  p = now // 2
+                  if p == 0:
+                      break
+                  if heap[p] >= heap[now]:
+                      break
+                  heap[p], heap[now] = heap[now], heap[p]
+                  now = p
+      
+      
+          def Top():
+              return heap[1]
+      
+      
+          def Pop():
+              global hindex
+              hindex -= 1
+              heap[1] = heap[hindex]
+              heap[hindex] = 0
+      
+              now = 1
+      
+              # heapify down
+              while True:
+                  son = now * 2
+                  rson = son + 1
+      
+                  # 더 큰 자식 선택
+                  if rson < hindex and heap[son] < heap[rson]:
+                      son = rson
+      
+                  if son >= hindex or heap[now] >= heap[son]:
+                      break
+      
+                  heap[now], heap[son] = heap[son], heap[now]
+                  now = son
+      
+      
+          for v in arr:
+              Insert(v)
+      
+          for _ in range(len(arr)):
+              print(Top(), end=" ")
+              Pop()
+      
+          # 출력: 43 34 6 6 5 4 3 2 2
+          ```
+      
+        - 연산 원리
+      
+          - 삽입
+            - 마지막 위치에 추가
+            - 부모와 비교
+            - 필요하면 위로 swap
+            - heapify up
+      
+          - 삭제 (루트 제거)
+            - 마지막 값을 루트로 이동
+            - 자식 중 더 큰 자식 선택
+            - 필요하면 아래로 swap
+            - heapify down
+      
+        - 시간 복잡도
+      
+          - Top: O(1)
+          - Insert: O(log N)
+          - Pop: O(log N)
+      
+        - BST와의 차이
+      
+          - BST
+            - 왼쪽 < 부모 < 오른쪽
+            - 탐색에 특화
+            - 일반 이진 트리 구조
+      
+          - Heap
+            - 부모 ≥ 자식 (또는 ≤)
+            - 최대/최소값 추출에 특화
+            - 완전 이진 트리 구조
+      
+        - 핵심 정리
+      
+          - 힙은 우선순위 큐를 구현하는 구조
+          - 완전 이진 트리 + 부모-자식 대소 관계
+          - 전체 정렬 구조는 아니다
+          - 루트는 항상 최대값(또는 최소값)
+      
+    - 포화 이진 트리 (Full Binary Tree)
+      - 모든 노드가 자식 0개 또는 2개
+      - 자식이 1개인 노드는 없음
+  
+      예시 
+      ```python
+      (O)
+              A
+            /   \
+           B     C
+          / \   / \
+         D  E  F  G
+  
+      (X)
+          A
+         /
+        B
+      → 자식이 1개
+
+  
+    - 포함 관계
+      - 포화 이진 트리 ⊂ 완전 이진 트리 ⊂ 일반 이진 트리
+      - 포화는 항상 완전이다
+      - 완전은 항상 일반이다
+      - 하지만 완전이 항상 포화는 아니다
+  
+    - 왜 이 구분이 중요한가
+      - 배열 기반 트리 표현은 완전 이진 트리일 때만 안전하다
+      - 우리가 사용한 공식
+          왼쪽 자식 = i * 2
+          오른쪽 자식 = i * 2 + 1
+        는 완전 이진 트리 전제에서만 성립한다
+      - 힙은 완전 이진 트리 → 배열 사용
+      - BST는 항상 완전이 아님 → 보통 Node 구조 사용
   
   - 트리 순회 (Traversal)
   
@@ -4537,58 +4737,220 @@
           # 출력: D E B F G C A
           ```
   
-  - 이진 탐색 트리 (BST)
+  - 이진 탐색 트리 (BST: Binary Search Tree)
   
-    - 규칙 : 왼쪽 < 부모 < 오른쪽
-    
-    - ✔ 삽입
-    
+    - 정의
+      - 왼쪽 서브트리의 모든 값 < 현재 노드
+      - 오른쪽 서브트리의 모든 값 > 현재 노드
+      - 이 조건을 모든 노드가 재귀적으로 만족
+  
+    - 구조적 특징
+      - 탐색, 삽입, 삭제가 모두 같은 비교 구조를 가진다
+      - 매 단계마다 한쪽 서브트리만 탐색한다
+      - 평균적으로 탐색 범위가 절반씩 줄어든다
+  
+    - Node 기반 표현 (연결 구조)
+  
       ```python
-      arr = [0]*20
-      lst = [4, 2, 9, 7, 15, 1, 3]
-      
-      def Insert(target):
-          now = 1
-          while True:
-              if arr[now] == 0:
-                  arr[now] = target
-                  return
-              elif arr[now] < target:
-                  now = now * 2 + 1
-              else:
-                  now = now * 2
-      
-      for i in lst:
-          Insert(i)
+      class Node:
+          def __init__(self, value):
+              self.value = value
+              self.left = None
+              self.right = None
       ```
-    
-    트리 구조:
+  
+      - 트리는 재귀적 구조
+        - 트리 = 현재 노드 + 왼쪽 서브트리 + 오른쪽 서브트리
+  
+    - 탐색 (Search)
+  
+      - 원리
+        - 현재 노드와 비교
+        - 작으면 왼쪽
+        - 크면 오른쪽
+        - 같으면 성공
+  
+      ```python
+      def search(node, target):
+          if node is None:
+              return False
+  
+          if node.value == target:
+              return True
+          elif target < node.value:
+              return search(node.left, target)
+          else:
+              return search(node.right, target)
+  
+  
+      # 예시
+      # print(search(root, 7))   # True
+      # print(search(root, 100)) # False
       ```
+  
+      - 시간 복잡도
+        - 평균: O(log N)
+        - 최악(편향 트리): O(N)
+  
+    - 삽입 (Insert)
+  
+      - 원리
+        - 탐색과 동일하게 내려간다
+        - None을 만나면 새 노드 생성
+  
+      ```python
+      def insert(node, target):
+          if node is None:
+              return Node(target)
+  
+          if target < node.value:
+              node.left = insert(node.left, target)
+          elif target > node.value:
+              node.right = insert(node.right, target)
+  
+          return node
+  
+  
+      # 트리 생성 예시
+      root = None
+      values = [4, 2, 9, 7, 15, 1, 3]
+  
+      for v in values:
+          root = insert(root, v)
+      ```
+  
+      - 핵심
+        - 항상 return node
+        - 부모가 정리된 서브트리를 다시 연결한다
+  
+      - 시간 복잡도
+        - 평균: O(log N)
+        - 최악: O(N)
+  
+    - 삭제 (Delete)
+  
+      - 삭제는 3가지 경우로 나뉜다
+  
+        1. 자식이 없는 경우 (리프 노드)
+           - 그냥 삭제
+           - return None
+  
+        2. 자식이 1개인 경우
+           - 자식 노드로 대체
+           - 부모가 삭제 노드를 건너뛰게 만든다
+  
+        3. 자식이 2개인 경우 (핵심)
+           - 오른쪽 서브트리의 최솟값 찾기
+           - 현재 노드 값을 그 값으로 교체
+           - 그 최솟값 노드를 다시 삭제 (재귀 호출)
+  
+      - 오른쪽 서브트리 최솟값 찾기
+  
+      ```python
+      def find_min(node):
+          while node.left:
+              node = node.left
+          return node
+      ```
+  
+      - 삭제 전체 구현
+  
+      ```python
+      def delete(node, target):
+          if node is None:
+              return None
+  
+          if target < node.value:
+              node.left = delete(node.left, target)
+  
+          elif target > node.value:
+              node.right = delete(node.right, target)
+  
+          else:
+              # case 1: 자식 없음
+              if node.left is None and node.right is None:
+                  return None
+  
+              # case 2: 자식 하나
+              if node.left is None:
+                  return node.right
+              if node.right is None:
+                  return node.left
+  
+              # case 3: 자식 둘
+              min_node = find_min(node.right)
+              node.value = min_node.value
+              node.right = delete(node.right, min_node.value)
+  
+          return node
+      ```
+  
+      - 예시
+  
+      ```python
+      root = delete(root, 4)
+      # 4 삭제 후에도 BST 조건 유지
+      ```
+  
+      - 시간 복잡도
+        - 평균: O(log N)
+        - 최악: O(N)
+  
+    - 높이 (Height)
+  
+      - 정의
+        - 루트부터 가장 깊은 리프까지의 노드 수
+  
+      ```python
+      def height(node):
+          if node is None:
+              return 0
+  
+          return 1 + max(height(node.left), height(node.right))
+  
+  
+      # print(height(root))  # 예: 3
+      ```
+  
+      - 시간 복잡도
+        - O(N)
+  
+    - BST 전체 흐름 요약
+  
+      - 모든 연산은 동일한 비교 구조를 가진다
+  
+        ```
+        if node is None:
+            처리
+  
+        if target < node.value:
+            왼쪽으로
+        elif target > node.value:
+            오른쪽으로
+        else:
+            찾음 → 처리
+        ```
+  
+      - 삽입 순서에 따라 트리가 한쪽으로 치우칠 수 있다
+  
+        예:
+        1 → 2 → 3 → 4 → 5
+  
+        구조:
+        1
+         \
+          2
+           \
+            3
+             \
               4
-            /   \
-           2     9
-          / \   / \
-         1  3  7  15
-      ```
+               \
+                5
   
+        → 이 경우 시간 복잡도는 O(N)
   
-    - ✔ 탐색
-    
-      ```python
-      def Search(target):
-          now = 1
-          while True:
-              if now >= 20:
-                  return 0
-              elif arr[now] == 0:
-                  return 0
-              elif arr[now] == target:
-                  return 1
-              elif arr[now] < target:
-                  now = now * 2 + 1
-              else:
-                  now = now * 2
-      ```
+      - 그래서 등장하는 개념
+        - 균형 이진 탐색 트리 (AVL, Red-Black Tree 등)
   
   - 시간 복잡도
     
