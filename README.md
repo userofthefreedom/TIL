@@ -4379,7 +4379,222 @@
     - 재귀 + 저장(캐시)의 조합
     - Top-Down DP의 핵심 기술
     - 시간 복잡도를 지수 → 선형으로 줄일 수 있다
+  
+## 🌳 트리(Tree)
 
+- 트리란 무엇인가
+  - 노드(Node)들이 부모-자식 관계로 연결된 구조
+  - 사이클이 없음 (돌아오지 않음)
+  - N개의 노드는 N-1개의 간선을 가짐
+  - 선형 자료구조(배열, 스택, 큐)와 달리
+    계층 구조를 표현하기 위한 비선형 자료구조
+- 트리가 필요한 이유
+  - 파일 시스템
+  - 조직도
+  - HTML DOM
+  - AI 의사결정 구조
+
+- 트리 기본 용어
+
+  - Root : 가장 위의 노드
+  - Parent : 부모 노드
+  - Child : 자식 노드
+  - Leaf : 자식이 없는 노드
+  - Depth : 루트로부터의 거리
+  - Height : 트리의 최대 깊이
+
+  예시 구조:
+  ```
+          A
+        /   \
+       B     C
+      / \
+     D   E
+  ```
+
+- 트리 표현 방법 : 배열로 표현 (완전 이진 트리 전용)
+  
+  - 인덱스 규칙
+  
+    왼쪽 자식 = now * 2  
+    오른쪽 자식 = now * 2 + 1  
+  
+  - 예시
+  
+    ```python
+    arr = " ABCDEFG"
+    ```
+  
+    트리 구조:
+      ```
+              A(1)
+            /       \
+          B(2)      C(3)
+         /   \      /   \
+       D(4) E(5)  F(6) G(7)
+      ```
+  
+
+
+- 트리 순회 (Traversal)
+
+  - DFS (깊이 우선 탐색)
+  
+    - 한 방향으로 끝까지 내려갔다가 돌아옴
+    - 재귀로 구현
+    
+      ```python
+      arr=" ABCDEFG"
+      
+      def dfs(now):
+          if now >= len(arr) or arr[now]==' ': 
+              return
+      
+          print(arr[now],end=' ')
+          dfs(now*2)
+          dfs(now*2+1)
+      
+      dfs(1)
+      # 출력: A B D E C F G
+      ```
+
+  - BFS (너비 우선 탐색)
+
+    - 같은 레벨을 먼저 방문
+    - 큐 사용 (FIFO)
+    
+      ```python
+      from collections import deque
+      
+      arr=" ABCDEFG"
+      
+      def bfs(now):
+          q=deque()
+          q.append(now)
+      
+          while q:
+              now=q.popleft()
+              print(arr[now],end=' ')
+              if now*2 <len(arr) and arr[now*2] !=' ':
+                  q.append(now*2)
+              if now*2+1 <len(arr) and arr[now*2+1] !=' ':
+                  q.append(now*2+1)
+      
+      bfs(1)
+      # 출력: A B C D E F G
+      ```
+
+  - 순회 3종 세트
+  
+    - ✔ Pre-order (전위)
+    
+      - 나 → 왼 → 오
+      
+        ```python
+        def pre_order(now):
+            if now > len(arr)-1:
+                return
+        
+            print(arr[now], end=" ")
+            pre_order(now*2)
+            pre_order(now*2+1)
+        
+        pre_order(1)
+        # 출력: A B D E C F G
+        ```
+    
+    - ✔ In-order (중위)
+    
+      - 왼 → 나 → 오
+      
+        ```python
+        def in_order(now):
+            if now > len(arr)-1:
+                return
+        
+            in_order(now*2)
+            print(arr[now], end=" ")
+            in_order(now*2+1)
+        
+        in_order(1)
+        # 출력: D B E A F C G
+        ```
+    
+    - ✔ Post-order (후위)
+    
+      - 왼 → 오 → 나
+      
+        ```python
+        def post_order(now):
+            if now > len(arr)-1:
+                return
+        
+            post_order(now*2)
+            post_order(now*2+1)
+            print(arr[now], end=" ")
+        
+        post_order(1)
+        # 출력: D E B F G C A
+        ```
+
+- 이진 탐색 트리 (BST)
+
+  - 규칙 : 왼쪽 < 부모 < 오른쪽
+  
+  - ✔ 삽입
+  
+    ```python
+    arr = [0]*20
+    lst = [4, 2, 9, 7, 15, 1, 3]
+    
+    def Insert(target):
+        now = 1
+        while True:
+            if arr[now] == 0:
+                arr[now] = target
+                return
+            elif arr[now] < target:
+                now = now * 2 + 1
+            else:
+                now = now * 2
+    
+    for i in lst:
+        Insert(i)
+    ```
+  
+  트리 구조:
+    ```
+            4
+          /   \
+         2     9
+        / \   / \
+       1  3  7  15
+    ```
+
+
+  - ✔ 탐색
+  
+    ```python
+    def Search(target):
+        now = 1
+        while True:
+            if now >= 20:
+                return 0
+            elif arr[now] == 0:
+                return 0
+            elif arr[now] == target:
+                return 1
+            elif arr[now] < target:
+                now = now * 2 + 1
+            else:
+                now = now * 2
+    ```
+
+- 시간 복잡도
+  
+  - DFS / BFS : O(N)
+  - BST 탐색 (균형) : O(log N)
+  - BST 최악 (한쪽 치우침) : O(N)
 
 ## 🧠 알고리즘 설계 전략
 
