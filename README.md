@@ -489,13 +489,13 @@
       print('kwargs:', kwargs)
 
   func(1, 2, 3, 4, 5, key1='value1')
-    ```
-    pos1: 1
-    pos2: 2
-    default_arg: 3
-    args: (4, 5)
-    kwargs: {'key1': 'value1'}
-    ```
+    
+  # pos1: 1
+  # pos2: 2
+  # default_arg: 3
+  # args: (4, 5)
+  # kwargs: {'key1': 'value1'}
+    
   ```
   - **실수하기 쉬운 포인트**
     - 기본값 인자는 반드시 뒤에 위치해야 함
@@ -539,7 +539,7 @@
     - global scope : 모듈 호출 이후 or 인터프리터 끝날때 까지
     - local scope : 함수 호출 시 생성, 종료 될때 까지
   - LEGB Rule
-    - 파이썬은 식별자를 특정 이름 공간에 저장하고, LECB Rule 순서에 따라 찾아 나간다
+    - 파이썬은 식별자를 특정 이름 공간에 저장하고, LEGB Rule 순서에 따라 찾아 나간다
     - local > enclosed > global > Built-in
   - global zldnjem
     - 변수의 스코프를 전역으로 확대한다
@@ -1097,7 +1097,7 @@
       # 출력: 2
       ```
 - 불변 시퀀스 method (문자열 전용)
-  -  탐색과 검증
+  - 탐색과 검증 
     - `.find()`
       - 값이 없으면 `-1` 반환 (에러 없음)
         ```py
@@ -1134,7 +1134,7 @@
       print(text.replace('world', 'Python', 1))
       # 출력: Hello Python world
       ```
-    -  `.strip()`
+    - `.strip()`
       - str.strip([chars])
         
     ```py
@@ -4380,583 +4380,221 @@
     - Top-Down DP의 핵심 기술
     - 시간 복잡도를 지수 → 선형으로 줄일 수 있다
   
-- 🌳 트리(Tree)
+## 🌳 트리(Tree)
 
-  - 트리란 무엇인가
-    - 노드(Node)들이 부모-자식 관계로 연결된 구조
-    - 사이클이 없음 (돌아오지 않음)
-    - N개의 노드는 N-1개의 간선을 가짐
-    - 선형 자료구조(배열, 스택, 큐)와 달리
-      계층 구조를 표현하기 위한 비선형 자료구조
-      
-  - 트리가 필요한 이유
-    - 파일 시스템
-    - 조직도
-    - HTML DOM
-    - AI 의사결정 구조
+- 트리란 무엇인가
+  - 노드(Node)들이 부모-자식 관계로 연결된 구조
+  - 사이클이 없음 (돌아오지 않음)
+  - N개의 노드는 N-1개의 간선을 가짐
+  - 선형 자료구조(배열, 스택, 큐)와 달리
+    계층 구조를 표현하기 위한 비선형 자료구조
+- 트리가 필요한 이유
+  - 파일 시스템
+  - 조직도
+  - HTML DOM
+  - AI 의사결정 구조
+
+- 트리 기본 용어
+
+  - Root : 가장 위의 노드
+  - Parent : 부모 노드
+  - Child : 자식 노드
+  - Leaf : 자식이 없는 노드
+  - Depth : 루트로부터의 거리
+  - Height : 트리의 최대 깊이
+
+  예시 구조:
+  ```
+          A
+        /   \
+       B     C
+      / \
+     D   E
+  ```
+
+- 트리 표현 방법 : 배열로 표현 (완전 이진 트리 전용)
   
-  - 트리 기본 용어
+  - 인덱스 규칙
   
-    - Root : 가장 위의 노드
-    - Parent : 부모 노드
-    - Child : 자식 노드
-    - Leaf : 자식이 없는 노드
-    - Depth : 루트로부터의 거리
-    - Height : 트리의 최대 깊이
+    왼쪽 자식 = now * 2  
+    오른쪽 자식 = now * 2 + 1  
   
-    예시 구조:
+  - 예시
+  
+    ```python
+    arr = " ABCDEFG"
     ```
-            A
-          /   \
-         B     C
-        / \
-       D   E
-    ```
   
-  - 트리 표현 방법 : 배열로 표현 (완전 이진 트리 전용)
-    
-    - 인덱스 규칙
-    
-      왼쪽 자식 = now * 2  
-      오른쪽 자식 = now * 2 + 1  
-    
-    - 예시
+    트리 구조:
+      ```
+              A(1)
+            /       \
+          B(2)      C(3)
+         /   \      /   \
+       D(4) E(5)  F(6) G(7)
+      ```
+  
+
+
+- 트리 순회 (Traversal)
+
+  - DFS (깊이 우선 탐색)
+  
+    - 한 방향으로 끝까지 내려갔다가 돌아옴
+    - 재귀로 구현
     
       ```python
-      arr = " ABCDEFG"
+      arr=" ABCDEFG"
+      
+      def dfs(now):
+          if now >= len(arr) or arr[now]==' ': 
+              return
+      
+          print(arr[now],end=' ')
+          dfs(now*2)
+          dfs(now*2+1)
+      
+      dfs(1)
+      # 출력: A B D E C F G
       ```
+
+  - BFS (너비 우선 탐색)
+
+    - 같은 레벨을 먼저 방문
+    - 큐 사용 (FIFO)
     
-      트리 구조:
-        ```
-                A(1)
-              /       \
-            B(2)      C(3)
-           /   \      /   \
-         D(4) E(5)  F(6) G(7)
-        ```
-  - 이진 트리 구조 구분
-
-    - 일반 이진 트리 (Binary Tree)
-      - 각 노드는 최대 2개의 자식을 가질 수 있음
-      - 자식이 0개, 1개, 2개 모두 가능
-      - 구조에 대한 제한은 없음
-  
-      예시
-          A
-         /
-        B
-         \
-          C
-  
-    - 완전 이진 트리 (Complete Binary Tree)
-      - 마지막 레벨을 제외한 모든 레벨이 꽉 차 있음
-      - 마지막 레벨은 왼쪽부터 채워짐
-      - 중간 인덱스가 비지 않음
-  
-      예시
-      ```
-      (O)
-              A
-            /   \
-           B     C
-          / \   /
-         D  E  F
-      
-
-  
-      (X)
-              A
-            /   \
-           B     C
-            \   /
-             E F
-      → 왼쪽이 비었는데 오른쪽이 먼저 채워짐
-      ```
-      - 힙 (Heap)
-      
-        - 정의
-          - 완전 이진 트리 구조
-          - 부모와 자식 사이에만 대소 관계를 만족
-          - 전체가 정렬된 구조는 아니다
-      
-        - 종류
-          - Max Heap
-            - 부모 ≥ 자식
-            - 루트가 가장 큰 값
-          - Min Heap
-            - 부모 ≤ 자식
-            - 루트가 가장 작은 값
-      
-        - 왜 완전 이진 트리인가
-          - 마지막 레벨까지 왼쪽부터 채워진 구조
-          - 배열로 안전하게 표현 가능
-          - 트리 높이가 최소가 되어 연산이 빠르다
-          - 높이 ≈ log N
-      
-        - 배열 기반 표현
-      
-          - 왼쪽 자식 = i * 2
-          - 오른쪽 자식 = i * 2 + 1
-          - 부모 = i // 2
-      
-        - Max Heap 구현
-      
-          ```python
-          arr = [6,4,2,34,6,5,3,2,43]
-          heap = [0] * 20
-          hindex = 1
-      
-      
-          def Insert(value):
-              global hindex
-              heap[hindex] = value
-              now = hindex
-              hindex += 1
-      
-              # heapify up
-              while True:
-                  p = now // 2
-                  if p == 0:
-                      break
-                  if heap[p] >= heap[now]:
-                      break
-                  heap[p], heap[now] = heap[now], heap[p]
-                  now = p
-      
-      
-          def Top():
-              return heap[1]
-      
-      
-          def Pop():
-              global hindex
-              hindex -= 1
-              heap[1] = heap[hindex]
-              heap[hindex] = 0
-      
-              now = 1
-      
-              # heapify down
-              while True:
-                  son = now * 2
-                  rson = son + 1
-      
-                  # 더 큰 자식 선택
-                  if rson < hindex and heap[son] < heap[rson]:
-                      son = rson
-      
-                  if son >= hindex or heap[now] >= heap[son]:
-                      break
-      
-                  heap[now], heap[son] = heap[son], heap[now]
-                  now = son
-      
-      
-          for v in arr:
-              Insert(v)
-      
-          for _ in range(len(arr)):
-              print(Top(), end=" ")
-              Pop()
-      
-          # 출력: 43 34 6 6 5 4 3 2 2
-          ```
-      
-        - 연산 원리
-      
-          - 삽입
-            - 마지막 위치에 추가
-            - 부모와 비교
-            - 필요하면 위로 swap
-            - heapify up
-      
-          - 삭제 (루트 제거)
-            - 마지막 값을 루트로 이동
-            - 자식 중 더 큰 자식 선택
-            - 필요하면 아래로 swap
-            - heapify down
-      
-        - 시간 복잡도
-      
-          - Top: O(1)
-          - Insert: O(log N)
-          - Pop: O(log N)
-      
-        - BST와의 차이
-      
-          - BST
-            - 왼쪽 < 부모 < 오른쪽
-            - 탐색에 특화
-            - 일반 이진 트리 구조
-      
-          - Heap
-            - 부모 ≥ 자식 (또는 ≤)
-            - 최대/최소값 추출에 특화
-            - 완전 이진 트리 구조
-      
-        - 핵심 정리
-      
-          - 힙은 우선순위 큐를 구현하는 구조
-          - 완전 이진 트리 + 부모-자식 대소 관계
-          - 전체 정렬 구조는 아니다
-          - 루트는 항상 최대값(또는 최소값)
-      
-    - 포화 이진 트리 (Full Binary Tree)
-      - 모든 노드가 자식 0개 또는 2개
-      - 자식이 1개인 노드는 없음
-  
-      예시 
       ```python
-      (O)
-              A
-            /   \
-           B     C
-          / \   / \
-         D  E  F  G
-  
-      (X)
-          A
-         /
-        B
-      → 자식이 1개
+      from collections import deque
+      
+      arr=" ABCDEFG"
+      
+      def bfs(now):
+          q=deque()
+          q.append(now)
+      
+          while q:
+              now=q.popleft()
+              print(arr[now],end=' ')
+              if now*2 <len(arr) and arr[now*2] !=' ':
+                  q.append(now*2)
+              if now*2+1 <len(arr) and arr[now*2+1] !=' ':
+                  q.append(now*2+1)
+      
+      bfs(1)
+      # 출력: A B C D E F G
+      ```
 
+  - 순회 3종 세트
   
-    - 포함 관계
-      - 포화 이진 트리 ⊂ 완전 이진 트리 ⊂ 일반 이진 트리
-      - 포화는 항상 완전이다
-      - 완전은 항상 일반이다
-      - 하지만 완전이 항상 포화는 아니다
-  
-    - 왜 이 구분이 중요한가
-      - 배열 기반 트리 표현은 완전 이진 트리일 때만 안전하다
-      - 우리가 사용한 공식
-          왼쪽 자식 = i * 2
-          오른쪽 자식 = i * 2 + 1
-        는 완전 이진 트리 전제에서만 성립한다
-      - 힙은 완전 이진 트리 → 배열 사용
-      - BST는 항상 완전이 아님 → 보통 Node 구조 사용
-  
-  - 트리 순회 (Traversal)
-  
-    - DFS (깊이 우선 탐색)
+    - ✔ Pre-order (전위)
     
-      - 한 방향으로 끝까지 내려갔다가 돌아옴
-      - 재귀로 구현
+      - 나 → 왼 → 오
       
         ```python
-        arr=" ABCDEFG"
-        
-        def dfs(now):
-            if now >= len(arr) or arr[now]==' ': 
+        def pre_order(now):
+            if now > len(arr)-1:
                 return
         
-            print(arr[now],end=' ')
-            dfs(now*2)
-            dfs(now*2+1)
+            print(arr[now], end=" ")
+            pre_order(now*2)
+            pre_order(now*2+1)
         
-        dfs(1)
+        pre_order(1)
         # 출력: A B D E C F G
         ```
-  
-    - BFS (너비 우선 탐색)
-  
-      - 같은 레벨을 먼저 방문
-      - 큐 사용 (FIFO)
+    
+    - ✔ In-order (중위)
+    
+      - 왼 → 나 → 오
       
         ```python
-        from collections import deque
+        def in_order(now):
+            if now > len(arr)-1:
+                return
         
-        arr=" ABCDEFG"
+            in_order(now*2)
+            print(arr[now], end=" ")
+            in_order(now*2+1)
         
-        def bfs(now):
-            q=deque()
-            q.append(now)
-        
-            while q:
-                now=q.popleft()
-                print(arr[now],end=' ')
-                if now*2 <len(arr) and arr[now*2] !=' ':
-                    q.append(now*2)
-                if now*2+1 <len(arr) and arr[now*2+1] !=' ':
-                    q.append(now*2+1)
-        
-        bfs(1)
-        # 출력: A B C D E F G
+        in_order(1)
+        # 출력: D B E A F C G
         ```
-  
-    - 순회 3종 세트
     
-      - ✔ Pre-order (전위)
-      
-        - 나 → 왼 → 오
-        
-          ```python
-          def pre_order(now):
-              if now > len(arr)-1:
-                  return
-          
-              print(arr[now], end=" ")
-              pre_order(now*2)
-              pre_order(now*2+1)
-          
-          pre_order(1)
-          # 출력: A B D E C F G
-          ```
-      
-      - ✔ In-order (중위)
-      
-        - 왼 → 나 → 오
-        
-          ```python
-          def in_order(now):
-              if now > len(arr)-1:
-                  return
-          
-              in_order(now*2)
-              print(arr[now], end=" ")
-              in_order(now*2+1)
-          
-          in_order(1)
-          # 출력: D B E A F C G
-          ```
-      
-      - ✔ Post-order (후위)
-      
-        - 왼 → 오 → 나
-        
-          ```python
-          def post_order(now):
-              if now > len(arr)-1:
-                  return
-          
-              post_order(now*2)
-              post_order(now*2+1)
-              print(arr[now], end=" ")
-          
-          post_order(1)
-          # 출력: D E B F G C A
-          ```
-  
-  - 이진 탐색 트리 (BST: Binary Search Tree)
-  
-    - 정의
-      - 왼쪽 서브트리의 모든 값 < 현재 노드
-      - 오른쪽 서브트리의 모든 값 > 현재 노드
-      - 이 조건을 모든 노드가 재귀적으로 만족
-  
-    - 구조적 특징
-      - 탐색, 삽입, 삭제가 모두 같은 비교 구조를 가진다
-      - 매 단계마다 한쪽 서브트리만 탐색한다
-      - 평균적으로 탐색 범위가 절반씩 줄어든다
-  
-    - Node 기반 표현 (연결 구조)
-  
-      ```python
-      class Node:
-          def __init__(self, value):
-              self.value = value
-              self.left = None
-              self.right = None
-      ```
-  
-      - 트리는 재귀적 구조
-        - 트리 = 현재 노드 + 왼쪽 서브트리 + 오른쪽 서브트리
-  
-    - 탐색 (Search)
-  
-      - 원리
-        - 현재 노드와 비교
-        - 작으면 왼쪽
-        - 크면 오른쪽
-        - 같으면 성공
-  
-      ```python
-      def search(node, target):
-          if node is None:
-              return False
-  
-          if node.value == target:
-              return True
-          elif target < node.value:
-              return search(node.left, target)
-          else:
-              return search(node.right, target)
-  
-  
-      # 예시
-      # print(search(root, 7))   # True
-      # print(search(root, 100)) # False
-      ```
-  
-      - 시간 복잡도
-        - 평균: O(log N)
-        - 최악(편향 트리): O(N)
-  
-    - 삽입 (Insert)
-  
-      - 원리
-        - 탐색과 동일하게 내려간다
-        - None을 만나면 새 노드 생성
-  
-      ```python
-      def insert(node, target):
-          if node is None:
-              return Node(target)
-  
-          if target < node.value:
-              node.left = insert(node.left, target)
-          elif target > node.value:
-              node.right = insert(node.right, target)
-  
-          return node
-  
-  
-      # 트리 생성 예시
-      root = None
-      values = [4, 2, 9, 7, 15, 1, 3]
-  
-      for v in values:
-          root = insert(root, v)
-      ```
-  
-      - 핵심
-        - 항상 return node
-        - 부모가 정리된 서브트리를 다시 연결한다
-  
-      - 시간 복잡도
-        - 평균: O(log N)
-        - 최악: O(N)
-  
-    - 삭제 (Delete)
-  
-      - 삭제는 3가지 경우로 나뉜다
-  
-        1. 자식이 없는 경우 (리프 노드)
-           - 그냥 삭제
-           - return None
-  
-        2. 자식이 1개인 경우
-           - 자식 노드로 대체
-           - 부모가 삭제 노드를 건너뛰게 만든다
-  
-        3. 자식이 2개인 경우 (핵심)
-           - 오른쪽 서브트리의 최솟값 찾기
-           - 현재 노드 값을 그 값으로 교체
-           - 그 최솟값 노드를 다시 삭제 (재귀 호출)
-  
-      - 오른쪽 서브트리 최솟값 찾기
-  
-      ```python
-      def find_min(node):
-          while node.left:
-              node = node.left
-          return node
-      ```
-  
-      - 삭제 전체 구현
-  
-      ```python
-      def delete(node, target):
-          if node is None:
-              return None
-  
-          if target < node.value:
-              node.left = delete(node.left, target)
-  
-          elif target > node.value:
-              node.right = delete(node.right, target)
-  
-          else:
-              # case 1: 자식 없음
-              if node.left is None and node.right is None:
-                  return None
-  
-              # case 2: 자식 하나
-              if node.left is None:
-                  return node.right
-              if node.right is None:
-                  return node.left
-  
-              # case 3: 자식 둘
-              min_node = find_min(node.right)
-              node.value = min_node.value
-              node.right = delete(node.right, min_node.value)
-  
-          return node
-      ```
-  
-      - 예시
-  
-      ```python
-      root = delete(root, 4)
-      # 4 삭제 후에도 BST 조건 유지
-      ```
-  
-      - 시간 복잡도
-        - 평균: O(log N)
-        - 최악: O(N)
-  
-    - 높이 (Height)
-  
-      - 정의
-        - 루트부터 가장 깊은 리프까지의 노드 수
-  
-      ```python
-      def height(node):
-          if node is None:
-              return 0
-  
-          return 1 + max(height(node.left), height(node.right))
-  
-  
-      # print(height(root))  # 예: 3
-      ```
-  
-      - 시간 복잡도
-        - O(N)
-  
-    - BST 전체 흐름 요약
-  
-      - 모든 연산은 동일한 비교 구조를 가진다
-  
-        ```
-        if node is None:
-            처리
-  
-        if target < node.value:
-            왼쪽으로
-        elif target > node.value:
-            오른쪽으로
-        else:
-            찾음 → 처리
-        ```
-  
-      - 삽입 순서에 따라 트리가 한쪽으로 치우칠 수 있다
-  
-        예:
-        1 → 2 → 3 → 4 → 5
-  
-        구조:
-        1
-         \
-          2
-           \
-            3
-             \
-              4
-               \
-                5
-  
-        → 이 경우 시간 복잡도는 O(N)
-  
-      - 그래서 등장하는 개념
-        - 균형 이진 탐색 트리 (AVL, Red-Black Tree 등)
-  
-  - 시간 복잡도
+    - ✔ Post-order (후위)
     
-    - DFS / BFS : O(N)
-    - BST 탐색 (균형) : O(log N)
-    - BST 최악 (한쪽 치우침) : O(N)
+      - 왼 → 오 → 나
+      
+        ```python
+        def post_order(now):
+            if now > len(arr)-1:
+                return
+        
+            post_order(now*2)
+            post_order(now*2+1)
+            print(arr[now], end=" ")
+        
+        post_order(1)
+        # 출력: D E B F G C A
+        ```
+
+- 이진 탐색 트리 (BST)
+
+  - 규칙 : 왼쪽 < 부모 < 오른쪽
+  
+  - ✔ 삽입
+  
+    ```python
+    arr = [0]*20
+    lst = [4, 2, 9, 7, 15, 1, 3]
+    
+    def Insert(target):
+        now = 1
+        while True:
+            if arr[now] == 0:
+                arr[now] = target
+                return
+            elif arr[now] < target:
+                now = now * 2 + 1
+            else:
+                now = now * 2
+    
+    for i in lst:
+        Insert(i)
+    ```
+  
+  트리 구조:
+    ```
+            4
+          /   \
+         2     9
+        / \   / \
+       1  3  7  15
+    ```
+
+
+  - ✔ 탐색
+  
+    ```python
+    def Search(target):
+        now = 1
+        while True:
+            if now >= 20:
+                return 0
+            elif arr[now] == 0:
+                return 0
+            elif arr[now] == target:
+                return 1
+            elif arr[now] < target:
+                now = now * 2 + 1
+            else:
+                now = now * 2
+    ```
+
+- 시간 복잡도
+  
+  - DFS / BFS : O(N)
+  - BST 탐색 (균형) : O(log N)
+  - BST 최악 (한쪽 치우침) : O(N)
 
 ## 🧠 알고리즘 설계 전략
 
@@ -6030,3 +5668,809 @@ logging.basicConfig(level=logging.INFO)
 logging.info("INFO 로그")
 logging.warning("WARNING 로그")
 ```
+---
+---
+
+# WEB
+
+- WEB이란?
+  
+  - 정의
+      - WEB(웹)은 인터넷을 통해 문서와 정보를 서로 연결하여 볼 수 있게 만든 시스템이다.
+      - 사용자는 웹 브라우저를 통해 웹 페이지(Web Page)를 보고 상호작용할 수 있다.
+      - 웹은 단순한 문서가 아니라 프로그램이 실행되는 환경이기도 하다.
+
+  - WEB의 특징
+      
+      - 브라우저를 통해 접근
+          - Chrome, Edge 같은 웹 브라우저를 사용하여 접속한다.
+      
+      - HTML 문서를 기반으로 동작
+          - 모든 웹 페이지는 HTML 문서로 구성된다.
+      
+      - CSS로 디자인
+          - 색상, 크기, 위치 등을 결정한다.
+      
+      - Javascript로 동작 제어
+          - 클릭이나 입력 처리 같은 동작을 담당한다.
+
+
+## WEB 동작 구조
+
+- 웹이 동작하는 과정
+
+  - 1 단계 : 주소 입력
+
+        https://google.com
+
+      - 사용자가 주소(URL)를 입력하면 웹 요청이 시작된다.
+
+
+  - 2 단계 : 브라우저가 서버에 요청
+
+      - 브라우저는 서버에게 웹 페이지를 요청한다.
+      - 이 요청을 HTTP Request라고 한다.
+
+
+  - 3 단계 : 서버가 응답 반환
+
+      - 서버는 HTML 문서를 브라우저에게 보낸다.
+      - 이를 HTTP Response라고 한다.
+
+
+  - 4 단계 : 브라우저가 화면 생성
+
+      - HTML 해석
+      - CSS 적용
+      - Javascript 실행
+
+      - 이 과정을 Rendering이라고 한다.
+
+
+
+## WEB 구조화 (HTML)
+
+- HTML
+
+  - 정의
+      - HTML(HyperText Markup Language)은 웹 페이지의 구조를 만드는 언어이다.
+      - 웹 페이지의 뼈대를 만든다.
+
+
+  - HyperText
+
+      - 문서와 문서를 연결하는 기능이다.
+
+        <a href="https://google.com">Google</a>
+
+      - 링크를 클릭하면 다른 페이지로 이동한다.
+
+
+  - Markup Language
+
+      - 태그(Tag)를 사용하여 문서의 구조를 표현하는 언어이다.
+      - 어떤 부분이 제목인지 문단인지 표시한다.
+
+
+
+- HTML 기본 구조
+
+      <!DOCTYPE html>
+      <html>
+
+      <head>
+          <title>Page Title</title>
+      </head>
+
+      <body>
+
+      </body>
+
+      </html>
+
+
+  - <!DOCTYPE html>
+
+      - HTML5 문서 선언이다.
+      - 브라우저에게 HTML 문서임을 알려준다.
+
+
+  - html
+
+      - HTML 문서 전체를 감싸는 태그이다.
+
+
+  - head
+
+      - 웹 페이지 설정 정보가 들어간다.
+      - 화면에는 표시되지 않는다.
+
+
+  - title
+
+      - 브라우저 탭 이름이다.
+
+
+  - body
+
+      - 실제 화면에 표시되는 내용이 들어간다.
+
+
+
+- HTML 핵심 개념
+
+  - 요소 (Element)
+
+      - HTML 문서를 구성하는 기본 단위이다.
+      - 시작 태그와 종료 태그로 이루어진다.
+        ```
+        <p>Hello</p>
+        ```
+
+      - 구조
+
+            <태그>내용</태그>
+
+
+
+  - 속성 (Attribute)
+
+      - 태그에 추가 정보를 제공한다.
+      - 태그의 동작을 설정한다.
+
+      - 구조
+
+            속성="값"
+
+      - 예시
+
+            <a href="https://google.com">link</a>
+
+      - href
+
+          - 이동할 주소를 지정하는 속성이다.
+
+
+
+- HTML Text Structure
+
+  - Heading
+
+        <h1>Main Title</h1>
+        <h2>Sub Title</h2>
+
+      - 제목을 나타내는 태그이다.
+      - h1이 가장 중요한 제목이다.
+      - h6이 가장 작은 제목이다.
+      - 웹 페이지의 구조를 표현할 때 사용한다.
+
+
+  - Paragraph
+
+        <p>Hello world</p>
+
+      - 문단을 나타내는 태그이다.
+      - 일반적인 텍스트는 보통 p 태그를 사용한다.
+
+
+  - Lists
+
+        <ul>
+            <li>Apple</li>
+            <li>Banana</li>
+        </ul>
+
+      - 목록을 나타내는 태그이다.
+
+      - ul
+          - 순서가 없는 목록
+
+      - ol
+          - 순서가 있는 목록
+
+      - li
+          - 목록 항목
+
+
+
+  - Emphasis
+
+        <em>important</em>
+
+      - 텍스트를 강조할 때 사용하는 태그이다.
+      - 의미적으로 "강조된 내용"이라는 뜻을 가진다.
+      - 보통 기울임꼴로 표시된다.
+      - 단순히 기울이기 위해서는 CSS를 사용하는 것이 좋다.
+
+
+
+  - Strong
+
+        <strong>important</strong>
+
+      - 중요한 내용을 표시하는 태그이다.
+      - 의미적으로 "중요한 내용"이라는 뜻이다.
+      - 보통 굵게 표시된다.
+
+
+
+- 자주 사용하는 태그
+
+  - div
+
+        <div></div>
+
+      - block 요소이다.
+      - 레이아웃을 구성할 때 가장 많이 사용하는 태그이다.
+      - 특별한 의미는 없고 영역을 나눌 때 사용한다.
+
+
+  - span
+
+        <span></span>
+
+      - inline 요소이다.
+      - 텍스트 일부 스타일 적용에 사용된다.
+
+
+  - a 태그
+
+        <a href="https://google.com">
+            Google
+        </a>
+
+      - 다른 페이지로 이동하는 링크를 만든다.
+
+
+  - img 태그
+
+        <img src="image.png">
+
+      - 이미지를 표시한다.
+      - src 속성은 이미지 위치를 의미한다.
+
+
+  - 주석
+
+        <!-- hello -->
+
+      - 코드 설명을 작성할 때 사용한다.
+
+
+
+## 웹 스타일링 (CSS)
+
+- CSS
+
+  - 정의
+      - CSS는 HTML 요소의 스타일을 지정하는 언어이다.
+      - 색상, 크기, 위치 등을 지정할 수 있다.
+
+
+
+- CSS Syntax
+
+        selector {
+            property: value;
+        }
+
+  - selector
+
+      - 스타일을 적용할 HTML 요소를 선택한다.
+
+
+  - property
+
+      - 변경할 스타일 속성이다.
+
+
+  - value
+
+      - 속성의 값이다.
+
+
+
+- Selector
+
+  - Tag 선택자
+
+        p {
+            color:red;
+        }
+
+      - 특정 태그 전체에 스타일을 적용한다.
+      - 예시에서는 모든 p 태그 글자를 빨간색으로 만든다.
+      - 가장 기본적인 선택자이다.
+
+
+  - Class 선택자
+
+        .menu {
+            color:blue;
+        }
+
+      - class가 menu인 요소에 적용된다.
+      - 여러 요소에 사용할 수 있다.
+
+        <p class="menu">Hello</p>
+
+
+  - ID 선택자
+
+        #header {
+            color:black;
+        }
+
+      - id가 header인 요소에 적용된다.
+      - 한 페이지에서 보통 하나만 사용한다.
+
+        <div id="header"></div>
+
+
+  - 속성 선택자
+
+        input[type="text"] {
+            border:1px solid black;
+        }
+
+      - 특정 속성과 값을 가진 요소를 선택한다.
+
+
+
+- 명시도 (Specificity)
+
+  - 여러 CSS 규칙이 있을 때 어떤 규칙이 적용될지 결정한다.
+
+
+  - 우선순위
+
+        inline > id > class > tag
+
+
+  - !important
+
+        color:red !important;
+
+      - 가장 높은 우선순위를 가진다.
+      - 다른 CSS 규칙보다 항상 먼저 적용된다.
+      - 유지보수가 어려워질 수 있으므로 최소한으로 사용한다.
+
+
+
+- 값과 단위
+
+  - px
+
+        font-size:20px;
+
+      - 픽셀(pixel) 단위이다.
+      - 화면의 점 하나를 의미한다.
+      - 고정된 크기이다.
+      - 가장 많이 사용하는 단위이다.
+
+
+  - %
+
+        width:50%;
+
+      - 부모 요소를 기준으로 한 비율이다.
+      - 레이아웃 구성에 많이 사용된다.
+
+
+  - em
+
+        font-size:2em;
+
+      - 현재 요소의 글자 크기를 기준으로 한다.
+      - 2em은 현재 글자 크기의 2배이다.
+      - 중첩되면 계산이 복잡해질 수 있다.
+
+
+  - rem
+
+        font-size:1rem;
+
+      - root em 이라는 뜻이다.
+      - 문서 전체의 기준 글자 크기를 기준으로 한다.
+      - 보통 html 태그의 font-size를 기준으로 한다.
+      - 중첩되어도 기준이 변하지 않는다.
+      - 예측하기 쉬워 많이 사용된다.
+
+
+  - vw
+
+        width:50vw;
+
+      - 화면 너비(viewport width)를 기준으로 한다.
+      - 50vw는 화면 너비의 50%이다.
+
+
+  - vh
+
+        height:50vh;
+
+      - 화면 높이(viewport height)를 기준으로 한다.
+      - 50vh는 화면 높이의 50%이다.
+- CSS 상속 (Inheritance)
+  - CSS 상속이란
+
+    - 부모 요소의 스타일이 자식 요소에게 전달되는 현상을 의미한다.
+    - 모든 CSS 속성이 상속되는 것은 아니다.
+    - 주로 텍스트 관련 속성이 상속된다.
+
+    - 예시
+
+          body {
+              color:blue;
+          }
+
+          <body>
+              <p>Hello</p>
+          </body>
+
+    - 결과
+
+        - p 태그는 color를 지정하지 않았지만 파란색으로 표시된다.
+        - body의 color 속성이 상속되었기 때문이다.
+
+  - 상속이 잘 일어나는 속성
+
+    - 글자 관련 속성
+
+          color
+          font-size
+          font-family
+          line-height
+          text-align
+
+    - 특징
+
+        - 텍스트 관련 속성은 대부분 상속된다.
+        - 문서 전체 스타일을 설정할 때 유용하다.
+
+  - 상속되지 않는 속성
+
+    - 레이아웃 관련 속성
+
+          margin
+          padding
+          border
+          width
+          height
+
+    - 예시
+
+          body {
+              border:3px solid red;
+          }
+
+          <body>
+              <p>Hello</p>
+          </body>
+
+    - 결과
+
+        - p 태그에는 border가 적용되지 않는다.
+        - border는 상속되지 않는 속성이기 때문이다.
+
+  - inherit 값
+
+    - inherit이란
+
+        - 부모 요소의 값을 강제로 상속받는다.
+
+    - 예시
+
+          div {
+              color:red;
+          }
+
+          p {
+              color:inherit;
+          }
+
+    - 결과
+
+        - p 태그는 div의 색상을 상속받는다.
+
+  - initial 값
+
+    - initial이란
+
+        - CSS 기본값으로 되돌린다.
+
+    - 예시
+
+          p {
+              color:initial;
+          }
+
+    - 결과
+
+        - 브라우저 기본 색상으로 돌아간다.
+
+  - 상속이 일어나는 구조
+
+    - HTML 구조
+
+          <body>
+              <div>
+                  <p>Hello</p>
+              </div>
+          </body>
+
+    - 상속 흐름
+
+          body → div → p
+
+    - 부모의 스타일이 자식에게 전달된다.
+
+  - 상속이 유용한 경우
+
+    - 문서 전체 글자 색 설정
+
+          body {
+              color:black;
+          }
+
+    - 문서 전체 글자 크기 설정
+
+          body {
+              font-size:16px;
+          }
+
+    - 장점
+
+        - 모든 요소에 따로 스타일을 지정하지 않아도 된다.
+- CSS Box Model
+
+  - Box Model이란
+
+    - 모든 HTML 요소는 사각형 박스(Box) 형태로 구성된다.
+    - 웹 페이지의 레이아웃은 이 박스들의 배치로 이루어진다.
+    - CSS는 이 박스의 크기와 간격을 조절하는 역할을 한다.
+
+  - Box Model 구조
+
+    - 요소는 다음 4가지 영역으로 구성된다.
+
+          Margin
+            Border
+              Padding
+                Content
+
+    - Content
+
+        - 실제 내용이 들어가는 영역이다.
+        - 텍스트나 이미지가 표시된다.
+
+          width
+          height
+
+    - Padding
+
+        - Content와 Border 사이의 공간이다.
+        - 내부 여백이라고 부른다.
+
+          padding:20px;
+
+    - Border
+
+        - Padding 바깥쪽에 있는 테두리이다.
+
+          border:1px solid black;
+
+    - Margin
+
+        - 요소 바깥쪽 공간이다.
+        - 다른 요소와의 거리를 결정한다.
+
+          margin:20px;
+
+  - Box Model 예시
+
+          div {
+              width:200px;
+              padding:20px;
+              border:5px solid black;
+              margin:10px;
+          }
+
+    - 구성
+
+        Content width = 200px
+
+        Padding = 좌우 20px + 20px
+
+        Border = 좌우 5px + 5px
+
+    - 전체 가로 길이
+
+          200 + 40 + 10 = 250px
+
+  - Margin vs Padding
+
+    - margin
+
+        - 요소와 요소 사이 거리
+        - 바깥쪽 공간
+
+          margin:20px;
+
+    - padding
+
+        - 내부 여백
+        - content와 border 사이 공간
+
+          padding:20px;
+
+  - 방향 지정
+
+    - 위쪽
+
+          margin-top:10px;
+          padding-top:10px;
+
+    - 오른쪽
+
+          margin-right:10px;
+          padding-right:10px;
+
+    - 아래쪽
+
+          margin-bottom:10px;
+          padding-bottom:10px;
+
+    - 왼쪽
+
+          margin-left:10px;
+          padding-left:10px;
+
+  - 축약 표현
+
+    - 4개 값
+
+          margin:10px 20px 30px 40px;
+
+        - 위 오른쪽 아래 왼쪽
+
+
+    - 2개 값
+
+          margin:10px 20px;
+
+        - 위아래 / 좌우
+
+
+    - 1개 값
+
+          margin:10px;
+
+        - 모든 방향
+
+
+
+  - box-sizing
+
+    - 기본 동작
+
+        - width는 content 크기만 의미한다.
+
+          width:200px;
+
+        - padding과 border는 추가된다.
+
+
+    - border-box
+
+          box-sizing:border-box;
+
+        - width 안에 padding과 border가 포함된다.
+
+
+    - 예시
+
+          div {
+              width:200px;
+              padding:20px;
+              box-sizing:border-box;
+          }
+
+    - 결과
+
+        - 전체 너비가 200px로 유지된다.
+
+  - Box Model이 중요한 이유
+
+    - 레이아웃 계산의 기본이 된다.
+    - 요소 크기를 정확히 계산할 수 있다.
+    - margin과 padding 차이를 이해해야 레이아웃이 깨지지 않는다.
+
+## Layout
+
+- Layout
+
+  - 웹 페이지에서 요소들의 위치와 크기를 결정하는 것이다.
+  - CSS를 사용하여 구성한다.
+
+
+- Block 요소
+
+      div
+      p
+      h1
+
+  - 줄 전체를 차지한다.
+  - 항상 새로운 줄에서 시작한다.
+
+
+- Inline 요소
+
+      span
+      a
+      strong
+
+  - 줄 안에서 표시된다.
+  - 필요한 공간만 차지한다.
+
+
+- Box Model
+
+  - 모든 HTML 요소는 Box 형태이다.
+
+
+  - 구성 요소
+
+      Content
+          실제 내용 영역
+
+      Padding
+          내부 여백
+
+      Border
+          테두리
+
+      Margin
+          외부 여백
+
+
+  - 예시
+
+        div {
+            margin:20px;
+            padding:10px;
+            border:1px solid black;
+        }
+
+
+- Display
+
+  - 요소가 화면에 표시되는 방식을 결정한다.
+
+
+  - block
+
+        display:block;
+
+      - 줄 전체를 차지한다.
+
+
+  - inline
+
+        display:inline;
+
+      - 줄 안에서 표시된다.
+
+
+  - inline-block
+
+        display:inline-block;
+
+      - inline처럼 배치되지만 width와 height 지정 가능하다.
+
+
+  - none
+
+        display:none;
+
+      - 화면에서 보이지 않는다.
