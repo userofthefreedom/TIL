@@ -5968,7 +5968,122 @@ logging.warning("WARNING 로그")
 
       - 속성의 값이다.
 
+- CSS 적용 방법
+  - 개념
+    - CSS는 3가지 방법으로 HTML에 적용할 수 있다.
 
+          Inline
+          Internal
+          External
+
+    - 실제 웹 개발에서는 External 방식을 가장 많이 사용한다.
+  - Inline 방식
+
+    - 정의
+
+        - HTML 태그 안에 직접 CSS를 작성하는 방법이다.
+
+    - 예시
+
+          <p style="color:red;">
+          Hello
+          </p>
+
+    - 설명
+
+        - style 속성 안에 CSS를 작성한다.
+        - 특정 요소 하나만 스타일을 적용할 때 사용한다.
+
+    - 특징
+
+        - 가장 간단한 방법이다.
+        - 코드가 길어지고 관리가 어렵다.
+        - 실제 프로젝트에서는 거의 사용하지 않는다.
+
+  - Internal 방식
+
+    - 정의
+
+        - HTML 파일 안의 style 태그 안에 CSS를 작성하는 방법이다.
+
+    - 예시
+
+          <head>
+
+          <style>
+
+          p {
+              color:red;
+          }
+
+          </style>
+
+          </head>
+
+    - 설명
+
+        - style 태그 안에 CSS를 작성한다.
+        - HTML 파일 하나에 CSS를 함께 작성하는 방식이다.
+
+    - 특징
+
+        - Inline보다 관리가 쉽다.
+        - HTML과 CSS가 섞인다.
+        - 작은 프로젝트나 연습용으로 사용된다.
+
+  - External 방식
+
+    - 정의
+
+        - CSS 파일을 따로 만들어 연결하는 방법이다.
+
+    - HTML 예시
+
+          <link rel="stylesheet" href="style.css">
+
+    - CSS 파일 예시
+
+          p {
+              color:red;
+          }
+
+    - 파일 구조 예시
+
+          index.html
+          style.css
+
+    - 설명
+
+        - link 태그를 사용하여 CSS 파일을 연결한다.
+        - 여러 HTML 파일에서 같은 CSS를 사용할 수 있다.
+
+    - 특징
+
+        - 가장 많이 사용하는 방식이다.
+        - HTML과 CSS가 분리된다.
+        - 유지보수가 쉽다.
+        - 실무 표준 방식이다.
+
+  - CSS 적용 방법 우선순위
+
+    - 여러 방식이 동시에 적용되면 우선순위가 존재한다.
+
+          Inline > Internal > External
+
+    - 예시
+
+          p {
+              color:blue;
+          }
+
+          <p style="color:red;">
+          Hello
+          </p>
+
+    - 결과
+
+        - 글자는 빨간색이 된다.
+        - Inline 방식이 더 우선순위가 높기 때문이다.
 
 - Selector
 
@@ -5991,8 +6106,9 @@ logging.warning("WARNING 로그")
 
       - class가 menu인 요소에 적용된다.
       - 여러 요소에 사용할 수 있다.
-
+        ```
         <p class="menu">Hello</p>
+        ```
 
 
   - ID 선택자
@@ -6003,8 +6119,9 @@ logging.warning("WARNING 로그")
 
       - id가 header인 요소에 적용된다.
       - 한 페이지에서 보통 하나만 사용한다.
-
+        ```
         <div id="header"></div>
+        ```
 
 
   - 속성 선택자
