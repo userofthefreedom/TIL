@@ -6561,88 +6561,6 @@ logging.warning("WARNING 로그")
 
     - 한 줄에 표시된다.
 
-- Display
-
-  - 정의
-    - 요소가 화면에 표시되는 방식을 결정하는 속성이다.
-    - 요소의 배치 방법을 변경할 수 있다.
-    - 태그의 기본 동작을 변경할 수 있다.
-
-    - 예시
-
-          div {
-              display:inline;
-          }
-
-    - div를 inline처럼 사용할 수 있다.
-
-  - block
-
-        display:block;
-
-    - 특징
-      - 줄 전체를 차지한다.
-      - 자동 줄바꿈이 된다.
-      - width 설정 가능하다.
-      - height 설정 가능하다.
-
-    - 예시
-
-          div {
-              display:block;
-          }
-
-  - inline
-
-        display:inline;
-
-    - 특징
-      - 줄 안에 표시된다.
-      - 자동 줄바꿈이 없다.
-      - width 설정이 제한된다.
-      - height 설정이 제한된다.
-
-    - 예시
-
-          span {
-              display:inline;
-          }
-
-  - inline-block
-
-        display:inline-block;
-
-    - 특징
-      - 줄 안에 표시된다.
-      - width 설정 가능하다.
-      - height 설정 가능하다.
-      - block과 inline의 특징을 함께 가진다.
-
-    - 예시
-
-          div {
-              display:inline-block;
-              width:100px;
-              height:50px;
-          }
-
-    - 결과
-      - 가로로 배치되면서 크기를 지정할 수 있다.
-
-  - none
-
-        display:none;
-
-    - 특징
-      - 요소가 화면에서 사라진다.
-      - 공간도 함께 사라진다.
-
-    - 예시
-
-          .menu {
-              display:none;
-          }
-
 - Box Model
 
   - 정의
@@ -6732,6 +6650,687 @@ logging.warning("WARNING 로그")
           }
 
     - 전체 크기가 200px로 유지된다.
+
+- Display
+
+  - 정의
+    - 요소가 화면에 표시되는 방식을 결정하는 속성이다.
+    - 요소의 배치 방법을 변경할 수 있다.
+    - 태그의 기본 동작을 변경할 수 있다.
+
+    - 예시
+
+          div {
+              display:inline;
+          }
+
+    - div를 inline처럼 사용할 수 있다.
+
+  - block
+
+        display:block;
+
+    - 특징
+      - 줄 전체를 차지한다.
+      - 자동 줄바꿈이 된다.
+      - width 설정 가능하다.
+      - height 설정 가능하다.
+
+    - 예시
+
+          div {
+              display:block;
+          }
+
+  - inline
+
+        display:inline;
+
+    - 특징
+      - 줄 안에 표시된다.
+      - 자동 줄바꿈이 없다.
+      - width 설정이 제한된다.
+      - height 설정이 제한된다.
+
+    - 예시
+
+          span {
+              display:inline;
+          }
+
+  - inline-block
+
+        display:inline-block;
+
+    - 특징
+      - 줄 안에 표시된다.
+      - width 설정 가능하다.
+      - height 설정 가능하다.
+      - block과 inline의 특징을 함께 가진다.
+
+    - 예시
+
+          div {
+              display:inline-block;
+              width:100px;
+              height:50px;
+          }
+
+    - 결과
+      - 가로로 배치되면서 크기를 지정할 수 있다.
+
+  - none
+
+        display:none;
+
+    - 특징
+      - 요소가 화면에서 사라진다.
+      - 공간도 함께 사라진다.
+
+    - 예시
+
+          .menu {
+              display:none;
+          }
+
+- Position
+
+  - 정의
+    - 요소의 “위치 배치 방식”을 결정하는 속성이다.
+    - display가 “줄 배치 방식(block/inline)”을 정한다면,
+      - position은 “특정 좌표(top/left 등)로 옮길 수 있는지 / 무엇을 기준으로 옮기는지”를 정한다.
+    - position은 보통 top / left / right / bottom 과 함께 사용된다.
+
+  - position 종류
+    - static
+    - relative
+    - absolute
+    - fixed
+    - sticky
+
+  - top / left / right / bottom 기본 개념
+    - 숫자를 주면 “이동”하는 게 아니라 “해당 방향에서 떨어진 거리”를 의미한다.
+    - 그래서 헷갈릴 수 있다.
+
+    - top: 20px
+      - “위에서 20px 떨어져라” 라는 뜻
+      - 결과적으로 아래로 내려간 것처럼 보인다.
+
+    - left: 20px
+      - “왼쪽에서 20px 떨어져라”
+      - 결과적으로 오른쪽으로 이동한 것처럼 보인다.
+
+  - position: static (기본값)
+
+    - 특징
+      - 모든 요소의 기본값이다.
+      - 문서의 기본 흐름(위에서 아래, 왼쪽에서 오른쪽)에 따라 배치된다.
+      - top/left/right/bottom이 적용되지 않는다.
+
+    - 예시
+
+          .box {
+              position:static;
+              top:50px;      /* 적용되지 않음 */
+              left:50px;     /* 적용되지 않음 */
+          }
+
+    - 결과
+      - 화면 변화가 없다.
+
+  - position: relative
+
+    - 정의
+      - “원래 있어야 할 위치(기본 흐름에서의 위치)”를 기준으로 이동한다.
+
+    - 특징
+      - top/left/right/bottom이 적용된다.
+      - 이동해도 “원래 자리(공간)”가 유지된다.
+        - 겉으로는 이동하지만, 주변 요소는 원래 자리 기준으로 배치된 것처럼 남아있다.
+
+    - 예시
+
+          <div>A</div>
+          <div class="box">B</div>
+          <div>C</div>
+
+          .box {
+              position:relative;
+              left:40px;
+              top:10px;
+          }
+
+    - 결과
+      - B가 오른쪽/아래로 이동한다.
+      - 하지만 B의 원래 공간은 유지되어 A와 C의 위치는 크게 바뀌지 않는다.
+
+    - 매우 중요한 용도(실무 핵심)
+      - absolute의 기준점(부모)을 만들기 위해 사용한다.
+      - 즉, “부모를 relative로 만든다”는 패턴이 매우 흔하다.
+
+  - position: absolute (가장 중요)
+
+    - 정의
+      - “문서 흐름에서 빠져나와서” 특정 기준점에 붙어서 배치된다.
+
+    - 특징 1 : 공간을 차지하지 않는다
+      - absolute를 주면 요소가 흐름에서 빠져나간다.
+      - 즉, 주변 요소는 그 요소가 없는 것처럼 배치된다.
+      - 그래서 요소가 겹쳐 보일 수 있다.
+
+    - 특징 2 : 기준점이 필요하다
+      - absolute는 “가장 가까운 position이 설정된 조상 요소”를 기준으로 한다.
+      - 여기서 position이 설정된 조상 요소란 보통 relative인 부모를 말한다.
+
+    - 기준점 규칙(초보 핵심)
+      - 가까운 조상 중에서 position이 static이 아닌 요소를 기준으로 한다.
+      - 대부분 이렇게 만든다.
+
+            .parent {
+                position:relative;
+            }
+
+            .child {
+                position:absolute;
+            }
+
+      - 만약 기준점이 없으면(조상에 position 설정이 없으면)
+        - 브라우저 화면(문서 전체)을 기준으로 배치되는 것처럼 보인다.
+
+    - 예시 1 : 부모 기준으로 배치하기 (정석)
+
+          <div class="parent">
+              <div class="child">BOX</div>
+          </div>
+
+          .parent {
+              position:relative;
+              width:300px;
+              height:200px;
+              border:1px solid black;
+          }
+
+          .child {
+              position:absolute;
+              top:20px;
+              left:30px;
+              width:80px;
+              height:40px;
+              border:1px solid black;
+          }
+
+    - 결과
+      - child는 parent 내부의 (top:20, left:30) 위치에 배치된다.
+
+    - 예시 2 : absolute는 공간이 사라진다 (겹침)
+
+          <div>A</div>
+          <div class="box">B</div>
+          <div>C</div>
+
+          .box {
+              position:absolute;
+              top:0;
+              left:0;
+          }
+
+    - 결과
+      - B는 문서 흐름에서 빠져나가며 A, C는 “B가 없는 것처럼” 배치된다.
+      - B는 화면 좌상단 근처로 이동하며 다른 요소와 겹칠 수 있다.
+
+    - 언제 쓰나(대표 예시)
+      - 뱃지(badge) 붙이기: “NEW”, “HOT”
+      - 카드 이미지 위 텍스트 올리기
+      - 모달, 드롭다운 같은 떠있는 UI
+      - 특정 영역의 한쪽 모서리에 요소 고정(부모 기준)
+
+  - position: fixed
+
+    - 정의
+      - 브라우저 화면(Viewport)을 기준으로 고정된다.
+
+    - 특징
+      - 스크롤을 내려도 같은 위치에 유지된다.
+      - absolute처럼 흐름에서 빠져나와 공간을 차지하지 않는다.
+
+    - 예시
+
+          .chat {
+              position:fixed;
+              right:20px;
+              bottom:20px;
+              width:60px;
+              height:60px;
+              border:1px solid black;
+          }
+
+    - 결과
+      - 화면 오른쪽 아래에 고정된 버튼처럼 보인다.
+      - 스크롤해도 위치가 유지된다.
+
+    - 언제 쓰나(대표 예시)
+      - “맨 위로” 버튼
+      - 채팅 버튼
+      - 고정 상단/하단 바(단, 요즘은 sticky도 자주 사용)
+
+  - position: sticky
+
+    - 정의
+      - 기본은 문서 흐름에 따라 움직이지만,
+      - 특정 위치(top 등)에 도달하면 그 자리에서 고정된다.
+
+    - 필수 조건(중요)
+      - 보통 top 값을 같이 써야 동작한다.
+
+            position:sticky;
+            top:0;
+
+    - 예시
+
+          .menu {
+              position:sticky;
+              top:0;
+              border:1px solid black;
+          }
+
+    - 결과
+      - 스크롤 전에는 일반 요소처럼 있다가,
+      - 스크롤로 top:0 위치에 닿으면 상단에 붙어서 고정된다.
+
+    - fixed와 차이
+      - fixed는 항상 고정
+      - sticky는 “닿을 때만” 고정
+
+  - z-index (겹침 순서)
+
+    - 정의
+      - 요소가 겹칠 때 “누가 위에 보일지”를 결정한다.
+      - position이 static이 아닌 요소(또는 특정 상황)에서 의미가 커진다.
+
+    - 예시
+
+          .a {
+              position:absolute;
+              z-index:1;
+          }
+
+          .b {
+              position:absolute;
+              z-index:2;
+          }
+
+    - 결과
+      - z-index가 큰 요소가 위에 보인다.
+
+    - 주의
+      - z-index는 “같은 기준(같은 stacking context)”에서 비교된다.
+      - 초보 단계에서는 “숫자가 크면 위”라고 이해해도 충분하다.
+
+- Flexbox
+
+  - 정의
+    - 요소들을 가로나 세로 방향으로 정렬하는 Layout 방식이다.
+    - 부모 요소(Container)에 display:flex를 적용하면 자식 요소(Item)들이 flex 방식으로 배치된다.
+    - 요소 정렬(Layout)을 만들 때 가장 많이 사용하는 방법이다.
+
+  - 기본 사용 방법
+
+        .container {
+            display:flex;
+        }
+
+    - 부모 요소가 Flex Container가 된다.
+    - 자식 요소들이 Flex Item이 된다.
+
+  - 기본 예시
+
+        <div class="container">
+
+            <div>A</div>
+            <div>B</div>
+            <div>C</div>
+
+        </div>
+
+
+        .container {
+            display:flex;
+        }
+
+    - 결과
+      - A B C 가 가로로 배치된다.
+      - 기본 block 요소는 세로로 배치되지만 flex에서는 가로 배치된다.
+
+  - Container와 Item
+
+    - Container
+      - display:flex가 적용된 부모 요소이다.
+
+            .container {
+                display:flex;
+            }
+
+    - Item
+      - Container 안에 들어있는 자식 요소이다.
+
+            <div class="container">
+
+                <div>A</div>
+                <div>B</div>
+
+            </div>
+
+    - 구조
+
+            Container
+              ├ Item
+              ├ Item
+              └ Item
+
+  - Flex 축 개념 (매우 중요)
+
+    - Main Axis
+      - 아이템이 배치되는 기본 방향이다.
+
+    - Cross Axis
+      - Main Axis와 수직 방향이다.
+
+    - 기본 상태
+
+            display:flex;
+
+    - 구조
+
+            Main Axis → 가로 방향
+
+            Cross Axis ↓ 세로 방향
+
+
+    - 결과
+
+            A B C
+
+  - flex-direction
+
+    - 정의
+      - Main Axis 방향을 결정한다.
+
+    - row (기본값)
+
+            .container {
+                display:flex;
+                flex-direction:row;
+            }
+
+      - Main Axis = 가로
+      - Cross Axis = 세로
+
+      - 결과
+
+            A B C
+
+    - column
+
+            .container {
+                display:flex;
+                flex-direction:column;
+            }
+
+      - Main Axis = 세로
+      - Cross Axis = 가로
+
+      - 결과
+
+            A
+            B
+            C
+
+
+    - 매우 중요한 특징
+      - column이 되면 justify-content와 align-items 방향이 바뀐다.
+
+  - justify-content
+
+    - 정의
+      - Main Axis 방향 정렬을 결정한다.
+
+    - center
+
+            justify-content:center;
+
+      - 가운데 정렬
+
+            A B C
+
+    - flex-start
+
+            justify-content:flex-start;
+
+      - 시작 위치 정렬
+
+    - flex-end
+
+            justify-content:flex-end;
+
+      - 끝 위치 정렬
+
+    - space-between
+
+            justify-content:space-between;
+
+      - 양 끝 정렬 + 사이 공간 동일
+
+            A     B     C
+
+    - space-around
+
+            justify-content:space-around;
+
+      - 양쪽 공간 포함 균등 분배
+
+  - align-items
+
+    - 정의
+      - Cross Axis 방향 정렬을 결정한다.
+
+    - center
+
+            align-items:center;
+
+      - 세로 가운데 정렬
+
+    - flex-start
+
+            align-items:flex-start;
+
+      - 위쪽 정렬
+
+    - flex-end
+
+            align-items:flex-end;
+
+      - 아래쪽 정렬
+
+  - justify-content vs align-items (핵심)
+
+    - row일 때
+
+      - justify-content
+        - 가로 정렬
+
+      - align-items
+        - 세로 정렬
+
+    - column일 때
+
+      - justify-content
+        - 세로 정렬
+
+      - align-items
+        - 가로 정렬
+
+  - gap
+
+    - 정의
+      - Flex Item 사이 간격을 만든다.
+
+    - 예시
+
+            .container {
+
+                display:flex;
+                gap:20px;
+
+            }
+
+      - 결과
+
+            A   B   C
+
+
+    - 특징
+      - Item 사이 간격만 생긴다.
+      - 가장자리에는 간격이 생기지 않는다.
+      - margin보다 관리가 쉽다.
+
+  - flex-wrap
+
+    - 정의
+      - 줄바꿈 허용 여부를 결정한다.
+
+    - nowrap (기본값)
+
+            flex-wrap:nowrap;
+
+      - 줄바꿈이 발생하지 않는다.
+
+    - wrap
+
+            flex-wrap:wrap;
+
+      - 줄바꿈이 발생한다.
+
+      - 결과
+
+            A B C
+            D E F
+
+
+    - 대표 사용 예
+      - 카드 Layout
+      - 상품 목록
+
+  - align-content
+
+    - 정의
+      - 여러 줄이 있을 때 줄 전체 정렬을 결정한다.
+
+    - 특징
+      - flex-wrap:wrap 상태에서만 동작한다.
+
+    - 예시
+
+            .container {
+
+                display:flex;
+                flex-wrap:wrap;
+                height:300px;
+
+                align-content:center;
+
+            }
+
+      - 결과
+        - 여러 줄이 가운데 정렬된다.
+
+  - flex-grow
+
+    - 정의
+      - 남는 공간을 얼마나 차지할지 결정한다.
+
+    - 예시
+
+            .container {
+                display:flex;
+                width:400px;
+            }
+
+            .a {
+                flex-grow:1;
+            }
+
+            .b {
+                flex-grow:1;
+            }
+
+      - 결과
+        - 같은 크기로 확장된다.
+
+    - 비율 예시
+
+            .a {
+                flex-grow:1;
+            }
+
+            .b {
+                flex-grow:2;
+            }
+
+      - 결과
+        - b가 a보다 2배 넓어진다.
+
+  - flex-shrink
+
+    - 정의
+      - 공간이 부족할 때 얼마나 줄어들지 결정한다.
+
+    - 기본값
+
+            flex-shrink:1;
+
+      - 줄어든다.
+
+    - 줄어들지 않게
+
+            flex-shrink:0;
+
+      - 크기가 유지된다.
+
+  - flex-basis
+
+    - 정의
+      - Flex Item의 기본 크기를 결정한다.
+
+    - 예시
+
+            flex-basis:200px;
+
+      - 기본 크기가 200px이 된다.
+
+  - flex (축약형)
+
+    - 정의
+      - flex-grow, flex-shrink, flex-basis를 한번에 설정한다.
+
+    - 예시
+
+            flex:1;
+
+      - 의미
+
+            flex-grow:1
+            flex-shrink:1
+            flex-basis:0
+
+    - 대표 사용 방법
+
+            .box {
+
+                flex:1;
+
+            }
+
+      - 모든 아이템이 같은 크기가 된다.
 
 - CSS 상속(Inheritance)
 
