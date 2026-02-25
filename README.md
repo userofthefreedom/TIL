@@ -6134,25 +6134,275 @@ logging.warning("WARNING 로그")
 
 
 
-- 명시도 (Specificity)
+- Cascade와 Specificity (명시도)
+  - CSS Cascade
+    - 정의
+      - 여러 개의 CSS 규칙이 있을 때 어떤 스타일이 적용될지 결정하는 규칙이다.
+      - CSS = Cascading Style Sheets
+      - Cascading = 폭포처럼 위에서 아래로 적용된다는 뜻
+    - 기본 원리
+        - 같은 요소에 여러 스타일이 적용되면:
+            1. Specificity (명시도)
+            2. 작성 순서 (나중에 쓴 것)
+            3. !important
+        순서로 결정된다.
+    - 예시
+  
+          p {
+              color:blue;
+          }
 
-  - 여러 CSS 규칙이 있을 때 어떤 규칙이 적용될지 결정한다.
+          p {
+              color:red;
+          }
 
+      결과
 
-  - 우선순위
+          빨간색
 
-        inline > id > class > tag
+      이유
+
+          같은 선택자라면 나중에 작성된 것이 적용된다.
+
+    - 핵심 규칙
+
+        같은 선택자 → 아래쪽 CSS 적용
+
+  - Specificity (명시도)
+    - 정의
+      - 어떤 CSS 선택자가 더 강한지를 결정하는 규칙이다.
+      - 강한 선택자가 적용된다.
+
+    - 기본 우선순위
+
+            Inline > ID > Class > Tag
+
+      설명
+
+          Inline style이 가장 강하다.
+          ID 선택자가 Class보다 강하다.
+          Class 선택자가 Tag보다 강하다.
+
+    - 예시
+
+        p {
+            color:blue;
+        }
+
+        .menu {
+            color:red;
+        }
+
+        #header {
+            color:black;
+        }
+
+        HTML
+
+            <p id="header" class="menu">
+            Hello
+            </p>
+
+        결과
+
+            검은색
+
+        이유
+
+            ID 선택자가 가장 강하다.
+
+  - Specificity 계산 방법
+    - Specificity는 숫자로 계산할 수 있다.
+    - 계산 방식
+
+      - Inline = 1000
+      - ID = 100
+      - Class = 10
+      - Tag = 1
+
+    - 예시
+
+          p
+
+      Specificity
+
+          1
+
+    - 예시
+
+          .menu
+
+      Specificity
+
+          10
+
+    - 예시
+
+          #header
+
+      Specificity
+
+          100
+
+    - 예시
+
+          p.menu
+
+      Specificity
+
+          11
+
+    - 예시
+
+          #header p.menu
+
+      Specificity
+
+          111
+
+    - 규칙
+
+        숫자가 큰 선택자가 적용된다.
+
+  - Cascade vs Specificity
+
+    - 중요한 규칙
+
+        Specificity가 Cascade보다 우선한다.
+
+    - 예시
+
+          p {
+              color:blue;
+          }
+
+          .menu {
+              color:red;
+          }
+
+        HTML
+
+            <p class="menu">
+            Hello
+            </p>
+
+        결과
+
+            빨간색
+
+        이유
+
+            Class selector가 Tag selector보다 강하다.
+
+    - Specificity가 같으면 Cascade 적용
+
+      - 예시
+
+            .menu {
+                color:blue;
+            }
+
+            .menu {
+                color:red;
+            }
+
+        결과
+
+            빨간색
+
+        이유
+
+            명시도가 같으면 아래쪽 CSS가 적용된다.
+
+  - Inline Style
+
+    - 정의
+
+      - HTML 태그 안에 직접 CSS를 작성하는 방법이다.
+
+    - 예시
+
+          <p style="color:red;">
+          Hello
+          </p>
+
+    - 특징
+
+      - 매우 강한 명시도를 가진다.
+      - 유지보수가 어렵다.
+      - 가능한 사용을 줄이는 것이 좋다.
 
 
   - !important
 
-        color:red !important;
+    - 정의
 
-      - 가장 높은 우선순위를 가진다.
-      - 다른 CSS 규칙보다 항상 먼저 적용된다.
-      - 유지보수가 어려워질 수 있으므로 최소한으로 사용한다.
+      - CSS 우선순위를 강제로 높이는 방법이다.
+
+    - 예시
+
+          p {
+              color:blue !important;
+          }
+
+          .menu {
+              color:red;
+          }
+
+        결과
+
+            파란색
+
+        이유
+
+            !important가 우선 적용된다.
 
 
+    - 특징
+
+      - Specificity보다 강하다.
+
+            !important > Inline > ID > Class > Tag
+    - 예시
+
+          .menu {
+              color:red !important;
+          }
+
+          #header {
+              color:black;
+          }
+
+        결과
+
+            빨간색
+
+    - 주의사항
+
+      - !important는 CSS 구조를 깨뜨릴 수 있다.
+      - 가능한 최소한으로 사용해야 한다.
+
+  - CSS가 적용되지 않을 때 확인할 것
+
+    - 선택자가 맞는지 확인
+
+    - 예시
+
+            p {
+                color:red;
+            }
+
+        HTML
+
+            <div>Hello</div>
+
+        결과
+
+            적용 안됨
+
+    - Specificity 확인
+    - Cascade 확인
+    - !important 확인
 
 - 값과 단위
 
@@ -6562,32 +6812,123 @@ logging.warning("WARNING 로그")
 
 - Display
 
-  - 요소가 화면에 표시되는 방식을 결정한다.
+  - 정의
+    - 요소가 화면에 배치되는 방식(줄바꿈, 크기 계산, 가로/세로 배치)을 결정하는 속성이다.
+    - 같은 태그라도 display 값을 바꾸면 동작이 달라질 수 있다.
+      - div는 기본이 block이지만 inline으로 바꿀 수 있다.
+      - span은 기본이 inline이지만 block으로 바꿀 수 있다.
 
+  - 기본 display 예시 (자주 쓰는 것만)
+    - block
+      - div, p, h1, ul, li
+    - inline
+      - span, a, em, strong, img(대부분 inline처럼 배치되지만 세부 동작은 조금 다를 수 있음)
 
-  - block
+  - display:block
 
-        display:block;
+    - 특징
+      - 한 줄 전체를 차지한다 (자동 줄바꿈)
+      - width / height 설정이 가능하다
+      - margin / padding / border가 일반적으로 예측 가능하게 동작한다
 
-      - 줄 전체를 차지한다.
+    - 예시
 
+          <div class="box">A</div>
+          <div class="box">B</div>
 
-  - inline
+          .box {
+              display:block;
+              width:200px;
+              height:50px;
+              border:1px solid black;
+              margin:10px;
+          }
 
-        display:inline;
+    - 결과
+      - A와 B가 세로로 배치된다.
 
-      - 줄 안에서 표시된다.
+  - display:inline
 
+    - 특징
+      - 줄 안에 배치된다 (자동 줄바꿈 없음)
+      - 내용(content) 크기만큼만 공간을 차지한다
+      - width / height는 보통 적용되지 않는다 (효과가 없다고 느껴짐)
+      - padding / margin은 동작이 제한적이다
+        - 좌/우(padding-left/right, margin-left/right)는 눈에 잘 보인다
+        - 위/아래(margin-top/bottom)는 기대와 다르게 보일 수 있다
 
-  - inline-block
+    - 예시
 
-        display:inline-block;
+          <div class="tag">A</div>
+          <div class="tag">B</div>
 
-      - inline처럼 배치되지만 width와 height 지정 가능하다.
+          .tag {
+              display:inline;
+              width:200px;        /* 보통 기대대로 적용되지 않음 */
+              height:50px;        /* 보통 기대대로 적용되지 않음 */
+              padding:10px;       /* 좌우는 잘 보임 */
+              border:1px solid black;
+          }
 
+    - 언제 쓰나
+      - 글자 흐름 안에서 “일부”를 다룰 때 (span, a, em 같은 inline 계열에 적합)
+      - div를 inline으로 바꾸는 건 가능하지만, 레이아웃 목적이면 inline-block이 더 자주 쓰인다
 
-  - none
+  - display:inline-block
 
-        display:none;
+    - 특징
+      - 줄 안에 배치된다 (inline처럼 가로로 나란히 놓일 수 있음)
+      - width / height 설정 가능 (block의 장점)
+      - padding / margin / border 동작이 비교적 예측 가능하다
+      - “가로로 배치하면서 크기도 주고 싶다”면 inline-block이 기본 선택지 중 하나다
 
-      - 화면에서 보이지 않는다.
+    - 예시 (가로 배치 + 크기 지정)
+
+          <div class="chip">A</div>
+          <div class="chip">B</div>
+          <div class="chip">C</div>
+
+          .chip {
+              display:inline-block;
+              width:80px;
+              height:40px;
+              line-height:40px;
+              text-align:center;
+              border:1px solid black;
+              margin-right:8px;
+          }
+
+    - 자주 겪는 포인트
+      - inline-block 요소 사이에 HTML 공백/줄바꿈이 있으면 “사이 간격”이 생길 수 있다.
+      - 간격을 정확히 제어하려면:
+        - margin으로 간격을 직접 주거나
+        - 나중에 배우는 flexbox를 사용한다 (실무에서는 flex가 더 흔함)
+
+  - display:none
+
+    - 특징
+      - 요소가 화면에서 사라진다
+      - 사라질 뿐 아니라 “공간 자체”도 사라진다 (레이아웃에서 제거)
+
+    - 예시
+
+          <div>A</div>
+          <div class="hide">B</div>
+          <div>C</div>
+
+          .hide {
+              display:none;
+          }
+
+    - 결과
+      - A 다음에 C가 바로 붙어서 배치된다 (B의 자리 공간도 없음)
+
+  - display:none vs visibility:hidden (참고)
+    - display:none
+      - 요소 + 공간 모두 제거
+    - visibility:hidden
+      - 요소는 안 보이지만 공간은 남는다
+    - 예시
+
+        .hide1 { display:none; }
+        .hide2 { visibility:hidden; }
