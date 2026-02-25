@@ -5847,7 +5847,7 @@ logging.warning("WARNING 로그")
   - 특징
     - 꺾쇠괄호 < > 를 사용한다.
 
-        <p>Hello</p>
+          <p>Hello</p>
 
     - 태그를 이용해 의미를 표현한다.
 
@@ -5946,23 +5946,23 @@ logging.warning("WARNING 로그")
   - 규칙
     - 먼저 열린 태그는 나중에 닫혀야 한다.
 
-        <div>
-            <p>Hello</p>
-        </div>
+          <div>
+              <p>Hello</p>
+          </div>
 
     - 잘못된 예
 
-        <div>
-            <p>Hello
-        </div>
-        </p>
+          <div>
+              <p>Hello
+          </div>
+          </p>
 
 - HTML 요소(Element)
 
   - 정의
     - 시작 태그 + 내용 + 종료 태그 전체를 요소(Element)라고 한다.
 
-        <p>Hello</p>
+          <p>Hello</p>
 
   - 구성
 
@@ -6062,9 +6062,9 @@ logging.warning("WARNING 로그")
 
     - 구조 예시
 
-        <h1>Book</h1>
-        <h2>Chapter</h2>
-        <h3>Section</h3>
+          <h1>Book</h1>
+          <h2>Chapter</h2>
+          <h3>Section</h3>
 
   - Paragraph
 
@@ -6075,8 +6075,8 @@ logging.warning("WARNING 로그")
 
     - 예시
 
-        <p>Hello</p>
-        <p>World</p>
+          <p>Hello</p>
+          <p>World</p>
 
   - Lists
 
@@ -6291,9 +6291,9 @@ logging.warning("WARNING 로그")
 
     - 적용 예시
 
-        <p>A</p>
-        <p>B</p>
-        <p>C</p>
+          <p>A</p>
+          <p>B</p>
+          <p>C</p>
 
     - 결과
       - A B C 모두 빨간색이 된다.
@@ -6310,8 +6310,8 @@ logging.warning("WARNING 로그")
 
     - HTML 예시
 
-        <p class="menu">A</p>
-        <p class="menu">B</p>
+          <p class="menu">A</p>
+          <p class="menu">B</p>
 
     - 결과
       - A B가 빨간색이 된다.
@@ -6327,8 +6327,8 @@ logging.warning("WARNING 로그")
 
     - HTML 예시
 
-        <div id="header">
-        </div>
+          <div id="header">
+          </div>
 
   - Tag + Class 선택자
 
@@ -6340,8 +6340,8 @@ logging.warning("WARNING 로그")
 
     - HTML 예시
 
-        <p class="menu">A</p>
-        <div class="menu">B</div>
+          <p class="menu">A</p>
+          <div class="menu">B</div>
 
     - 결과
       - A만 적용된다.
@@ -6356,8 +6356,8 @@ logging.warning("WARNING 로그")
 
     - HTML 예시
 
-        <input type="text">
-        <input type="password">
+          <input type="text">
+          <input type="password">
 
     - Attribute 값 선택
 
