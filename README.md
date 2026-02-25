@@ -5674,184 +5674,409 @@ logging.warning("WARNING 로그")
 # WEB
 
 - WEB이란?
-  
-  - 정의
-      - WEB(웹)은 인터넷을 통해 문서와 정보를 서로 연결하여 볼 수 있게 만든 시스템이다.
-      - 사용자는 웹 브라우저를 통해 웹 페이지(Web Page)를 보고 상호작용할 수 있다.
-      - 웹은 단순한 문서가 아니라 프로그램이 실행되는 환경이기도 하다.
-
-  - WEB의 특징
-      
-      - 브라우저를 통해 접근
-          - Chrome, Edge 같은 웹 브라우저를 사용하여 접속한다.
-      
-      - HTML 문서를 기반으로 동작
-          - 모든 웹 페이지는 HTML 문서로 구성된다.
-      
-      - CSS로 디자인
-          - 색상, 크기, 위치 등을 결정한다.
-      
-      - Javascript로 동작 제어
-          - 클릭이나 입력 처리 같은 동작을 담당한다.
-
-
-## WEB 동작 구조
-
-- 웹이 동작하는 과정
-
-  - 1 단계 : 주소 입력
-
-        https://google.com
-
-      - 사용자가 주소(URL)를 입력하면 웹 요청이 시작된다.
-
-
-  - 2 단계 : 브라우저가 서버에 요청
-
-      - 브라우저는 서버에게 웹 페이지를 요청한다.
-      - 이 요청을 HTTP Request라고 한다.
-
-
-  - 3 단계 : 서버가 응답 반환
-
-      - 서버는 HTML 문서를 브라우저에게 보낸다.
-      - 이를 HTTP Response라고 한다.
-
-
-  - 4 단계 : 브라우저가 화면 생성
-
-      - HTML 해석
-      - CSS 적용
-      - Javascript 실행
-
-      - 이 과정을 Rendering이라고 한다.
-
-
-
-## WEB 구조화 (HTML)
-
-- HTML
 
   - 정의
-      - HTML(HyperText Markup Language)은 웹 페이지의 구조를 만드는 언어이다.
-      - 웹 페이지의 뼈대를 만든다.
+    - 인터넷을 통해 문서(페이지)를 제공하고, 사용자가 브라우저로 접근하여 보는 시스템이다.
+    - “웹(Web)”은 흔히 “인터넷(Internet)”과 같이 말하지만 둘은 다르다.
+      - 인터넷: 전 세계 컴퓨터가 연결된 네트워크 자체
+      - 웹: 인터넷 위에서 동작하는 서비스(문서/페이지 제공 시스템)
+
+  - 왜 웹을 배우나
+    - 웹은 대부분의 서비스가 제공되는 플랫폼이다.
+    - HTML/CSS/JS를 배우면 “화면(페이지)을 만들고, 꾸미고, 움직이게” 할 수 있다.
 
 
-  - HyperText
+- Web Site / Web Page
 
-      - 문서와 문서를 연결하는 기능이다.
+  - Web Site
+    - 정의
+      - 여러 Web Page가 모여 하나의 사이트(서비스)를 이룬다.
+    - 예시
+      - 네이버(사이트) 안에는: 메인 페이지, 로그인 페이지, 검색 결과 페이지 등 여러 페이지가 존재한다.
 
-        <a href="https://google.com">Google</a>
-
-      - 링크를 클릭하면 다른 페이지로 이동한다.
-
-
-  - Markup Language
-
-      - 태그(Tag)를 사용하여 문서의 구조를 표현하는 언어이다.
-      - 어떤 부분이 제목인지 문단인지 표시한다.
+  - Web Page
+    - 정의
+      - 브라우저에서 보이는 “한 화면” 단위를 의미한다.
+      - 보통 하나의 HTML 문서를 중심으로 구성된다.
+    - 특징
+      - 페이지는 HTML(구조) + CSS(스타일) + JS(동작)로 완성된다.
 
 
+- Browser(브라우저)
+
+  - 정의
+    - 웹 페이지를 받아서 해석하고, 화면에 렌더링(Rendering)하는 프로그램이다.
+  - 예시
+    - Chrome, Edge, Safari, Firefox
+  - 브라우저가 하는 일(핵심)
+    - HTML을 해석하여 구조를 만든다.
+    - CSS를 적용하여 모양(색, 크기, 위치)을 결정한다.
+    - Javascript를 실행하여 동작을 처리한다.
+
+
+- WEB의 3대 구성 요소
+
+  - HTML
+    - 역할
+      - 웹 페이지의 “구조”를 만든다.
+    - 예시(무엇을 올릴지)
+      - 제목(h1), 문단(p), 이미지(img), 링크(a), 목록(ul/li) 등
+
+  - CSS
+    - 역할
+      - 웹 페이지의 “스타일(디자인)”을 만든다.
+    - 예시(어떻게 보일지)
+      - 색상(color), 크기(font-size, width), 간격(margin/padding), 배치(display) 등
+
+  - Javascript
+    - 역할
+      - 웹 페이지의 “동작”을 만든다.
+    - 예시(무엇을 하게 할지)
+      - 버튼 클릭 처리, 입력값 검증, 애니메이션, 서버 통신 등
+
+- WEB 동작 과정(요청/응답 흐름)
+
+  - 핵심 개념
+    - 사용자가 브라우저로 “요청(Request)”을 보내면
+    - 서버가 “응답(Response)”을 반환하고
+    - 브라우저가 화면을 만든다(Rendering)
+
+  - 1 단계: 주소 입력(URL)
+    - 사용자가 주소를 입력한다.
+
+          https://example.com
+
+    - URL은 “어디에 요청할지”를 나타낸다.
+
+  - 2 단계: 브라우저가 서버에 요청(Request)
+    - 브라우저가 서버에게 “페이지 주세요”라고 요청한다.
+    - 이 요청을 HTTP Request라고 부른다.
+
+  - 3 단계: 서버가 응답(Response)
+    - 서버는 보통 HTML 문서를 응답으로 보낸다.
+    - 필요하다면 CSS/JS/이미지 파일도 추가로 받게 된다.
+    - 이 응답을 HTTP Response라고 부른다.
+
+  - 4 단계: 브라우저가 화면 생성(Rendering)
+    - 브라우저는 보통 다음 순서로 화면을 만든다.
+      - HTML 해석 → 구조 생성
+      - CSS 적용 → 모양 결정
+      - Javascript 실행 → 동작 처리
+
+  - 중요한 포인트
+    - “웹은 파일을 열어보는 것”이 아니라, 대부분 “서버와 통신해서 문서를 받는 것”이다.
+    - 단, 개발 초반에는 로컬의 html 파일을 브라우저로 열어도 학습이 가능하다.
+
+- (입문 보강) Client / Server
+
+  - Client(클라이언트)
+    - 정의
+      - 서비스를 요청하는 쪽
+    - 예시
+      - 브라우저(Chrome)가 대표적인 클라이언트이다.
+
+  - Server(서버)
+    - 정의
+      - 요청을 받아서 응답을 보내주는 쪽
+    - 예시
+      - 웹 서버(페이지 제공), API 서버(데이터 제공) 등
+
+  - 요약
+    - Client(브라우저) → Request → Server
+    - Server → Response(HTML/CSS/JS/데이터) → Client(브라우저)
+
+- Rendering이란?
+
+  - 정의
+    - 브라우저가 HTML/CSS/JS를 바탕으로 화면을 만들어 사용자에게 보여주는 과정이다.
+  - 초보자가 자주 착각하는 점
+    - “HTML을 작성하면 곧바로 화면이 된다”가 아니라
+    - 브라우저가 HTML을 해석하고 스타일을 계산해서 “그려주는 과정”이 필요하다.
+
+## HTML
+
+- HTML이란
+
+  - 정의
+    - 웹 페이지의 구조를 만드는 언어이다.
+    - 웹 페이지에 어떤 요소가 있는지를 정의한다.
+    - 제목, 문단, 이미지, 링크 등을 표현할 수 있다.
+
+  - 특징
+    - 프로그래밍 언어가 아니라 문서 구조 언어이다.
+    - 태그(Tag)를 사용하여 문서를 구성한다.
+    - 브라우저가 해석하여 화면으로 보여준다.
+
+  - HTML과 CSS의 차이
+
+    - HTML
+      - 구조를 만든다.
+      - 무엇이 있는지 정의한다.
+
+    - CSS
+      - 디자인을 만든다.
+      - 어떻게 보일지 정의한다.
+
+    - 예시
+
+          <h1>Hello</h1>
+
+      - HTML은 "제목이다" 라는 의미를 만든다.
+      - 크기나 색상은 CSS가 담당한다.
+
+
+- HyperText
+
+  - 정의
+    - 문서와 문서를 연결하는 기능이다.
+    - 링크(Link)를 통해 다른 페이지로 이동할 수 있다.
+
+  - 예시
+
+        <a href="https://google.com">
+        Google
+        </a>
+
+    - 클릭하면 다른 페이지로 이동한다.
+
+- Markup Language
+
+  - 정의
+    - 태그(Tag)를 이용하여 문서 구조를 표현하는 언어이다.
+
+  - 특징
+    - 꺾쇠괄호 < > 를 사용한다.
+
+        <p>Hello</p>
+
+    - 태그를 이용해 의미를 표현한다.
+
+  - 예시
+
+        <h1>Title</h1>
+        <p>Hello</p>
+
+    - h1은 제목을 의미한다.
+    - p는 문단을 의미한다.
 
 - HTML 기본 구조
 
-      <!DOCTYPE html>
-      <html>
+  - 기본 구조
 
-      <head>
-          <title>Page Title</title>
-      </head>
+        <!DOCTYPE html>
+        <html>
 
-      <body>
+        <head>
+            <title>Page Title</title>
+        </head>
 
-      </body>
+        <body>
 
-      </html>
+        </body>
 
+        </html>
 
-  - <!DOCTYPE html>
+  - DOCTYPE
 
-      - HTML5 문서 선언이다.
-      - 브라우저에게 HTML 문서임을 알려준다.
+        <!DOCTYPE html>
 
+    - HTML 문서라는 것을 브라우저에 알려준다.
+    - HTML5 문서라는 것을 의미한다.
+    - 표준 모드(Standard Mode)로 동작하도록 한다.
+    - 없으면 브라우저가 비표준 모드로 동작할 수 있다.
 
-  - html
+  - html 태그
 
-      - HTML 문서 전체를 감싸는 태그이다.
+        <html>
+        </html>
 
+    - HTML 문서 전체를 감싸는 태그이다.
+    - HTML 문서의 루트(root) 요소이다.
+    - 모든 HTML 요소는 html 태그 안에 들어간다.
 
-  - head
+  - head 태그
 
-      - 웹 페이지 설정 정보가 들어간다.
-      - 화면에는 표시되지 않는다.
+        <head>
+        </head>
 
+    - 문서 설정 정보를 넣는 영역이다.
+    - 화면에는 표시되지 않는다.
 
-  - title
+    - 예시 내용
+      - title
+      - CSS 연결
+      - 문자 인코딩 설정
 
-      - 브라우저 탭 이름이다.
+  - title 태그
 
+        <title>Page Title</title>
 
-  - body
+    - 브라우저 탭 이름이 된다.
 
-      - 실제 화면에 표시되는 내용이 들어간다.
+    - 예시
 
+      - Chrome 탭에 표시된다.
 
+  - body 태그
 
-- HTML 핵심 개념
+        <body>
+        </body>
 
-  - 요소 (Element)
+    - 실제 화면에 표시되는 내용을 넣는다.
+    - 대부분의 HTML 코드는 body 안에 작성한다.
 
-      - HTML 문서를 구성하는 기본 단위이다.
-      - 시작 태그와 종료 태그로 이루어진다.
-        ```
+- HTML 태그(Tag)
+
+  - 정의
+    - 꺾쇠괄호 < > 로 이루어진 명령어이다.
+
+  - 시작 태그
+
+        <p>
+
+  - 종료 태그
+
+        </p>
+
+  - 특징
+    - 대부분 시작 태그와 종료 태그가 존재한다.
+
         <p>Hello</p>
-        ```
 
-      - 구조
+  - 규칙
+    - 먼저 열린 태그는 나중에 닫혀야 한다.
 
-            <태그>내용</태그>
+        <div>
+            <p>Hello</p>
+        </div>
 
+    - 잘못된 예
 
+        <div>
+            <p>Hello
+        </div>
+        </p>
 
-  - 속성 (Attribute)
+- HTML 요소(Element)
 
-      - 태그에 추가 정보를 제공한다.
-      - 태그의 동작을 설정한다.
+  - 정의
+    - 시작 태그 + 내용 + 종료 태그 전체를 요소(Element)라고 한다.
 
-      - 구조
+        <p>Hello</p>
 
-            속성="값"
+  - 구성
 
-      - 예시
+        <p> + Hello + </p>
 
-            <a href="https://google.com">link</a>
+  - Tag와 Element 차이
 
-      - href
+    - Tag
 
-          - 이동할 주소를 지정하는 속성이다.
+          <p>
 
+    - Element
 
+          <p>Hello</p>
 
-- HTML Text Structure
+    - 태그는 요소의 일부이다.
+
+- HTML 구조 (중첩 구조)
+
+  - 정의
+    - 요소는 다른 요소 안에 들어갈 수 있다.
+
+  - 예시
+
+        <div>
+
+            <p>Hello</p>
+
+        </div>
+
+  - 구조
+
+        div
+         └ p
+
+    - div는 부모 요소이다.
+    - p는 자식 요소이다.
+
+  - 특징
+    - HTML은 트리 구조(Tree Structure)를 가진다.
+
+- HTML 속성(Attribute)
+
+  - 정의
+    - 태그에 추가 정보를 제공한다.
+
+  - 구조
+
+        name="value"
+
+  - 위치
+    - 시작 태그 안에 작성한다.
+
+        <a href="google.com">
+
+  - 여러 속성 사용
+
+        <a href="google.com" target="_blank">
+
+  - 주요 속성
+
+    - href
+
+          <a href="google.com">
+
+      - 링크 주소를 지정한다.
+
+    - src
+
+          <img src="image.png">
+
+      - 이미지 파일 위치를 지정한다.
+
+    - class
+
+          <p class="menu">
+
+      - CSS 적용 대상을 지정한다.
+      - 여러 요소에 사용할 수 있다.
+
+    - id
+
+          <div id="header">
+
+      - 특정 요소 하나를 지정한다.
+      - 보통 하나만 사용한다.
+
+- HTML 텍스트 구조
 
   - Heading
 
-        <h1>Main Title</h1>
-        <h2>Sub Title</h2>
+        <h1>Title</h1>
 
-      - 제목을 나타내는 태그이다.
-      - h1이 가장 중요한 제목이다.
-      - h6이 가장 작은 제목이다.
-      - 웹 페이지의 구조를 표현할 때 사용한다.
+    - 제목을 나타낸다.
+    - h1 ~ h6까지 존재한다.
+    - h1이 가장 중요하다.
 
+    - 구조 예시
+
+        <h1>Book</h1>
+        <h2>Chapter</h2>
+        <h3>Section</h3>
 
   - Paragraph
 
         <p>Hello world</p>
 
-      - 문단을 나타내는 태그이다.
-      - 일반적인 텍스트는 보통 p 태그를 사용한다.
+    - 문단을 나타낸다.
+    - 자동으로 줄바꿈이 된다.
 
+    - 예시
+
+        <p>Hello</p>
+        <p>World</p>
 
   - Lists
 
@@ -5860,232 +6085,199 @@ logging.warning("WARNING 로그")
             <li>Banana</li>
         </ul>
 
-      - 목록을 나타내는 태그이다.
+    - 순서 없는 목록이다.
 
-      - ul
-          - 순서가 없는 목록
+  - Ordered Lists
 
-      - ol
-          - 순서가 있는 목록
+        <ol>
+            <li>One</li>
+            <li>Two</li>
+        </ol>
 
-      - li
-          - 목록 항목
+    - 순서가 있는 목록이다.
 
+  - li 태그
 
+        <li>Apple</li>
+
+    - 목록 항목을 나타낸다.
+    - ul 또는 ol 안에 들어간다.
 
   - Emphasis
 
         <em>important</em>
 
-      - 텍스트를 강조할 때 사용하는 태그이다.
-      - 의미적으로 "강조된 내용"이라는 뜻을 가진다.
-      - 보통 기울임꼴로 표시된다.
-      - 단순히 기울이기 위해서는 CSS를 사용하는 것이 좋다.
-
-
+    - 강조를 나타낸다.
+    - 보통 기울임꼴로 표시된다.
+    - 의미적으로 강조를 표현한다.
 
   - Strong
 
         <strong>important</strong>
 
-      - 중요한 내용을 표시하는 태그이다.
-      - 의미적으로 "중요한 내용"이라는 뜻이다.
-      - 보통 굵게 표시된다.
+    - 중요한 내용을 나타낸다.
+    - 보통 굵게 표시된다.
+    - 의미적으로 중요함을 나타낸다.
 
-
-
-- 자주 사용하는 태그
-
-  - div
-
-        <div></div>
-
-      - block 요소이다.
-      - 레이아웃을 구성할 때 가장 많이 사용하는 태그이다.
-      - 특별한 의미는 없고 영역을 나눌 때 사용한다.
-
-
-  - span
-
-        <span></span>
-
-      - inline 요소이다.
-      - 텍스트 일부 스타일 적용에 사용된다.
-
-
-  - a 태그
-
-        <a href="https://google.com">
-            Google
-        </a>
-
-      - 다른 페이지로 이동하는 링크를 만든다.
-
-
-  - img 태그
-
-        <img src="image.png">
-
-      - 이미지를 표시한다.
-      - src 속성은 이미지 위치를 의미한다.
-
-
-  - 주석
-
-        <!-- hello -->
-
-      - 코드 설명을 작성할 때 사용한다.
-
-
-
-## 웹 스타일링 (CSS)
-
-- CSS
+- div 태그
 
   - 정의
-      - CSS는 HTML 요소의 스타일을 지정하는 언어이다.
-      - 색상, 크기, 위치 등을 지정할 수 있다.
+    - 영역을 나누는 태그이다.
+    - 여러 요소를 묶는 역할을 한다.
 
+  - 특징
+    - 의미가 없는 일반적인 태그이다.
+    - Layout 구성에 자주 사용된다.
 
+  - 예시
 
-- CSS Syntax
+        <div class="menu">
+            <p>Home</p>
+            <p>About</p>
+        </div>
 
-        selector {
-            property: value;
+- span 태그
+
+  - 정의
+    - 텍스트 일부를 묶는 태그이다.
+
+  - 특징
+    - 문장 안에서 특정 부분만 선택할 때 사용한다.
+
+  - 예시
+
+        Price : <span>$10</span>
+
+- Block 요소
+
+  - 특징
+    - 줄 전체를 차지한다.
+    - 자동 줄바꿈이 된다.
+
+  - 대표 요소
+
+        div
+        p
+        h1
+        ul
+
+  - 예시
+
+        <p>Hello</p>
+        <p>World</p>
+
+- Inline 요소
+
+  - 특징
+    - 줄 안에 표시된다.
+    - 자동 줄바꿈이 없다.
+
+  - 대표 요소
+
+        span
+        a
+        em
+        strong
+
+  - 예시
+
+        Hello <span>world</span>
+
+## CSS
+
+- CSS란
+
+  - 정의
+    - HTML 요소의 스타일을 지정하는 언어이다.
+    - 웹 페이지의 디자인을 담당한다.
+    - 색상, 크기, 위치 등을 지정할 수 있다.
+
+  - 역할
+
+    - HTML
+      - 구조를 만든다.
+      - 무엇이 있는지 정의한다.
+
+    - CSS
+      - 디자인을 만든다.
+      - 어떻게 보일지 정의한다.
+
+  - 예시
+
+        <p>Hello</p>
+
+        p {
+            color:red;
         }
 
-  - selector
-
-      - 스타일을 적용할 HTML 요소를 선택한다.
-
-
-  - property
-
-      - 변경할 스타일 속성이다.
-
-
-  - value
-
-      - 속성의 값이다.
+    - p 태그 글자가 빨간색이 된다.
 
 - CSS 적용 방법
-  - 개념
-    - CSS는 3가지 방법으로 HTML에 적용할 수 있다.
 
-          Inline
-          Internal
-          External
-
-    - 실제 웹 개발에서는 External 방식을 가장 많이 사용한다.
   - Inline 방식
 
-    - 정의
+        <p style="color:red;">
+        Hello
+        </p>
 
-        - HTML 태그 안에 직접 CSS를 작성하는 방법이다.
-
-    - 예시
-
-          <p style="color:red;">
-          Hello
-          </p>
-
-    - 설명
-
-        - style 속성 안에 CSS를 작성한다.
-        - 특정 요소 하나만 스타일을 적용할 때 사용한다.
-
-    - 특징
-
-        - 가장 간단한 방법이다.
-        - 코드가 길어지고 관리가 어렵다.
-        - 실제 프로젝트에서는 거의 사용하지 않는다.
+    - HTML 태그 안에 CSS를 작성하는 방식이다.
+    - 특정 요소 하나에 스타일을 적용할 때 사용한다.
+    - 관리가 어렵기 때문에 많이 사용하지 않는다.
 
   - Internal 방식
 
-    - 정의
+        <style>
 
-        - HTML 파일 안의 style 태그 안에 CSS를 작성하는 방법이다.
+        p {
+            color:red;
+        }
 
-    - 예시
+        </style>
 
-          <head>
-
-          <style>
-
-          p {
-              color:red;
-          }
-
-          </style>
-
-          </head>
-
-    - 설명
-
-        - style 태그 안에 CSS를 작성한다.
-        - HTML 파일 하나에 CSS를 함께 작성하는 방식이다.
-
-    - 특징
-
-        - Inline보다 관리가 쉽다.
-        - HTML과 CSS가 섞인다.
-        - 작은 프로젝트나 연습용으로 사용된다.
+    - HTML 파일 안에 CSS를 작성하는 방식이다.
+    - head 태그 안에 작성한다.
+    - 작은 프로젝트에서 사용한다.
 
   - External 방식
 
-    - 정의
+        <link rel="stylesheet" href="style.css">
 
-        - CSS 파일을 따로 만들어 연결하는 방법이다.
+    - CSS 파일을 따로 만들어 연결하는 방식이다.
+    - 가장 많이 사용하는 방식이다.
+    - 여러 HTML 파일에서 사용할 수 있다.
 
-    - HTML 예시
+  - 파일 구조 예시
 
-          <link rel="stylesheet" href="style.css">
+        index.html
+        style.css
 
-    - CSS 파일 예시
+- CSS 구문(Syntax)
 
-          p {
-              color:red;
-          }
+        p {
 
-    - 파일 구조 예시
+            color:red;
 
-          index.html
-          style.css
+        }
 
-    - 설명
+  - Selector
 
-        - link 태그를 사용하여 CSS 파일을 연결한다.
-        - 여러 HTML 파일에서 같은 CSS를 사용할 수 있다.
+        p
 
-    - 특징
+    - 스타일을 적용할 HTML 요소를 선택한다.
 
-        - 가장 많이 사용하는 방식이다.
-        - HTML과 CSS가 분리된다.
-        - 유지보수가 쉽다.
-        - 실무 표준 방식이다.
+  - Property
 
-  - CSS 적용 방법 우선순위
+        color
 
-    - 여러 방식이 동시에 적용되면 우선순위가 존재한다.
+    - 변경할 속성을 의미한다.
 
-          Inline > Internal > External
+  - Value
 
-    - 예시
+        red
 
-          p {
-              color:blue;
-          }
+    - 속성 값을 의미한다.
 
-          <p style="color:red;">
-          Hello
-          </p>
-
-    - 결과
-
-        - 글자는 빨간색이 된다.
-        - Inline 방식이 더 우선순위가 높기 때문이다.
-
-- Selector
+- CSS 선택자(Selector)
 
   - Tag 선택자
 
@@ -6093,97 +6285,142 @@ logging.warning("WARNING 로그")
             color:red;
         }
 
-      - 특정 태그 전체에 스타일을 적용한다.
-      - 예시에서는 모든 p 태그 글자를 빨간색으로 만든다.
-      - 가장 기본적인 선택자이다.
+    - 특정 태그 전체에 스타일을 적용한다.
+    - 예시에서는 모든 p 태그 글자를 빨간색으로 만든다.
+    - 가장 기본적인 선택자이다.
 
+    - 적용 예시
+
+        <p>A</p>
+        <p>B</p>
+        <p>C</p>
+
+    - 결과
+      - A B C 모두 빨간색이 된다.
 
   - Class 선택자
 
         .menu {
-            color:blue;
+            color:red;
         }
 
-      - class가 menu인 요소에 적용된다.
-      - 여러 요소에 사용할 수 있다.
-        ```
-        <p class="menu">Hello</p>
-        ```
+    - class 속성을 가진 요소를 선택한다.
+    - 가장 많이 사용하는 선택자이다.
+    - 여러 요소에 적용할 수 있다.
 
+    - HTML 예시
+
+        <p class="menu">A</p>
+        <p class="menu">B</p>
+
+    - 결과
+      - A B가 빨간색이 된다.
 
   - ID 선택자
 
         #header {
-            color:black;
+            color:red;
         }
 
-      - id가 header인 요소에 적용된다.
-      - 한 페이지에서 보통 하나만 사용한다.
-        ```
-        <div id="header"></div>
-        ```
+    - id 속성을 가진 요소를 선택한다.
+    - 보통 하나의 요소에만 사용한다.
 
+    - HTML 예시
 
-  - 속성 선택자
+        <div id="header">
+        </div>
+
+  - Tag + Class 선택자
+
+        p.menu {
+            color:red;
+        }
+
+    - p 태그 중 class가 menu인 요소를 선택한다.
+
+    - HTML 예시
+
+        <p class="menu">A</p>
+        <div class="menu">B</div>
+
+    - 결과
+      - A만 적용된다.
+
+  - Attribute 선택자
 
         input[type="text"] {
-            border:1px solid black;
+
         }
 
-      - 특정 속성과 값을 가진 요소를 선택한다.
+    - 특정 속성을 가진 요소를 선택한다.
 
+    - HTML 예시
 
+        <input type="text">
+        <input type="password">
 
-- Cascade와 Specificity (명시도)
-  - CSS Cascade
-    - 정의
-      - 여러 개의 CSS 규칙이 있을 때 어떤 스타일이 적용될지 결정하는 규칙이다.
-      - CSS = Cascading Style Sheets
-      - Cascading = 폭포처럼 위에서 아래로 적용된다는 뜻
-    - 기본 원리
-        - 같은 요소에 여러 스타일이 적용되면:
-            1. Specificity (명시도)
-            2. 작성 순서 (나중에 쓴 것)
-            3. !important
-        순서로 결정된다.
-    - 예시
-  
-          p {
-              color:blue;
+    - Attribute 값 선택
+
+          [type="text"] {
+
           }
 
-          p {
-              color:red;
-          }
+      - type이 text인 요소 선택한다.
 
-      결과
+    - 시작 선택
 
-          빨간색
+          [href^="https"]
 
-      이유
+      - https로 시작하는 요소 선택한다.
 
-          같은 선택자라면 나중에 작성된 것이 적용된다.
+    - 끝 선택
 
-    - 핵심 규칙
+          [src$=".png"]
 
-        같은 선택자 → 아래쪽 CSS 적용
+      - png로 끝나는 요소 선택한다.
 
-  - Specificity (명시도)
-    - 정의
-      - 어떤 CSS 선택자가 더 강한지를 결정하는 규칙이다.
-      - 강한 선택자가 적용된다.
+    - 포함 선택
 
-    - 기본 우선순위
+          [class*="menu"]
 
-            Inline > ID > Class > Tag
+      - menu를 포함하는 요소 선택한다.
 
-      설명
+- Cascade
 
-          Inline style이 가장 강하다.
-          ID 선택자가 Class보다 강하다.
-          Class 선택자가 Tag보다 강하다.
+  - 정의
+    - 여러 CSS 규칙 중 어떤 스타일이 적용될지 결정하는 규칙이다.
 
-    - 예시
+  - 특징
+    - 같은 선택자라면 아래쪽 CSS가 적용된다.
+
+  - 예시
+
+        p {
+            color:blue;
+        }
+
+        p {
+            color:red;
+        }
+
+    - 결과
+      - 빨간색 적용된다.
+
+- Specificity
+
+  - 정의
+    - 선택자 우선순위를 결정하는 규칙이다.
+
+  - 우선순위
+
+        Inline > ID > Class > Tag
+
+  - 설명
+    - Inline style이 가장 강하다.
+    - ID 선택자가 Class보다 강하다.
+    - Class 선택자가 Tag보다 강하다.
+
+  - 예시
 
         p {
             color:blue;
@@ -6193,742 +6430,345 @@ logging.warning("WARNING 로그")
             color:red;
         }
 
-        #header {
-            color:black;
-        }
-
-        HTML
-
-            <p id="header" class="menu">
-            Hello
-            </p>
-
-        결과
-
-            검은색
-
-        이유
-
-            ID 선택자가 가장 강하다.
-
-  - Specificity 계산 방법
-    - Specificity는 숫자로 계산할 수 있다.
-    - 계산 방식
-
-      - Inline = 1000
-      - ID = 100
-      - Class = 10
-      - Tag = 1
-
-    - 예시
-
-          p
-
-      Specificity
-
-          1
-
-    - 예시
-
-          .menu
-
-      Specificity
-
-          10
-
-    - 예시
-
-          #header
-
-      Specificity
-
-          100
-
-    - 예시
-
-          p.menu
-
-      Specificity
-
-          11
-
-    - 예시
-
-          #header p.menu
-
-      Specificity
-
-          111
-
-    - 규칙
-
-        숫자가 큰 선택자가 적용된다.
-
-  - Cascade vs Specificity
-
-    - 중요한 규칙
-
-        Specificity가 Cascade보다 우선한다.
-
-    - 예시
-
-          p {
-              color:blue;
-          }
-
-          .menu {
-              color:red;
-          }
-
-        HTML
-
-            <p class="menu">
-            Hello
-            </p>
-
-        결과
-
-            빨간색
-
-        이유
-
-            Class selector가 Tag selector보다 강하다.
-
-    - Specificity가 같으면 Cascade 적용
-
-      - 예시
-
-            .menu {
-                color:blue;
-            }
-
-            .menu {
-                color:red;
-            }
-
-        결과
-
-            빨간색
-
-        이유
-
-            명시도가 같으면 아래쪽 CSS가 적용된다.
-
-  - Inline Style
-
-    - 정의
-
-      - HTML 태그 안에 직접 CSS를 작성하는 방법이다.
-
-    - 예시
-
-          <p style="color:red;">
-          Hello
-          </p>
-
-    - 특징
-
-      - 매우 강한 명시도를 가진다.
-      - 유지보수가 어렵다.
-      - 가능한 사용을 줄이는 것이 좋다.
-
+    - 결과
+      - 빨간색 적용된다.
 
   - !important
 
-    - 정의
+          color:red !important;
 
-      - CSS 우선순위를 강제로 높이는 방법이다.
-
-    - 예시
-
-          p {
-              color:blue !important;
-          }
-
-          .menu {
-              color:red;
-          }
-
-        결과
-
-            파란색
-
-        이유
-
-            !important가 우선 적용된다.
-
+    - 우선순위를 강제로 높인다.
 
     - 특징
+      - 다른 CSS보다 우선 적용된다.
+      - 남용하면 관리가 어려워진다.
 
-      - Specificity보다 강하다.
-
-            !important > Inline > ID > Class > Tag
-    - 예시
-
-          .menu {
-              color:red !important;
-          }
-
-          #header {
-              color:black;
-          }
-
-        결과
-
-            빨간색
-
-    - 주의사항
-
-      - !important는 CSS 구조를 깨뜨릴 수 있다.
-      - 가능한 최소한으로 사용해야 한다.
-
-  - CSS가 적용되지 않을 때 확인할 것
-
-    - 선택자가 맞는지 확인
-
-    - 예시
-
-            p {
-                color:red;
-            }
-
-        HTML
-
-            <div>Hello</div>
-
-        결과
-
-            적용 안됨
-
-    - Specificity 확인
-    - Cascade 확인
-    - !important 확인
-
-- 값과 단위
+- CSS 단위(Unit)
 
   - px
 
-        font-size:20px;
+        width:200px;
 
-      - 픽셀(pixel) 단위이다.
-      - 화면의 점 하나를 의미한다.
-      - 고정된 크기이다.
-      - 가장 많이 사용하는 단위이다.
-
+    - 고정 크기 단위이다.
+    - 가장 많이 사용하는 단위이다.
 
   - %
 
         width:50%;
 
-      - 부모 요소를 기준으로 한 비율이다.
-      - 레이아웃 구성에 많이 사용된다.
-
+    - 부모 요소 기준 단위이다.
 
   - em
 
         font-size:2em;
 
-      - 현재 요소의 글자 크기를 기준으로 한다.
-      - 2em은 현재 글자 크기의 2배이다.
-      - 중첩되면 계산이 복잡해질 수 있다.
-
+    - 부모 font-size 기준 단위이다.
+    - 중첩되면 계산이 어려워질 수 있다.
 
   - rem
 
-        font-size:1rem;
+        font-size:2rem;
 
-      - root em 이라는 뜻이다.
-      - 문서 전체의 기준 글자 크기를 기준으로 한다.
-      - 보통 html 태그의 font-size를 기준으로 한다.
-      - 중첩되어도 기준이 변하지 않는다.
-      - 예측하기 쉬워 많이 사용된다.
-
+    - html font-size 기준 단위이다.
+    - 실무에서 많이 사용한다.
 
   - vw
 
         width:50vw;
 
-      - 화면 너비(viewport width)를 기준으로 한다.
-      - 50vw는 화면 너비의 50%이다.
-
+    - 화면 너비 기준 단위이다.
+    - 1vw는 화면 너비의 1%이다.
 
   - vh
 
-        height:50vh;
+        height:100vh;
 
-      - 화면 높이(viewport height)를 기준으로 한다.
-      - 50vh는 화면 높이의 50%이다.
-- CSS 상속 (Inheritance)
-  - CSS 상속이란
-
-    - 부모 요소의 스타일이 자식 요소에게 전달되는 현상을 의미한다.
-    - 모든 CSS 속성이 상속되는 것은 아니다.
-    - 주로 텍스트 관련 속성이 상속된다.
-
-    - 예시
-
-          body {
-              color:blue;
-          }
-
-          <body>
-              <p>Hello</p>
-          </body>
-
-    - 결과
-
-        - p 태그는 color를 지정하지 않았지만 파란색으로 표시된다.
-        - body의 color 속성이 상속되었기 때문이다.
-
-  - 상속이 잘 일어나는 속성
-
-    - 글자 관련 속성
-
-          color
-          font-size
-          font-family
-          line-height
-          text-align
-
-    - 특징
-
-        - 텍스트 관련 속성은 대부분 상속된다.
-        - 문서 전체 스타일을 설정할 때 유용하다.
-
-  - 상속되지 않는 속성
-
-    - 레이아웃 관련 속성
-
-          margin
-          padding
-          border
-          width
-          height
-
-    - 예시
-
-          body {
-              border:3px solid red;
-          }
-
-          <body>
-              <p>Hello</p>
-          </body>
-
-    - 결과
-
-        - p 태그에는 border가 적용되지 않는다.
-        - border는 상속되지 않는 속성이기 때문이다.
-
-  - inherit 값
-
-    - inherit이란
-
-        - 부모 요소의 값을 강제로 상속받는다.
-
-    - 예시
-
-          div {
-              color:red;
-          }
-
-          p {
-              color:inherit;
-          }
-
-    - 결과
-
-        - p 태그는 div의 색상을 상속받는다.
-
-  - initial 값
-
-    - initial이란
-
-        - CSS 기본값으로 되돌린다.
-
-    - 예시
-
-          p {
-              color:initial;
-          }
-
-    - 결과
-
-        - 브라우저 기본 색상으로 돌아간다.
-
-  - 상속이 일어나는 구조
-
-    - HTML 구조
-
-          <body>
-              <div>
-                  <p>Hello</p>
-              </div>
-          </body>
-
-    - 상속 흐름
-
-          body → div → p
-
-    - 부모의 스타일이 자식에게 전달된다.
-
-  - 상속이 유용한 경우
-
-    - 문서 전체 글자 색 설정
-
-          body {
-              color:black;
-          }
-
-    - 문서 전체 글자 크기 설정
-
-          body {
-              font-size:16px;
-          }
-
-    - 장점
-
-        - 모든 요소에 따로 스타일을 지정하지 않아도 된다.
-- CSS Box Model
-
-  - Box Model이란
-
-    - 모든 HTML 요소는 사각형 박스(Box) 형태로 구성된다.
-    - 웹 페이지의 레이아웃은 이 박스들의 배치로 이루어진다.
-    - CSS는 이 박스의 크기와 간격을 조절하는 역할을 한다.
-
-  - Box Model 구조
-
-    - 요소는 다음 4가지 영역으로 구성된다.
-
-          Margin
-            Border
-              Padding
-                Content
-
-    - Content
-
-        - 실제 내용이 들어가는 영역이다.
-        - 텍스트나 이미지가 표시된다.
-
-          width
-          height
-
-    - Padding
-
-        - Content와 Border 사이의 공간이다.
-        - 내부 여백이라고 부른다.
-
-          padding:20px;
-
-    - Border
-
-        - Padding 바깥쪽에 있는 테두리이다.
-
-          border:1px solid black;
-
-    - Margin
-
-        - 요소 바깥쪽 공간이다.
-        - 다른 요소와의 거리를 결정한다.
-
-          margin:20px;
-
-  - Box Model 예시
-
-          div {
-              width:200px;
-              padding:20px;
-              border:5px solid black;
-              margin:10px;
-          }
-
-    - 구성
-
-        Content width = 200px
-
-        Padding = 좌우 20px + 20px
-
-        Border = 좌우 5px + 5px
-
-    - 전체 가로 길이
-
-          200 + 40 + 10 = 250px
-
-  - Margin vs Padding
-
-    - margin
-
-        - 요소와 요소 사이 거리
-        - 바깥쪽 공간
-
-          margin:20px;
-
-    - padding
-
-        - 내부 여백
-        - content와 border 사이 공간
-
-          padding:20px;
-
-  - 방향 지정
-
-    - 위쪽
-
-          margin-top:10px;
-          padding-top:10px;
-
-    - 오른쪽
-
-          margin-right:10px;
-          padding-right:10px;
-
-    - 아래쪽
-
-          margin-bottom:10px;
-          padding-bottom:10px;
-
-    - 왼쪽
-
-          margin-left:10px;
-          padding-left:10px;
-
-  - 축약 표현
-
-    - 4개 값
-
-          margin:10px 20px 30px 40px;
-
-        - 위 오른쪽 아래 왼쪽
-
-
-    - 2개 값
-
-          margin:10px 20px;
-
-        - 위아래 / 좌우
-
-
-    - 1개 값
-
-          margin:10px;
-
-        - 모든 방향
-
-
-
-  - box-sizing
-
-    - 기본 동작
-
-        - width는 content 크기만 의미한다.
-
-          width:200px;
-
-        - padding과 border는 추가된다.
-
-
-    - border-box
-
-          box-sizing:border-box;
-
-        - width 안에 padding과 border가 포함된다.
-
-
-    - 예시
-
-          div {
-              width:200px;
-              padding:20px;
-              box-sizing:border-box;
-          }
-
-    - 결과
-
-        - 전체 너비가 200px로 유지된다.
-
-  - Box Model이 중요한 이유
-
-    - 레이아웃 계산의 기본이 된다.
-    - 요소 크기를 정확히 계산할 수 있다.
-    - margin과 padding 차이를 이해해야 레이아웃이 깨지지 않는다.
+    - 화면 높이 기준 단위이다.
+    - 1vh는 화면 높이의 1%이다.
 
 ## Layout
 
-- Layout
-
-  - 웹 페이지에서 요소들의 위치와 크기를 결정하는 것이다.
-  - CSS를 사용하여 구성한다.
-
-
-- Block 요소
-
-      div
-      p
-      h1
-
-  - 줄 전체를 차지한다.
-  - 항상 새로운 줄에서 시작한다.
-
-
-- Inline 요소
-
-      span
-      a
-      strong
-
-  - 줄 안에서 표시된다.
-  - 필요한 공간만 차지한다.
-
-
-- Box Model
-
-  - 모든 HTML 요소는 Box 형태이다.
-
-
-  - 구성 요소
-
-      Content
-          실제 내용 영역
-
-      Padding
-          내부 여백
-
-      Border
-          테두리
-
-      Margin
-          외부 여백
-
-
-  - 예시
-
-        div {
-            margin:20px;
-            padding:10px;
-            border:1px solid black;
-        }
-
-
-- Display
+- Layout이란
 
   - 정의
-    - 요소가 화면에 배치되는 방식(줄바꿈, 크기 계산, 가로/세로 배치)을 결정하는 속성이다.
-    - 같은 태그라도 display 값을 바꾸면 동작이 달라질 수 있다.
-      - div는 기본이 block이지만 inline으로 바꿀 수 있다.
-      - span은 기본이 inline이지만 block으로 바꿀 수 있다.
+    - 웹 페이지에서 요소들의 위치와 크기를 결정하는 것이다.
+    - 요소를 어디에 배치할지 결정하는 작업이다.
 
-  - 기본 display 예시 (자주 쓰는 것만)
-    - block
-      - div, p, h1, ul, li
-    - inline
-      - span, a, em, strong, img(대부분 inline처럼 배치되지만 세부 동작은 조금 다를 수 있음)
+  - 예시
+    - 메뉴 영역
+    - 본문 영역
+    - 사이드바 영역
 
-  - display:block
+  - 특징
+    - HTML은 구조를 만든다.
+    - CSS Layout은 위치를 만든다.
 
-    - 특징
-      - 한 줄 전체를 차지한다 (자동 줄바꿈)
-      - width / height 설정이 가능하다
-      - margin / padding / border가 일반적으로 예측 가능하게 동작한다
+- Block vs Inline
 
-    - 예시
-
-          <div class="box">A</div>
-          <div class="box">B</div>
-
-          .box {
-              display:block;
-              width:200px;
-              height:50px;
-              border:1px solid black;
-              margin:10px;
-          }
-
-    - 결과
-      - A와 B가 세로로 배치된다.
-
-  - display:inline
+  - Block 요소
 
     - 특징
-      - 줄 안에 배치된다 (자동 줄바꿈 없음)
-      - 내용(content) 크기만큼만 공간을 차지한다
-      - width / height는 보통 적용되지 않는다 (효과가 없다고 느껴짐)
-      - padding / margin은 동작이 제한적이다
-        - 좌/우(padding-left/right, margin-left/right)는 눈에 잘 보인다
-        - 위/아래(margin-top/bottom)는 기대와 다르게 보일 수 있다
+      - 줄 전체를 차지한다.
+      - 자동으로 줄바꿈이 된다.
+      - width 설정 가능하다.
+      - height 설정 가능하다.
+      - margin 설정 가능하다.
+      - padding 설정 가능하다.
 
-    - 예시
+    - 대표 요소
 
-          <div class="tag">A</div>
-          <div class="tag">B</div>
-
-          .tag {
-              display:inline;
-              width:200px;        /* 보통 기대대로 적용되지 않음 */
-              height:50px;        /* 보통 기대대로 적용되지 않음 */
-              padding:10px;       /* 좌우는 잘 보임 */
-              border:1px solid black;
-          }
-
-    - 언제 쓰나
-      - 글자 흐름 안에서 “일부”를 다룰 때 (span, a, em 같은 inline 계열에 적합)
-      - div를 inline으로 바꾸는 건 가능하지만, 레이아웃 목적이면 inline-block이 더 자주 쓰인다
-
-  - display:inline-block
-
-    - 특징
-      - 줄 안에 배치된다 (inline처럼 가로로 나란히 놓일 수 있음)
-      - width / height 설정 가능 (block의 장점)
-      - padding / margin / border 동작이 비교적 예측 가능하다
-      - “가로로 배치하면서 크기도 주고 싶다”면 inline-block이 기본 선택지 중 하나다
-
-    - 예시 (가로 배치 + 크기 지정)
-
-          <div class="chip">A</div>
-          <div class="chip">B</div>
-          <div class="chip">C</div>
-
-          .chip {
-              display:inline-block;
-              width:80px;
-              height:40px;
-              line-height:40px;
-              text-align:center;
-              border:1px solid black;
-              margin-right:8px;
-          }
-
-    - 자주 겪는 포인트
-      - inline-block 요소 사이에 HTML 공백/줄바꿈이 있으면 “사이 간격”이 생길 수 있다.
-      - 간격을 정확히 제어하려면:
-        - margin으로 간격을 직접 주거나
-        - 나중에 배우는 flexbox를 사용한다 (실무에서는 flex가 더 흔함)
-
-  - display:none
-
-    - 특징
-      - 요소가 화면에서 사라진다
-      - 사라질 뿐 아니라 “공간 자체”도 사라진다 (레이아웃에서 제거)
+          div
+          p
+          h1
+          ul
+          li
 
     - 예시
 
           <div>A</div>
-          <div class="hide">B</div>
-          <div>C</div>
+          <div>B</div>
 
-          .hide {
-              display:none;
+    - 결과
+
+          A
+          B
+
+    - 세로로 배치된다.
+
+  - Inline 요소
+
+    - 특징
+      - 줄 안에 표시된다.
+      - 자동 줄바꿈이 없다.
+      - 내용(content) 크기만큼만 공간을 차지한다.
+      - width 설정이 제한된다.
+      - height 설정이 제한된다.
+
+    - 대표 요소
+
+          span
+          a
+          em
+          strong
+
+    - 예시
+
+          Hello <span>world</span>
+
+    - 결과
+
+          Hello world
+
+    - 한 줄에 표시된다.
+
+- Display
+
+  - 정의
+    - 요소가 화면에 표시되는 방식을 결정하는 속성이다.
+    - 요소의 배치 방법을 변경할 수 있다.
+    - 태그의 기본 동작을 변경할 수 있다.
+
+    - 예시
+
+          div {
+              display:inline;
+          }
+
+    - div를 inline처럼 사용할 수 있다.
+
+  - block
+
+        display:block;
+
+    - 특징
+      - 줄 전체를 차지한다.
+      - 자동 줄바꿈이 된다.
+      - width 설정 가능하다.
+      - height 설정 가능하다.
+
+    - 예시
+
+          div {
+              display:block;
+          }
+
+  - inline
+
+        display:inline;
+
+    - 특징
+      - 줄 안에 표시된다.
+      - 자동 줄바꿈이 없다.
+      - width 설정이 제한된다.
+      - height 설정이 제한된다.
+
+    - 예시
+
+          span {
+              display:inline;
+          }
+
+  - inline-block
+
+        display:inline-block;
+
+    - 특징
+      - 줄 안에 표시된다.
+      - width 설정 가능하다.
+      - height 설정 가능하다.
+      - block과 inline의 특징을 함께 가진다.
+
+    - 예시
+
+          div {
+              display:inline-block;
+              width:100px;
+              height:50px;
           }
 
     - 결과
-      - A 다음에 C가 바로 붙어서 배치된다 (B의 자리 공간도 없음)
+      - 가로로 배치되면서 크기를 지정할 수 있다.
 
-  - display:none vs visibility:hidden (참고)
-    - display:none
-      - 요소 + 공간 모두 제거
-    - visibility:hidden
-      - 요소는 안 보이지만 공간은 남는다
+  - none
+
+        display:none;
+
+    - 특징
+      - 요소가 화면에서 사라진다.
+      - 공간도 함께 사라진다.
+
     - 예시
 
-        .hide1 { display:none; }
-        .hide2 { visibility:hidden; }
+          .menu {
+              display:none;
+          }
+
+- Box Model
+
+  - 정의
+    - 모든 HTML 요소는 사각형(Box) 형태를 가진다.
+    - 요소의 크기는 Box Model로 계산된다.
+
+  - 구조
+
+        Margin
+        Border
+        Padding
+        Content
+
+  - 설명
+
+    - Content
+      - 실제 내용이 들어가는 영역이다.
+
+    - Padding
+      - Content와 Border 사이의 공간이다.
+      - 내부 여백이다.
+
+    - Border
+      - 요소의 테두리이다.
+
+    - Margin
+      - 요소 바깥 공간이다.
+      - 다른 요소와의 거리를 만든다.
+
+  - width
+
+        width:200px;
+
+    - Content 영역 크기이다.
+    - 전체 크기가 아니다.
+
+  - 예시
+
+        div {
+
+            width:200px;
+            padding:20px;
+            border:5px solid black;
+
+        }
+
+    - 전체 크기 계산
+
+          200 + 20 + 20 + 5 + 5
+
+    - 결과
+
+          250px
+
+  - padding
+
+        padding:20px;
+
+    - 내부 여백이다.
+
+  - margin
+
+        margin:20px;
+
+    - 외부 여백이다.
+
+  - border
+
+        border:1px solid black;
+
+    - 테두리이다.
+
+  - box-sizing
+
+        box-sizing:border-box;
+
+    - width에 padding과 border를 포함한다.
+
+    - 예시
+
+          div {
+
+              width:200px;
+              padding:20px;
+              box-sizing:border-box;
+
+          }
+
+    - 전체 크기가 200px로 유지된다.
+
+- CSS 상속(Inheritance)
+
+  - 정의
+    - 부모 요소의 스타일이 자식 요소에 전달되는 현상이다.
+
+  - 예시
+
+        div {
+
+            color:red;
+
+        }
+
+        <div>
+
+            Hello
+            <p>World</p>
+
+        </div>
+
+    - p 태그도 빨간색이 된다.
+
+  - 상속되는 속성
+
+        color
+        font-size
+        font-family
+
+  - 상속되지 않는 속성
+
+        margin
+        padding
+        border
+        width
+        height
+
+  - 특징
+    - 텍스트 관련 속성은 상속되는 경우가 많다.
+    - 크기와 위치 관련 속성은 상속되지 않는 경우가 많다.
