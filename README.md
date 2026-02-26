@@ -6486,6 +6486,337 @@ logging.warning("WARNING 로그")
     - 화면 높이 기준 단위이다.
     - 1vh는 화면 높이의 1%이다.
 
+- CSS 상속과 값 제어 (Inheritance / inherit / initial / unset)
+
+  - CSS 상속(Inheritance)이란
+
+    - 정의
+      - 부모 요소에 적용된 스타일이 자식 요소에 전달되는 현상이다.
+      - HTML 요소는 부모-자식 구조를 가지므로 스타일이 전달될 수 있다.
+
+    - 구조 예시
+
+          <div>
+
+              Hello
+              <p>World</p>
+
+          </div>
+
+      - div는 부모 요소이다.
+      - p는 자식 요소이다.
+
+    - 상속 예시
+
+          div {
+
+              color:red;
+
+          }
+
+      - 결과
+        - div 안의 모든 글자가 빨간색이 된다.
+        - p 태그도 빨간색이 된다.
+
+    - 특징
+      - 모든 속성이 상속되는 것은 아니다.
+      - 일부 속성만 상속된다.
+
+  - 상속이 일어나는 이유
+
+    - 목적
+      - 문서 전체 스타일을 쉽게 적용하기 위해서이다.
+
+    - 예시
+
+          body {
+
+              font-family:Arial;
+              color:black;
+
+          }
+
+      - 결과
+        - 페이지 전체 글자가 Arial 글꼴이 된다.
+        - 대부분의 텍스트가 검은색이 된다.
+
+    - 특징
+      - 보통 body나 html에 기본 스타일을 설정한다.
+
+  - 대표적으로 상속되는 속성
+
+    - 특징
+      - 텍스트 관련 속성은 대부분 상속된다.
+
+    - color
+
+          div {
+              color:red;
+          }
+
+      - 자식 요소 글자도 빨간색이 된다.
+
+    - font-size
+
+          div {
+              font-size:20px;
+          }
+
+      - 자식 요소도 20px이 된다.
+
+    - font-family
+
+          body {
+              font-family:Arial;
+          }
+
+      - 전체 글꼴이 Arial이 된다.
+
+    - font-weight
+
+          div {
+              font-weight:bold;
+          }
+
+      - 자식 글자도 굵어진다.
+
+    - line-height
+
+          div {
+              line-height:2;
+          }
+
+      - 자식 요소도 적용된다.
+
+    - text-align
+
+          div {
+              text-align:center;
+          }
+
+      - 자식 텍스트도 가운데 정렬된다.
+
+    - visibility
+
+          div {
+              visibility:hidden;
+          }
+
+      - 자식 요소도 보이지 않는다.
+
+    - 대표 속성 정리
+
+          color
+          font-size
+          font-family
+          font-weight
+          line-height
+          text-align
+          visibility
+
+  - 대표적으로 상속되지 않는 속성
+
+    - 특징
+      - Layout과 크기 관련 속성은 대부분 상속되지 않는다.
+
+    - margin
+
+          div {
+              margin:20px;
+          }
+
+      - 자식 margin은 적용되지 않는다.
+
+    - padding
+
+          div {
+              padding:20px;
+          }
+
+      - 자식 padding은 적용되지 않는다.
+
+    - border
+
+          div {
+              border:1px solid black;
+          }
+
+      - 자식 border는 없다.
+
+    - width
+
+          div {
+              width:200px;
+          }
+
+      - 자식 width는 자동이다.
+
+    - height
+
+          div {
+              height:200px;
+          }
+
+      - 자식 height는 자동이다.
+
+    - background
+
+          div {
+              background:red;
+          }
+
+      - 자식 background는 없다.
+      - 부모 배경이 보일 뿐이다.
+
+    - display
+
+          div {
+              display:flex;
+          }
+
+      - 자식 요소는 flex가 아니다.
+
+    - position
+
+          div {
+              position:relative;
+          }
+
+      - 자식 요소는 relative가 아니다.
+
+    - 대표 속성 정리
+
+          margin
+          padding
+          border
+          width
+          height
+          background
+          display
+          position
+
+  - inherit
+
+    - 정의
+      - 부모 요소의 값을 그대로 사용한다.
+      - 부모 값이 바뀌면 자식 값도 함께 바뀐다.
+      - 자동 상속이 아닌 속성도 상속할 수 있다.
+
+    - 예시 (color)
+
+          .parent {
+              color:red;
+          }
+
+          .child {
+              color:inherit;
+          }
+
+      - 결과
+        - child도 빨간색이 된다.
+
+    - 예시 (border)
+
+          .parent {
+              border:1px solid black;
+          }
+
+          .child {
+              border:inherit;
+          }
+
+      - 결과
+        - child에도 border가 생긴다.
+
+    - 특징
+      - 부모 값을 그대로 따라간다.
+      - 강제 상속을 만들 수 있다.
+
+  - initial
+
+    - 정의
+      - 브라우저 기본값으로 되돌린다.
+      - 부모 값과 관계없이 기본값을 사용한다.
+
+    - 예시
+
+          div {
+              color:red;
+          }
+
+          p {
+              color:initial;
+          }
+
+      - 결과
+        - p는 기본 글자색이 된다.
+
+    - 특징
+      - 상속을 끊고 기본값으로 돌아간다.
+
+  - unset
+
+    - 정의
+      - 상황에 따라 inherit 또는 initial처럼 동작한다.
+
+    - 동작 규칙
+
+          상속 속성 → inherit
+
+          비상속 속성 → initial
+
+    - 예시 (상속 속성)
+
+          div {
+              color:red;
+          }
+
+          p {
+              color:unset;
+          }
+
+      - 결과
+        - p는 빨간색이 유지된다.
+
+    - 예시 (비상속 속성)
+
+          div {
+              margin:20px;
+          }
+
+          p {
+              margin:unset;
+          }
+
+      - 결과
+        - p margin은 기본값이 된다.
+
+  - inherit vs initial vs unset 비교
+
+        inherit → 부모값 사용
+
+        initial → 기본값 사용
+
+        unset → 자동 판단
+
+  - 실무 예시
+
+    - 링크 색상 부모와 동일하게 만들기
+
+          a {
+              color:inherit;
+          }
+
+      - 링크 색상이 부모와 같아진다.
+
+    - 버튼 기본 스타일 제거
+
+          button {
+              all:unset;
+          }
+
+      - 모든 스타일이 제거된다.
+
 ## Layout
 
 - Layout이란
@@ -7332,42 +7663,382 @@ logging.warning("WARNING 로그")
 
       - 모든 아이템이 같은 크기가 된다.
 
-- CSS 상속(Inheritance)
+- Grid
 
   - 정의
-    - 부모 요소의 스타일이 자식 요소에 전달되는 현상이다.
+    - 행(Row)과 열(Column)을 이용해 요소를 배치하는 Layout 방식이다.
+    - Flexbox와 달리 2차원 Layout을 만들 수 있다.
+    - 페이지 전체 구조를 만들 때 많이 사용된다.
 
-  - 예시
+  - Flexbox와 Grid 차이
 
-        div {
+    - Flexbox
+      - 한 방향 Layout이다.
+      - 가로나 세로 중 한 방향 정렬에 사용한다.
 
-            color:red;
+            A B C
+
+      - 메뉴 정렬이나 버튼 정렬에 적합하다.
+
+    - Grid
+      - 두 방향 Layout이다.
+      - 행과 열을 동시에 제어할 수 있다.
+
+            A B C
+            D E F
+
+      - 페이지 Layout에 적합하다.
+
+  - 기본 사용 방법
+
+        .container {
+
+            display:grid;
 
         }
 
-        <div>
+    - 부모 요소가 Grid Container가 된다.
+    - 자식 요소가 Grid Item이 된다.
 
-            Hello
-            <p>World</p>
+  - 기본 예시
+
+        <div class="container">
+
+            <div>A</div>
+            <div>B</div>
+            <div>C</div>
 
         </div>
 
-    - p 태그도 빨간색이 된다.
 
-  - 상속되는 속성
+        .container {
 
-        color
-        font-size
-        font-family
+            display:grid;
 
-  - 상속되지 않는 속성
+        }
 
-        margin
-        padding
-        border
-        width
-        height
 
-  - 특징
-    - 텍스트 관련 속성은 상속되는 경우가 많다.
-    - 크기와 위치 관련 속성은 상속되지 않는 경우가 많다.
+    - 결과
+
+            A
+            B
+            C
+
+    - 기본 배치는 세로 방향이다.
+
+  - grid-template-columns
+
+    - 정의
+      - 열(Column)의 개수와 크기를 결정한다.
+
+    - 예시
+
+        grid-template-columns:100px 100px 100px;
+
+
+    - 결과
+
+            A B C
+
+
+    - 특징
+      - 값의 개수만큼 열이 생성된다.
+
+    - 예시
+
+        grid-template-columns:200px 100px;
+
+
+    - 결과
+
+            A B
+            C D
+            E F
+
+    - 열은 2개가 된다.
+
+  - grid-template-rows
+
+    - 정의
+      - 행(Row)의 높이를 결정한다.
+
+
+    - 예시
+
+        grid-template-rows:100px 200px;
+
+
+    - 결과
+      - 첫 번째 행 높이는 100px
+      - 두 번째 행 높이는 200px
+
+    - 예시
+
+        .container {
+
+            display:grid;
+
+            grid-template-columns:1fr 1fr;
+            grid-template-rows:100px 200px;
+
+        }
+
+  - fr 단위
+
+    - 정의
+      - 남은 공간을 비율로 나누는 단위이다.
+
+    - 예시
+
+        grid-template-columns:1fr 1fr;
+
+
+    - 결과
+      - 두 열이 같은 크기가 된다.
+
+    - 예시
+
+        grid-template-columns:1fr 2fr;
+
+
+    - 결과
+      - 두 번째 열이 두 배 넓어진다.
+
+  - px와 fr 차이
+
+    - px
+
+        grid-template-columns:200px 200px;
+
+      - 고정 크기이다.
+
+    - fr
+
+        grid-template-columns:1fr 1fr;
+
+      - 화면 크기에 따라 변한다.
+
+  - gap
+
+    - 정의
+      - Grid Item 사이 간격을 만든다.
+
+    - 예시
+
+        .container {
+
+            display:grid;
+
+            grid-template-columns:1fr 1fr;
+
+            gap:20px;
+
+        }
+
+
+    - 결과
+
+            A   B
+            C   D
+
+
+    - 특징
+      - 요소 사이 간격만 생긴다.
+      - 가장자리에는 간격이 생기지 않는다.
+
+  - Grid 자동 배치
+
+    - 정의
+      - Grid는 자동으로 요소를 배치한다.
+
+    - 예시
+
+        grid-template-columns:1fr 1fr;
+
+
+        A B C D E F
+
+
+    - 결과
+
+            A B
+            C D
+            E F
+
+  - Grid 선(Line) 개념
+
+    - 특징
+      - Grid는 칸이 아니라 선 번호 기준으로 동작한다.
+
+
+    - 예시
+
+        grid-template-columns:1fr 1fr 1fr;
+
+
+    - 구조
+
+            1   2   3   4
+            | A | B | C |
+
+
+    - 열이 3개이면 선은 4개이다.
+
+  - grid-column
+
+    - 정의
+      - 요소가 차지하는 열 범위를 지정한다.
+
+
+    - 예시
+
+        .box {
+
+            grid-column:1 / 3;
+
+        }
+
+
+    - 결과
+
+            A A B
+            C D E
+
+
+    - 설명
+      - 1번 선부터 3번 선까지 사용한다.
+      - 두 칸을 차지한다.
+
+  - grid-row
+
+    - 정의
+      - 요소가 차지하는 행 범위를 지정한다.
+
+
+    - 예시
+
+        .box {
+
+            grid-row:1 / 3;
+
+        }
+
+
+    - 결과
+
+            A B
+            A C
+
+
+    - 설명
+      - 세로 방향으로 확장된다.
+
+  - span
+
+    - 정의
+      - 몇 칸을 차지할지 지정한다.
+
+    - 예시
+
+        .box {
+
+            grid-column:span 2;
+
+        }
+
+
+    - 결과
+
+            A A B
+            C D E
+
+
+    - 특징
+      - 현재 위치 기준으로 확장된다.
+
+  - grid-column과 span 차이
+
+    - grid-column:1 / 3
+
+      - 1번 선에서 3번 선까지 이동한다.
+
+    - grid-column:span 2
+
+      - 현재 위치에서 2칸 차지한다.
+
+  - grid-column + grid-row
+
+    - 예시
+
+        .box {
+
+            grid-column:1 / 3;
+            grid-row:1 / 3;
+
+        }
+
+
+    - 결과
+
+            A A B
+            A A C
+            D E F
+
+    - 특징
+      - 2 x 2 영역을 차지한다.
+
+  - 실전 Layout 예시
+
+    - 구조
+
+            Header Header
+            Menu   Content
+            Footer Footer
+
+    - CSS
+
+        .container {
+
+            display:grid;
+
+            grid-template-columns:200px 1fr;
+
+            grid-template-rows:80px 1fr 80px;
+
+            gap:10px;
+
+        }
+
+
+        .header {
+
+            grid-column:1 / 3;
+
+        }
+
+
+        .menu {
+
+            grid-column:1;
+
+        }
+
+
+        .content {
+
+            grid-column:2;
+
+        }
+
+
+        .footer {
+
+            grid-column:1 / 3;
+
+        }
+
+    - 결과
+
+            Header Header
+            Menu   Content
+            Footer Footer
