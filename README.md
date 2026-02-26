@@ -33,6 +33,10 @@
   - [Numpy](#numpy)
   - [Pandas](#pandas)
   - [Matplotlib](#matplotlib)
+- [Web](#web)
+  - [HTML](#html)
+  - [CSS](#css)
+  - [Layout](#layout)
 
 # Python Study Notes
 
@@ -8042,3 +8046,482 @@ logging.warning("WARNING 로그")
             Header Header
             Menu   Content
             Footer Footer
+
+- overflow
+
+  - 개념
+    - 요소(box)의 크기보다 내용이 더 클 때 **넘친 부분을 어떻게 처리할지 결정하는 CSS 속성**
+    - 박스보다 내용이 크면 overflow가 발생함
+    - 레이아웃 제어에서 매우 자주 사용되는 속성
+
+  - 기본 구조
+
+    overflow: 값;
+
+    대표 값:
+
+    overflow: visible;
+    overflow: hidden;
+    overflow: scroll;
+    overflow: auto;
+
+
+  - 동작 원리
+
+    box 크기 > 내용 크기
+    → 정상 표시
+
+    box 크기 < 내용 크기
+    → overflow 발생
+
+    overflow는 반드시 **크기(width 또는 height)가 있어야 작동함**
+
+    예시:
+
+    height: 200px;
+    overflow: auto;
+
+
+  - overflow: visible
+
+    - 기본값 (default)
+    - 내용이 넘쳐도 그대로 표시됨
+    - 박스 밖으로 내용이 튀어나옴
+
+    예시:
+
+    div {
+        width: 200px;
+        height: 100px;
+        overflow: visible;
+    }
+
+
+  - overflow: hidden
+
+    - 넘친 부분을 잘라서 숨김
+    - 박스 영역 밖의 내용은 보이지 않음
+    - 레이아웃 정리에 자주 사용됨
+
+    예시:
+
+    div {
+        width: 200px;
+        height: 100px;
+        overflow: hidden;
+    }
+
+    사용 예:
+
+    - 이미지 자르기
+    - 둥근 모서리 처리
+
+    예:
+
+    border-radius: 20px;
+    overflow: hidden;
+
+
+  - overflow: scroll
+
+    - 항상 스크롤바가 생성됨
+    - 내용이 넘치지 않아도 스크롤 표시됨
+    - 실무에서는 거의 사용하지 않음
+
+    예시:
+
+    div {
+        width: 200px;
+        height: 100px;
+        overflow: scroll;
+    }
+
+
+  - overflow: auto
+
+    - 내용이 넘칠 때만 스크롤 생성
+    - 넘치지 않으면 스크롤 없음
+    - 실무에서 가장 많이 사용됨
+
+    예시:
+
+    div {
+        width: 200px;
+        height: 100px;
+        overflow: auto;
+    }
+
+
+  - 방향별 overflow
+
+    가로 스크롤
+
+    overflow-x: auto;
+
+    - 가로 방향만 스크롤 생성
+
+    세로 스크롤
+
+    overflow-y: auto;
+
+    - 세로 방향만 스크롤 생성
+
+
+  - overflow가 작동하는 조건 (중요 ⭐)
+
+    overflow는 반드시 크기가 있어야 동작함
+
+    예:
+
+    overflow: auto;
+
+    → 아무 일도 안 일어남
+
+    반드시:
+
+    height: 200px;
+    overflow: auto;
+
+    또는:
+
+    width: 300px;
+    overflow: auto;
+
+
+  - 실무 사용 패턴
+
+    1) 스크롤 박스
+
+    height: 300px;
+    overflow: auto;
+
+    사용 예:
+
+    - 채팅창
+    - 리스트
+    - 메뉴
+
+
+    2) 이미지 자르기
+
+    overflow: hidden;
+
+    사용 예:
+
+    - 카드 UI
+    - 프로필 이미지
+
+
+    3) 가로 스크롤
+
+    overflow-x: auto;
+
+    사용 예:
+
+    - 테이블
+    - 코드 영역
+
+## Bootstrap
+
+- Bootstrap
+
+  - 정의
+    - 웹사이트 디자인을 빠르게 만들기 위한 CSS + JavaScript 라이브러리이다.
+    - 버튼, 메뉴, 카드, 팝업창 같은 UI를 class만으로 만들 수 있다.
+    - CSS를 직접 작성하지 않아도 기본 디자인이 적용된다.
+    - 실무에서 매우 많이 사용되는 프레임워크이다.
+
+  - CDN
+
+    - 정의
+      - Bootstrap 파일을 인터넷에서 바로 가져오는 방식이다.
+      - Bootstrap을 설치하지 않고 사용할 수 있다.
+
+    - Bootstrap CSS 연결
+
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+      - Bootstrap 디자인을 적용하기 위해 필요하다.
+
+    - Bootstrap JavaScript 연결
+
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+      - Bootstrap 기능을 사용하기 위해 필요하다.
+
+    - JavaScript가 필요한 기능
+
+      - Navbar 버튼
+      - Dropdown
+      - Carousel
+      - Modal
+
+  - 기본 사용 방법
+
+    - Bootstrap은 class 중심 구조이다.
+
+          태그 class="bootstrap-class"
+
+    - class를 추가하면 디자인이 적용된다.
+
+    - 예시
+
+          <button class="btn btn-primary">버튼</button>
+
+    - Bootstrap 사용 순서
+
+      1 Bootstrap 연결
+      2 HTML 작성
+      3 class 추가
+
+  - Reset CSS
+
+    - 정의
+      - 브라우저 기본 스타일을 초기화하는 것이다.
+
+    - 브라우저 기본 스타일 예
+
+      - h1 → 큰 글자
+      - p → margin 존재
+      - ul → 들여쓰기 존재
+
+    - Bootstrap 특징
+
+      - 폰트 통일
+      - margin 정리
+      - 줄 간격 통일
+
+    - Bootstrap은 Reset CSS가 포함되어 있다.
+
+  - 활용 영역
+
+    - Typography
+      - 글자 스타일을 설정하는 기능이다.
+
+    - Colors
+      - 글자색과 배경색을 설정하는 기능이다.
+
+    - Component
+      - 완성된 UI 부품이다.
+
+  - Typography
+
+    - 정의
+      - 글자의 크기와 스타일을 설정하는 기능이다.
+
+    - Display 글자 크기
+
+          <h1 class="display-1">Display 1</h1>
+
+      - display-1 → 가장 큰 글자
+      - display-6 → 작은 글자
+
+      - 사이트 제목에 많이 사용된다.
+
+    - 글자 스타일 태그
+
+      - 형광펜
+
+            <mark>text</mark>
+
+      - 취소선
+
+            <del>text</del>
+
+      - 밑줄
+
+            <ins>text</ins>
+
+      - 굵은 글씨
+
+            <strong>text</strong>
+
+      - 기울임
+
+            <em>text</em>
+
+  - Colors
+
+    - 정의
+      - Bootstrap에서 제공하는 색상 시스템이다.
+
+    - 글자 색상
+
+          class="text-primary"
+
+      - primary → 파랑
+      - success → 초록
+      - danger → 빨강
+      - warning → 노랑
+      - info → 하늘색
+      - dark → 검정
+      - light → 밝은색
+
+    - 배경 색상
+
+          class="bg-dark"
+
+    - 사용 예
+
+          class="text-warning bg-dark"
+
+      - 글자색 노랑
+      - 배경색 검정
+
+    - 특징
+
+      - 색상 이름만 기억하면 사용할 수 있다.
+
+  - Component
+
+    - 정의
+      - Bootstrap에서 제공하는 완성된 UI 부품이다.
+
+    - Navbar
+
+      - 정의
+        - 웹사이트 상단 메뉴이다.
+
+      - 구성 요소
+
+        - 로고
+        - 메뉴
+        - 검색창
+
+    - Alert
+
+      - 정의
+        - 알림 메시지를 표시하는 Component이다.
+
+      - 종류
+
+        - alert-success
+        - alert-danger
+        - alert-warning
+        - alert-info
+
+    - Badge
+
+      - 정의
+        - 작은 표시를 나타내는 Component이다.
+
+      - 사용 예
+
+        - NEW 표시
+        - 공지 표시
+
+    - Card
+
+      - 정의
+        - 정보를 박스 형태로 표시하는 Component이다.
+
+      - 사용 예
+
+        - 상품 표시
+        - 게시글 표시
+
+      - 구성 요소
+
+        - 이미지
+        - 제목
+        - 설명
+        - 버튼
+
+    - Carousel
+
+      - 정의
+        - 이미지를 슬라이드 형태로 표시하는 Component이다.
+
+      - 사용 예
+
+        - 쇼핑몰 배너
+        - 메인 화면 이미지
+
+    - Modal
+
+      - 정의
+        - 팝업창을 표시하는 Component이다.
+
+      - 사용 예
+
+        - 로그인 창
+        - 회원가입 창
+
+- Bootstrap Layout
+
+  - 정의
+    - 웹페이지 요소를 화면에 배치하는 방법이다.
+
+  - 기본 구조
+
+        container
+          row
+            col
+
+    - Bootstrap Layout의 기본 구조이다.
+
+  - Container
+
+    - 정의
+      - 내용을 가운데 정렬하고 폭을 제한하는 영역이다.
+
+    - 형식
+
+          <div class="container">
+
+    - 특징
+
+      - 가운데 정렬
+      - 좌우 여백 생성
+      - 최대 폭 제한
+
+    - container-fluid
+
+          <div class="container-fluid">
+
+      - 화면 전체 폭 사용
+
+  - Row
+
+    - 정의
+      - 가로 한 줄을 만드는 요소이다.
+
+    - 형식
+
+          <div class="row">
+
+  - Column
+
+    - 정의
+      - 한 줄 안에서 칸을 나누는 요소이다.
+
+    - 형식
+
+          <div class="col">
+
+  - Grid 시스템
+
+    - 정의
+      - Bootstrap은 화면을 12칸으로 나누어 Layout을 만든다.
+
+    - 특징
+
+      - 한 줄 = 12칸
+
+    - col-6
+
+          <div class="col-6">
+
+      - 화면 반반 분할
+
+    - col-4
+
+          <div class="col-4">
+
+      - 화면 3칸 분할
+
+  - 핵심 구조
+
+        container → 영역
+        row → 줄
+        col → 칸
