@@ -1,5 +1,6 @@
 ## 목차
 - [Python Study Notes](#python-study-notes)
+  - [핵심](#핵심)
   - [Basic](#basic)
   - [변수와 자료형](#변수와-자료형)
   - [함수(Function)](#함수function)
@@ -14,29 +15,32 @@
 - [Git 활용법 정리 (기능 + 예시)](#git-활용법-정리-기능--예시)
 - [Markdown / README 작성법 정리](#markdown--readme-작성법-정리)
 - [알고리즘(Algorithm) 기초](#알고리즘algorithm-기초)
+  - [알고리즘 공부의 큰 흐름](#알고리즘-공부의-큰-흐름)
   - [개념](#개념)
   - [시간 복잡도](#시간-복잡도)
   - [부분집합 (Subsets)](#부분집합-subsets)
   - [배열(Array)](#배열array)
   - [정렬(Sorting)](#정렬sorting)
   - [검색](#검색)
-  - [Stack (스택)](#stack-스택)
-  - [재귀 호출 (Recursion)](#재귀-호출-recursion)
-  - [알고리즘 설계 전략](#알고리즘-설계-전략)
+  - [🥞 Stack (스택)](#-stack-스택)
+  - [🔁 재귀 호출 (Recursion)](#-재귀-호출-recursion)
+  - [🌳 트리(Tree)](#-트리tree)
+  - [🧠 알고리즘 설계 전략](#-알고리즘-설계-전략)
 - [라이브러리](#라이브러리)
+  - [Numpy](#numpy)
+  - [Pandas](#pandas)
+  - [Matplotlib](#matplotlib)
   - [collections](#collections)
   - [itertools](#itertools)
   - [pathlib (Path)](#pathlib-path)
   - [datetime](#datetime)
   - [random](#random)
   - [logging](#logging)
-  - [Numpy](#numpy)
-  - [Pandas](#pandas)
-  - [Matplotlib](#matplotlib)
-- [Web](#web)
+- [WEB](#web)
   - [HTML](#html)
   - [CSS](#css)
   - [Layout](#layout)
+  - [Bootstrap](#bootstrap)
 
 # Python Study Notes
 
@@ -4593,6 +4597,456 @@
             else:
                 now = now * 2
     ```
+
+  - ✔ 삭제 (Deletion)
+
+    - 정의
+      - 이진 탐색 트리(BST)에서 특정 값을 제거하는 연산이다.
+      - 삭제 후에도 BST 규칙(왼쪽 < 부모 < 오른쪽)을 유지해야 한다.
+      - 삭제는 상황에 따라 처리 방법이 달라지므로 “3가지 케이스”로 나눠서 생각한다.
+
+    - 삭제 케이스 3가지 (핵심 ⭐)
+
+      - 1) 자식이 없는 노드(Leaf)
+        - 그냥 제거하면 된다.
+
+      - 2) 자식이 1개인 노드
+        - 부모가 삭제 노드 대신, 삭제 노드의 자식을 직접 가리키게 한다.
+
+      - 3) 자식이 2개인 노드 (가장 중요 ⭐⭐⭐)
+        - 바로 지우면 왼쪽/오른쪽 서브트리를 어떻게 붙일지 문제가 생긴다.
+        - 해결: “대체 노드”로 값을 교체하고, 대체 노드를 삭제한다.
+
+        - 대체 노드 선택 방법 (둘 중 하나)
+          - (가장 많이 씀) 오른쪽 서브트리의 최솟값 = inorder successor
+          - 또는 왼쪽 서브트리의 최댓값 = inorder predecessor
+
+    - 삭제 알고리즘 흐름
+
+      1 삭제할 값 탐색
+      2 케이스 판별
+        - Leaf → 제거
+        - 자식 1개 → 자식으로 대체
+        - 자식 2개 → successor(오른쪽 최솟값)로 값 교체 후 successor 삭제
+
+    - 예시 코드 (Node 기반 BST: 삽입 / 탐색 / 삭제)
+
+      ```python
+      # 배열(이진트리 인덱스) 방식 BST: 1-based 인덱스
+      # - 왼쪽 자식 = i * 2
+      # - 오른쪽 자식 = i * 2 + 1
+      # - arr[i] == 0 이면 비어있는 노드(없음)
+      #
+      # ✅ 삭제(delete)까지 포함 (Leaf / 자식 1개 / 자식 2개)
+      # ✅ 자식 2개는 "오른쪽 서브트리의 최솟값(successor)"로 교체 후 successor 삭제
+
+      MAXN = 64
+      arr = [0] * MAXN  # 1..MAXN-1 사용
+
+
+      def insert_bst(x):
+          """BST 삽입: 빈 칸(0)을 만날 때까지 내려가서 넣는다."""
+          i = 1
+          while i < MAXN:
+              if arr[i] == 0:
+                  arr[i] = x
+                  return True
+              if x < arr[i]:
+                  i = i * 2
+              else:
+                  i = i * 2 + 1
+          return False  # 공간 부족
+
+
+      def search_bst(x):
+          """BST 탐색: 찾으면 인덱스 반환, 없으면 0 반환"""
+          i = 1
+          while i < MAXN and arr[i] != 0:
+              if arr[i] == x:
+                  return i
+              if x < arr[i]:
+                  i = i * 2
+              else:
+                  i = i * 2 + 1
+          return 0
+
+
+      def _left(i): return i * 2
+      def _right(i): return i * 2 + 1
+
+
+      def _min_index(i):
+          """(서브트리 루트 i)에서 최솟값 노드 인덱스: 왼쪽으로 끝까지"""
+          cur = i
+          while _left(cur) < MAXN and arr[_left(cur)] != 0:
+              cur = _left(cur)
+          return cur
+
+
+      def delete_bst(x):
+          """
+          BST 삭제(배열 방식)
+          - 삭제할 값 x를 찾아서, 케이스별 처리
+          - 반환: True(삭제 성공) / False(없음)
+          """
+          idx = search_bst(x)
+          if idx == 0:
+              return False
+
+          def _delete_at(i):
+              """i 위치의 노드를 BST 규칙 유지하며 삭제"""
+              li = _left(i)
+              ri = _right(i)
+
+              left_exists = (li < MAXN and arr[li] != 0)
+              right_exists = (ri < MAXN and arr[ri] != 0)
+
+              # 1) Leaf (자식 없음)
+              if not left_exists and not right_exists:
+                  arr[i] = 0
+                  return
+
+              # 2) 자식 1개
+              if left_exists and not right_exists:
+                  # 왼쪽 자식을 현재 자리로 "올림"
+                  arr[i] = arr[li]
+                  _delete_at(li)  # 올린 자리(왼쪽 자식 자리)를 삭제 처리
+                  return
+
+              if not left_exists and right_exists:
+                  # 오른쪽 자식을 현재 자리로 "올림"
+                  arr[i] = arr[ri]
+                  _delete_at(ri)
+                  return
+
+              # 3) 자식 2개
+              # 오른쪽 서브트리에서 최솟값(successor) 찾아서 값만 복사 후 successor 삭제
+              succ = _min_index(ri)
+              arr[i] = arr[succ]
+              _delete_at(succ)  # successor는 최솟값이라 왼쪽 자식이 없어서(=쉬운 케이스로 떨어짐) 삭제가 단순
+              return
+
+          _delete_at(idx)
+          return True
+
+
+      def inorder(i, out):
+          """중위 순회(오름차순). 0은 비어있는 노드."""
+          if i >= MAXN or arr[i] == 0:
+              return
+          inorder(_left(i), out)
+          out.append(arr[i])
+          inorder(_right(i), out)
+
+
+      # -----------------------
+      # 예시 실행
+      # -----------------------
+      values = [4, 2, 9, 7, 15, 1, 3]
+      for v in values:
+          insert_bst(v)
+
+      res = []
+      inorder(1, res)
+      print("initial:", res)  # 예상: [1, 2, 3, 4, 7, 9, 15]
+
+      print("search 7:", search_bst(7) != 0)   # 예상: True
+      print("search 8:", search_bst(8) != 0)   # 예상: False
+
+      # Leaf 삭제 (3)
+      delete_bst(3)
+      res = []
+      inorder(1, res)
+      print("after delete 3:", res)  # 예상: [1, 2, 4, 7, 9, 15]
+
+      # Leaf 삭제 (1)
+      delete_bst(1)
+      res = []
+      inorder(1, res)
+      print("after delete 1:", res)  # 예상: [2, 4, 7, 9, 15]
+
+      # 자식 2개 삭제 (9)
+      delete_bst(9)
+      res = []
+      inorder(1, res)
+      print("after delete 9:", res)  # 예상: [2, 4, 7, 15]
+      ```
+
+    - 특징 / 주의점
+
+      - 삭제 구현에서 가장 중요한 케이스는 “자식 2개”이다.
+      - 이때는 successor(오른쪽 최솟값) 또는 predecessor(왼쪽 최댓값)로 교체하는 방식이 정석이다.
+      - 배열로 트리를 표현하는 방식은 “완전 이진 트리”에서 다루기 쉬운 표현이며,
+        BST 삭제처럼 “서브트리 연결을 바꾸는” 연산은 Node 기반이 훨씬 자연스럽다.
+  
+  - Heap
+
+    - 정의
+      - Heap은 완전 이진 트리 형태를 유지하는 자료구조이다.
+      - 부모와 자식 사이에 일정한 대소 관계가 유지되는 트리이다.
+      - 배열을 이용해서 구현하기에 매우 적합하다.
+      - 최소값 또는 최대값을 빠르게 찾기 위해 사용된다.
+
+    - 특징
+
+      - 완전 이진 트리 구조
+        - 노드가 왼쪽부터 채워진다.
+
+                  O
+                / \
+                O   O
+              / \
+              O   O
+
+        - 중간에 비어있는 자리가 있으면 안 된다.
+
+      - Heap 규칙 유지
+
+        - Min Heap
+          - 부모 ≤ 자식
+          - 가장 작은 값이 root에 위치한다.
+
+        - Max Heap
+          - 부모 ≥ 자식
+          - 가장 큰 값이 root에 위치한다.
+
+        - Python heapq는 Min Heap이다.
+
+
+    - 배열 표현 (중요 ⭐⭐⭐)
+
+      - Heap은 배열로 표현하기 쉽다.
+
+      - 인덱스 규칙
+
+            왼쪽 자식 = i * 2
+            오른쪽 자식 = i * 2 + 1
+            부모 = i // 2
+
+      - 예시 트리
+
+                2
+               / \
+              5   6
+             / \
+            8   9
+
+      - 배열 표현
+
+            index : 1 2 3 4 5
+            value : 2 5 6 8 9
+
+
+    - Heap의 목적
+
+      - 최소값 또는 최대값을 빠르게 꺼내기 위한 구조이다.
+
+      - 사용 예
+
+        - 우선순위 큐
+        - 다익스트라 알고리즘
+        - 스케줄링
+
+
+    - Heap 삽입 (Push)
+
+      - 과정
+
+        1 마지막 위치에 삽입
+        2 부모와 비교
+        3 규칙 위반 시 교환
+        4 root까지 반복
+
+      - 예시
+
+        초기 Heap
+
+              2
+             / \
+            5   6
+
+        배열
+
+              [2,5,6]
+
+        1 삽입
+
+                2
+              / \
+              5   6
+            /
+            1
+
+        배열
+
+              [2,5,6,1]
+
+        위로 이동
+
+                1
+              / \
+              2   6
+            /
+            5
+
+        배열
+
+              [1,2,6,5]
+
+
+    - Heap 삭제 (Pop)
+
+      - Min Heap에서는 root를 삭제한다.
+
+      - 과정
+
+        1 root 제거
+        2 마지막 노드를 root로 이동
+        3 자식과 비교
+        4 더 작은 자식과 교환
+        5 반복
+
+      - 예시
+
+        초기 Heap
+
+                1
+              / \
+              2   6
+            /
+            5
+
+        배열
+
+              [1,2,6,5]
+
+        root 제거
+
+              5
+             / \
+            2   6
+
+        배열
+
+              [5,2,6]
+
+        아래로 이동
+
+              2
+             / \
+            5   6
+
+        배열
+
+              [2,5,6]
+
+
+    - 시간 복잡도
+
+      - 삽입
+
+            O(log N)
+
+      - 삭제
+
+            O(log N)
+
+      - root 조회
+
+            O(1)
+
+
+    - Heap 연산 구현 예시
+
+      ```python
+      MAXN = 100
+      heap = [0] * MAXN
+      size = 0
+
+
+      def push(x):
+          """Min Heap 삽입"""
+
+          global size
+
+          size += 1
+          heap[size] = x
+
+          i = size
+
+          # 위로 이동 (heapify-up)
+          while i > 1:
+
+              parent = i // 2
+
+              if heap[parent] <= heap[i]:
+                  break
+
+              heap[parent], heap[i] = heap[i], heap[parent]
+
+              i = parent
+
+
+      def pop():
+          """Min Heap 삭제"""
+
+          global size
+
+          if size == 0:
+              return None
+
+          root = heap[1]
+
+          heap[1] = heap[size]
+          size -= 1
+
+          i = 1
+
+          # 아래로 이동 (heapify-down)
+          while True:
+
+              left = i * 2
+              right = i * 2 + 1
+
+              smallest = i
+
+              if left <= size and heap[left] < heap[smallest]:
+                  smallest = left
+
+              if right <= size and heap[right] < heap[smallest]:
+                  smallest = right
+
+              if smallest == i:
+                  break
+
+              heap[i], heap[smallest] = heap[smallest], heap[i]
+
+              i = smallest
+
+          return root
+
+
+      # 예시 실행
+
+      push(5)
+      push(2)
+      push(8)
+      push(1)
+
+      print(heap[1:size+1])
+      # 예상 결과:
+      # [1,2,8,5]
+
+
+      print(pop())
+      # 예상 결과:
+      # 1
+
+
+      print(heap[1:size+1])
+      # 예상 결과:
+      # [2,5,8]
+      ```
 
 - 시간 복잡도
   
