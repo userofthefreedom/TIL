@@ -3463,78 +3463,78 @@
 
   - 4방향 이웃 탐색
 
-        ```python
-        def neighbors_4(r,c,n,m):
+      ```python
+      def neighbors_4(r,c,n,m):
 
-            dr = [-1,1,0,0]
-            dc = [0,0,-1,1]
+          dr = [-1,1,0,0]
+          dc = [0,0,-1,1]
 
-            for d in range(4):
+          for d in range(4):
 
-                nr = r + dr[d]
-                nc = c + dc[d]
+              nr = r + dr[d]
+              nc = c + dc[d]
 
-                if 0 <= nr < n and 0 <= nc < m:
-                    yield nr,nc
-        ```
+              if 0 <= nr < n and 0 <= nc < m:
+                  yield nr,nc
+      ```
 
   - 대각선 이웃 탐색
 
-        ```python
-        def neighbors_diag(r,c,n,m):
+      ```python
+      def neighbors_diag(r,c,n,m):
 
-            dr = [-1,-1,1,1]
-            dc = [-1,1,-1,1]
+          dr = [-1,-1,1,1]
+          dc = [-1,1,-1,1]
 
-            for d in range(4):
+          for d in range(4):
 
-                nr = r + dr[d]
-                nc = c + dc[d]
+              nr = r + dr[d]
+              nc = c + dc[d]
 
-                if 0 <= nr < n and 0 <= nc < m:
-                    yield nr,nc
-        ```
+              if 0 <= nr < n and 0 <= nc < m:
+                  yield nr,nc
+      ```
 
   - 8방향 탐색
 
-        ```python
-        def neighbors_8(r,c,n,m):
+      ```python
+      def neighbors_8(r,c,n,m):
 
-            dr = [-1,-1,-1,0,0,1,1,1]
-            dc = [-1,0,1,-1,1,-1,0,1]
+          dr = [-1,-1,-1,0,0,1,1,1]
+          dc = [-1,0,1,-1,1,-1,0,1]
 
-            for d in range(8):
+          for d in range(8):
 
-                nr = r + dr[d]
-                nc = c + dc[d]
+              nr = r + dr[d]
+              nc = c + dc[d]
 
-                if 0 <= nr < n and 0 <= nc < m:
-                    yield nr,nc
-        ```
+              if 0 <= nr < n and 0 <= nc < m:
+                  yield nr,nc
+      ```
 
   - 특정 값 탐색
 
-        ```python
-        def neighbors_with_value(arr,r,c,value):
+      ```python
+      def neighbors_with_value(arr,r,c,value):
 
-            n = len(arr)
-            m = len(arr[0])
+          n = len(arr)
+          m = len(arr[0])
 
-            for nr,nc in neighbors_4(r,c,n,m):
+          for nr,nc in neighbors_4(r,c,n,m):
 
-                if arr[nr][nc] == value:
-                    return True
+              if arr[nr][nc] == value:
+                  return True
 
-            return False
-        ```
+          return False
+      ```
 
   - 2차원 배열 시간 복잡도
 
-        ```
-        N × M 배열 전체 순회
+      ```
+      N × M 배열 전체 순회
 
-        O(N × M)
-        ```
+      O(N × M)
+      ```
 
 - Stack
   - 개념
@@ -3544,11 +3544,11 @@
 
   - 주요 연산
 
-        ```
-        push
-        pop
-        peek
-        ```
+      ```
+      push
+      pop
+      peek
+      ```
 
   - 예시
     - 예시 코드
@@ -3611,10 +3611,10 @@
 
   - 필수 요소
 
-        ```
-        Base Case
-        Recursive Case
-        ```
+      ```
+      Base Case
+      Recursive Case
+      ```
 
   - 예시 : 팩토리얼
     - 예시 코드
@@ -3654,23 +3654,16 @@
         ```
   - 특징
 
-        ```
-        사이클이 없다
-        하나의 루트 노드가 존재한다
-        부모는 하나
-        자식은 여러 개 가능
-        ```
+      ```
+      사이클이 없다
+      하나의 루트 노드가 존재한다
+      부모는 하나
+      자식은 여러 개 가능
+      ```
 
   - 트리 용어
 
-        ```
-        Root
-        Parent
-        Child
-        Leaf
-        Depth
-        Height
-        ```
+ 
 
   - 트리 표현
     - 배열 기반 표현
@@ -3827,47 +3820,47 @@
 
     - 예시
 
-          ```
-                1
-              /   \
-             2     3
-            / \
-           4   5
-          ```
+        ```
+              1
+            /   \
+          2     3
+          / \
+        4   5
+        ```
 
-          ```
-          LCA(4,5) = 2
-          ```
+        ```
+        LCA(4,5) = 2
+        ```
 
     - 예시 코드
 
-          ```python
-          parent = [0,0,1,1,2,2]
+        ```python
+        parent = [0,0,1,1,2,2]
 
-          def lca(a,b):
+        def lca(a,b):
 
-              visited = set()
+            visited = set()
 
-              while a:
+            while a:
 
-                  visited.add(a)
-                  a = parent[a]
+                visited.add(a)
+                a = parent[a]
 
-              while b:
+            while b:
 
-                  if b in visited:
-                      return b
+                if b in visited:
+                    return b
 
-                  b = parent[b]
+                b = parent[b]
 
-          print(lca(4,5))
-          ```
+        print(lca(4,5))
+        ```
 
     - 실행 결과
 
-          ```
-          2
-          ```
+        ```
+        2
+        ```
 
     - Euler Tour Technique
 
@@ -3876,62 +3869,64 @@
 
       - 활용
 
-            ```
-            Subtree Query
-            LCA
-            Segment Tree
-            ```
+          ```
+          Subtree Query
+          LCA
+          Segment Tree
+          ```
 
       - 핵심 아이디어
 
-            ```
-            노드 방문 시간을 기록
-            ```
+          ```
+          노드 방문 시간을 기록
+          ```
 
       - 예시 코드
 
-            ```python
-            graph = {
-                1:[2,3],
-                2:[4,5],
-                3:[],
-                4:[],
-                5:[]
-            }
+          ```python
+          graph = {
+              1:[2,3],
+              2:[4,5],
+              3:[],
+              4:[],
+              5:[]
+          }
 
-            start = {}
-            end = {}
+          start = {}
+          end = {}
 
-            order = []
-            time = 0
+          order = []
+          time = 0
 
-            def dfs(v):
+          def dfs(v):
 
-                global time
+              global time
 
-                start[v] = time
-                order.append(v)
+              start[v] = time
+              order.append(v)
 
-                time += 1
+              time += 1
 
-                for nxt in graph[v]:
-                    dfs(nxt)
+              for nxt in graph[v]:
+                  dfs(nxt)
 
-                end[v] = time-1
+              end[v] = time-1
 
 
-            dfs(1)
+          dfs(1)
 
-            print(order)
-            print(start)
-            print(end)
-            ```
+          print(order)
+          print(start)
+          print(end)
+          ```
 
       - 실행 결과
 
-            ```
-            [1,2,4,5,3]
-            ```
+          ```
+          [1,2,4,5,3]
+          {1: 0, 2: 1, 4: 2, 5: 3, 3: 4}
+          {4: 2, 5: 3, 2: 3, 3: 4, 1: 4}
+          ```
 
   - Binary Search Tree
     - 개념
@@ -4033,13 +4028,13 @@
 
   - 대표 탐색 방법
 
-        ```
-        선형 탐색
-        이진 탐색
-        DFS
-        BFS
-        완전 탐색
-        ```
+      ```
+      선형 탐색
+      이진 탐색
+      DFS
+      BFS
+      완전 탐색
+      ```
 
 - 선형 탐색 (Linear Search)
   - 개념
@@ -4047,17 +4042,17 @@
 
   - 특징
 
-        ```
-        구현이 쉽다
-        정렬이 필요 없다
-        데이터가 많으면 느리다
-        ```
+      ```
+      구현이 쉽다
+      정렬이 필요 없다
+      데이터가 많으면 느리다
+      ```
 
   - 시간 복잡도
 
-        ```
-        O(N)
-        ```
+      ```
+      O(N)
+      ```
 
   - 예시
     - 예시 코드
@@ -4085,16 +4080,16 @@
 
   - 특징
 
-        ```
-        반드시 정렬된 데이터여야 한다
-        매우 빠른 탐색
-        ```
+      ```
+      반드시 정렬된 데이터여야 한다
+      매우 빠른 탐색
+      ```
 
   - 시간 복잡도
 
-        ```
-        O(log N)
-        ```
+      ```
+      O(log N)
+      ```
 
   - 예시
     - 예시 코드
@@ -4134,21 +4129,21 @@
 
     - 예시 코드
 
-          ```python
-          import bisect
+        ```python
+        import bisect
 
-          arr = [1,2,2,2,3,4]
+        arr = [1,2,2,2,3,4]
 
-          print(bisect.bisect_left(arr,2))
-          print(bisect.bisect_right(arr,2))
-          ```
+        print(bisect.bisect_left(arr,2))
+        print(bisect.bisect_right(arr,2))
+        ```
 
     - 실행 결과
 
-          ```
-          1
-          4
-          ```
+        ```
+        1
+        4
+        ```
 
   - Binary Search on Answer
 
@@ -4158,63 +4153,62 @@
 
     - 대표 문제
 
-          ```
-          최소 시간
-          최대 길이
-          가능한 최소값
-          ```
+        ```
+        최소 시간
+        최대 길이
+        가능한 최소값
+        ```
 
     - 핵심 아이디어
 
-          ```
-          mid 값이 가능한지 검사
-          ```
+        ```
+        mid 값이 가능한지 검사
+        ```
 
     - 예시 문제
       - 랜선 자르기
 
     - 예시 코드
 
-          ```python
-          cables = [802,743,457,539]
-          target = 11
+        ```python
+        cables = [802,743,457,539]
+        target = 11
 
-          left = 1
-          right = max(cables)
+        left = 1
+        right = max(cables)
 
-          answer = 0
+        answer = 0
 
-          while left <= right:
+        while left <= right:
 
-              mid = (left + right) // 2
+            mid = (left + right) // 2
 
-              pieces = 0
+            pieces = 0
 
-              for c in cables:
-                  pieces += c // mid
+            for c in cables:
+                pieces += c // mid
 
-              if pieces >= target:
+            if pieces >= target:
 
-                  answer = mid
-                  left = mid + 1
+                answer = mid
+                left = mid + 1
 
-              else:
+            else:
 
-                  right = mid - 1
+                right = mid - 1
 
-          print(answer)
-          ```
+        print(answer)
+        # 200
+        ```
 
     - 시간 복잡도
 
-          ```
-          O(N log M)
-          ```
+        ```
+        O(N log M)
 
-          ```
-          N = 배열 길이
-          M = 탐색 범위
-          ```    
+        N = 배열 길이
+        M = 탐색 범위
+        ```    
 
 - DFS (Depth First Search)
   - 개념
@@ -4223,26 +4217,24 @@
 
   - 특징
 
-        ```
-        스택 구조
-        재귀 구현 가능
-        경로 탐색에 유리
-        ```
+      ```
+      스택 구조
+      재귀 구현 가능
+      경로 탐색에 유리
+      ```
 
   - 탐색 예
 
-        ```
-            A
-           / \
-          B   C
-         / \
-        D   E
-        ```
+      ```
+          A
+          / \
+        B   C
+        / \
+      D   E
 
-        ```
-        DFS 탐색 순서
-        A → B → D → E → C
-        ```
+      DFS 탐색 순서
+      A → B → D → E → C
+      ```
 
   - 예시
     - 예시 코드
@@ -4285,25 +4277,23 @@
 
   - 특징
 
-        ```
-        큐(queue) 사용
-        최단 거리 문제에 자주 사용
-        ```
+      ```
+      큐(queue) 사용
+      최단 거리 문제에 자주 사용
+      ```
 
   - 탐색 예
 
-        ```
-            A
-           / \
-          B   C
-         / \
-        D   E
-        ```
+      ```
+          A
+          / \
+        B   C
+        / \
+      D   E
 
-        ```
-        BFS 탐색 순서
-        A → B → C → D → E
-        ```
+      BFS 탐색 순서
+      A → B → C → D → E
+      ```
 
   - 예시
     - 예시 코드
@@ -4357,88 +4347,88 @@
 
     - 대표 문제
 
-            ```
-            미로 탐색
-            최단 거리
-            섬 개수
-            ```
+        ```
+        미로 탐색
+        최단 거리
+        섬 개수
+        ```
 
     - 핵심 아이디어
 
-            ```
-            상하좌우 이동
-            Queue 사용
-            방문 체크
-            ```
+        ```
+        상하좌우 이동
+        Queue 사용
+        방문 체크
+        ```
 
     - 이동 방향
 
-            ```python
-            dr = [-1,1,0,0]
-            dc = [0,0,-1,1]
-            ```
+        ```python
+        dr = [-1,1,0,0]
+        dc = [0,0,-1,1]
+        ```
 
     - 예시 문제
         - 시작점에서 목표 지점까지 최단 거리 찾기
 
     - 예시 코드
 
-            ```python
-            from collections import deque
+        ```python
+        from collections import deque
 
-            grid = [
-                [1,1,0],
-                [0,1,1],
-                [0,0,1]
-            ]
+        grid = [
+            [1,1,0],
+            [0,1,1],
+            [0,0,1]
+        ]
 
-            n = len(grid)
-            m = len(grid[0])
+        n = len(grid)
+        m = len(grid[0])
 
-            dr = [-1,1,0,0]
-            dc = [0,0,-1,1]
+        dr = [-1,1,0,0]
+        dc = [0,0,-1,1]
 
-            def bfs(sr,sc):
+        def bfs(sr,sc):
 
-                q = deque()
-                q.append((sr,sc,0))
+            q = deque()
+            q.append((sr,sc,0))
 
-                visited = [[False]*m for _ in range(n)]
-                visited[sr][sc] = True
+            visited = [[False]*m for _ in range(n)]
+            visited[sr][sc] = True
 
-                while q:
+            while q:
 
-                    r,c,d = q.popleft()
+                r,c,d = q.popleft()
 
-                    if (r,c) == (2,2):
-                        return d
+                if (r,c) == (2,2):
+                    return d
 
-                    for k in range(4):
+                for k in range(4):
 
-                        nr = r + dr[k]
-                        nc = c + dc[k]
+                    nr = r + dr[k]
+                    nc = c + dc[k]
 
-                        if 0 <= nr < n and 0 <= nc < m:
+                    if 0 <= nr < n and 0 <= nc < m:
 
-                            if grid[nr][nc] == 1 and not visited[nr][nc]:
+                        if grid[nr][nc] == 1 and not visited[nr][nc]:
 
-                                visited[nr][nc] = True
-                                q.append((nr,nc,d+1))
+                            visited[nr][nc] = True
+                            q.append((nr,nc,d+1))
 
-            print(bfs(0,0))
-            ```
+        print(bfs(0,0))
+        ```
 
     - 실행 결과
 
-            ```
-            4
-            ```
+        ```
+        4
+        ```
 
     - 시간 복잡도
 
-            ```
-            O(N × M)
-            ```
+        ```
+        O(N × M)
+        ```
 
   - Multi Source BFS
 
@@ -4447,62 +4437,63 @@
 
     - 대표 문제
 
-          ```
-          토마토 문제
-          전염 확산
-          최단 거리 확산
-          ```
+        ```
+        토마토 문제
+        전염 확산
+        최단 거리 확산
+        ```
 
     - 핵심 아이디어
 
-          ```
-          시작점 여러 개를
-          Queue에 모두 넣는다
-          ```
+        ```
+        시작점 여러 개를
+        Queue에 모두 넣는다
+        ```
 
     - 예시 코드
 
-          ```python
-          from collections import deque
+        ```python
+        from collections import deque
 
-          grid = [
-              [1,0,0],
-              [0,0,0],
-              [0,0,1]
-          ]
+        grid = [
+            [1,0,0],
+            [0,0,0],
+            [0,0,1]
+        ]
 
-          n = len(grid)
-          m = len(grid[0])
+        n = len(grid)
+        m = len(grid[0])
 
-          q = deque()
+        q = deque()
 
-          for r in range(n):
-              for c in range(m):
+        for r in range(n):
+            for c in range(m):
 
-                  if grid[r][c] == 1:
-                      q.append((r,c))
+                if grid[r][c] == 1:
+                    q.append((r,c))
 
-          dr = [-1,1,0,0]
-          dc = [0,0,-1,1]
+        dr = [-1,1,0,0]
+        dc = [0,0,-1,1]
 
-          while q:
+        while q:
 
-              r,c = q.popleft()
+            r,c = q.popleft()
 
-              for k in range(4):
+            for k in range(4):
 
-                  nr = r + dr[k]
-                  nc = c + dc[k]
+                nr = r + dr[k]
+                nc = c + dc[k]
 
-                  if 0 <= nr < n and 0 <= nc < m:
+                if 0 <= nr < n and 0 <= nc < m:
 
-                      if grid[nr][nc] == 0:
+                    if grid[nr][nc] == 0:
 
-                          grid[nr][nc] = grid[r][c] + 1
-                          q.append((nr,nc))
+                        grid[nr][nc] = grid[r][c] + 1
+                        q.append((nr,nc))
 
-          print(grid)
-          ```
+        print(grid)
+        # [[1, 2, 3], [2, 3, 2], [3, 2, 1]]
+        ```
 
 - Flood Fill
 
@@ -4512,92 +4503,92 @@
 
   - 대표 문제
 
-        ```
-        그림 영역 찾기
-        섬 개수
-        영역 크기 계산
-        ```
+      ```
+      그림 영역 찾기
+      섬 개수
+      영역 크기 계산
+      ```
 
   - 핵심 아이디어
 
-        ```
-        같은 값이면 계속 탐색
-        방문 체크
-        ```
+      ```
+      같은 값이면 계속 탐색
+      방문 체크
+      ```
 
   - 예시 코드
 
-        ```python
-        grid = [
-            [1,1,0],
-            [1,0,0],
-            [0,0,1]
-        ]
+      ```python
+      grid = [
+          [1,1,0],
+          [1,0,0],
+          [0,0,1]
+      ]
 
-        n = len(grid)
-        m = len(grid[0])
+      n = len(grid)
+      m = len(grid[0])
 
-        visited = [[False]*m for _ in range(n)]
+      visited = [[False]*m for _ in range(n)]
 
-        dr = [-1,1,0,0]
-        dc = [0,0,-1,1]
+      dr = [-1,1,0,0]
+      dc = [0,0,-1,1]
 
-        def dfs(r,c):
+      def dfs(r,c):
 
-            visited[r][c] = True
-            count = 1
+          visited[r][c] = True
+          count = 1
 
-            for k in range(4):
+          for k in range(4):
 
-                nr = r + dr[k]
-                nc = c + dc[k]
+              nr = r + dr[k]
+              nc = c + dc[k]
 
-                if 0 <= nr < n and 0 <= nc < m:
+              if 0 <= nr < n and 0 <= nc < m:
 
-                    if grid[nr][nc] == 1 and not visited[nr][nc]:
+                  if grid[nr][nc] == 1 and not visited[nr][nc]:
 
-                        count += dfs(nr,nc)
+                      count += dfs(nr,nc)
 
-            return count
+          return count
 
 
-        areas = []
+      areas = []
 
-        for r in range(n):
-            for c in range(m):
+      for r in range(n):
+          for c in range(m):
 
-                if grid[r][c] == 1 and not visited[r][c]:
+              if grid[r][c] == 1 and not visited[r][c]:
 
-                    areas.append(dfs(r,c))
+                  areas.append(dfs(r,c))
 
-        print(areas)
-        ```
+      print(areas)
+      ```
 
   - 실행 결과
 
-        ```
-        [3,1]
-        ```
+      ```
+      [3,1]
+      ```
 
   - 시간 복잡도
 
-        ```
-        O(N × M)
-        ```
+      ```
+      O(N × M)
+      ```
 
 - DFS vs BFS 비교
 
-        ```
-        DFS
-        깊게 탐색
-        스택
-        경로 문제
+    ```
+    DFS
+    깊게 탐색
+    스택
+    경로 문제
 
-        BFS
-        가까운 노드부터
-        큐
-        최단 거리 문제
-        ```
+    BFS
+    가까운 노드부터
+    큐
+    최단 거리 문제
+    ```
 
 - 완전 탐색 (Brute Force)
   - 개념
@@ -4605,11 +4596,11 @@
 
   - 특징
 
-        ```
-        구현이 단순하다
-        항상 정답을 찾는다
-        경우의 수가 많으면 느리다
-        ```
+      ```
+      구현이 단순하다
+      항상 정답을 찾는다
+      경우의 수가 많으면 느리다
+      ```
   - 문자열 패턴 검색 (Brute Force)
 
     - 개념
@@ -4667,9 +4658,7 @@
 
         ```
         O(N × M)
-        ```
 
-        ```
         N = 텍스트 길이
         M = 패턴 길이
         ```
@@ -4680,9 +4669,9 @@
 
     - 시간 복잡도
 
-            ```
-            O(N!)
-            ```
+        ```
+        O(N!)
+        ```
 
     - 예시
         - 예시 코드
@@ -4733,43 +4722,43 @@
 
     - 예시
 
-          ```
-          arr = [1,2,3]
+        ```
+        arr = [1,2,3]
 
-          부분집합
+        부분집합
 
-          []
-          [1]
-          [2]
-          [3]
-          [1,2]
-          [1,3]
-          [2,3]
-          [1,2,3]
-          ```
+        []
+        [1]
+        [2]
+        [3]
+        [1,2]
+        [1,3]
+        [2,3]
+        [1,2,3]
+        ```
 
     - 시간 복잡도
 
-          ```
-          O(2^N)
-          ```
+        ```
+        O(2^N)
+        ```
 
     - 부분집합 생성 방법
 
-          ```
-          1. 백트래킹
-          2. 비트마스크
-          ```
+        ```
+        1. 백트래킹
+        2. 비트마스크
+        ```
 
     - 백트래킹 방식
 
       - 아이디어
         - 각 원소마다 선택 / 선택하지 않음 두 가지 경우가 있다
 
-              ```
-              선택
-              선택 안함
-              ```
+            ```
+            선택
+            선택 안함
+            ```
 
       - 예시 코드
 
@@ -4918,10 +4907,10 @@
 
   - 특징
 
-        ```
-        O(N) 시간에 해결 가능
-        정렬된 배열에서 매우 강력
-        ```
+      ```
+      O(N) 시간에 해결 가능
+      정렬된 배열에서 매우 강력
+      ```
 
   - 대표 문제
     - 두 수의 합
@@ -4968,10 +4957,10 @@
 
   - 특징
 
-        ```
-        구간 문제에 매우 강력
-        O(N)으로 해결 가능
-        ```
+      ```
+      구간 문제에 매우 강력
+      O(N)으로 해결 가능
+      ```
 
   - 예시 : 최대 구간 합
     - 문제
@@ -5008,37 +4997,37 @@
 
   - 특징
 
-        ```
-        구간 합 계산을 빠르게 할 수 있다
-        ```
+      ```
+      구간 합 계산을 빠르게 할 수 있다
+      ```
 
   - 예시
 
-        ```
-        arr = [1,2,3,4,5]
+      ```
+      arr = [1,2,3,4,5]
 
-        prefix
-        [0,1,3,6,10,15]
-        ```
+      prefix
+      [0,1,3,6,10,15]
+      ```
 
   - 예시 코드
 
-        ```python
-        arr = [1,2,3,4,5]
+      ```python
+      arr = [1,2,3,4,5]
 
-        prefix = [0]*(len(arr)+1)
+      prefix = [0]*(len(arr)+1)
 
-        for i in range(len(arr)):
-            prefix[i+1] = prefix[i] + arr[i]
+      for i in range(len(arr)):
+          prefix[i+1] = prefix[i] + arr[i]
 
-        print(prefix)
-        ```
+      print(prefix)
+      ```
 
     - 실행 결과
 
-        ```
-        [0,1,3,6,10,15]
-        ```
+      ```
+      [0,1,3,6,10,15]
+      ```
 
   - 구간 합 계산
     - 공식
@@ -5076,56 +5065,56 @@
 
   - 대표 문제
 
-        ```
-        Maximum Subarray
-        ```
+      ```
+      Maximum Subarray
+      ```
 
   - 핵심 아이디어
 
-        ```
-        현재까지의 합이 음수가 되면 버린다
-        ```
+      ```
+      현재까지의 합이 음수가 되면 버린다
+      ```
 
   - 예시
 
-        ```
-        arr = [-2,1,-3,4,-1,2,1,-5,4]
-        ```
+      ```
+      arr = [-2,1,-3,4,-1,2,1,-5,4]
+      ```
 
   - 예시 코드
 
-        ```python
-        arr = [-2,1,-3,4,-1,2,1,-5,4]
+      ```python
+      arr = [-2,1,-3,4,-1,2,1,-5,4]
 
-        current = arr[0]
-        best = arr[0]
+      current = arr[0]
+      best = arr[0]
 
-        for i in range(1,len(arr)):
+      for i in range(1,len(arr)):
 
-            current = max(arr[i], current + arr[i])
-            best = max(best, current)
+          current = max(arr[i], current + arr[i])
+          best = max(best, current)
 
-        print(best)
-        ```
+      print(best)
+      ```
 
   - 실행 결과
 
-        ```
-        6
-        ```
+      ```
+      6
+      ```
 
   - 설명
 
-        ```
-        최대 부분 배열
-        [4,-1,2,1]
-        ```
+      ```
+      최대 부분 배열
+      [4,-1,2,1]
+      ```
 
   - 시간 복잡도
 
-        ```
-        O(N)
-        ```
+      ```
+      O(N)
+      ```
 
 - Monotonic Stack
 
@@ -5134,51 +5123,51 @@
 
   - 대표 문제
 
-        ```
-        Next Greater Element
-        Stock Span
-        ```
+      ```
+      Next Greater Element
+      Stock Span
+      ```
 
   - 핵심 아이디어
 
-        ```
-        현재 값보다 작은 값들을 스택에서 제거
-        ```
+      ```
+      현재 값보다 작은 값들을 스택에서 제거
+      ```
 
   - 예시 문제
     - 다음 큰 수 찾기
 
   - 예시 코드
 
-        ```python
-        arr = [2,1,2,4,3]
+      ```python
+      arr = [2,1,2,4,3]
 
-        stack = []
-        result = [-1]*len(arr)
+      stack = []
+      result = [-1]*len(arr)
 
-        for i in range(len(arr)):
+      for i in range(len(arr)):
 
-            while stack and arr[stack[-1]] < arr[i]:
+          while stack and arr[stack[-1]] < arr[i]:
 
-                idx = stack.pop()
-                result[idx] = arr[i]
+              idx = stack.pop()
+              result[idx] = arr[i]
 
-            stack.append(i)
+          stack.append(i)
 
-        print(result)
-        ```
+      print(result)
+      ```
 
   - 실행 결과
 
-        ```
-        [4,2,4,-1,-1]
-        ```
+      ```
+      [4,2,4,-1,-1]
+      ```
 
   - 시간 복잡도
 
-        ```
-        O(N)
-        ```
+      ```
+      O(N)
+      ```
 - Interval Algorithms
   
   - Interval Merge
@@ -5188,58 +5177,58 @@
 
     - 대표 문제
 
-          ```
-          Merge Intervals
-          Meeting Rooms
-          ```
+        ```
+        Merge Intervals
+        Meeting Rooms
+        ```
 
     - 핵심 아이디어
 
-          ```
-          구간을 시작점 기준으로 정렬
-          ```
+        ```
+        구간을 시작점 기준으로 정렬
+        ```
 
     - 예시
 
-          ```
-          intervals = [[1,3],[2,6],[8,10],[15,18]]
-          ```
+        ```
+        intervals = [[1,3],[2,6],[8,10],[15,18]]
+        ```
 
     - 예시 코드
 
-          ```python
-          intervals = [[1,3],[2,6],[8,10],[15,18]]
+        ```python
+        intervals = [[1,3],[2,6],[8,10],[15,18]]
 
-          intervals.sort()
+        intervals.sort()
 
-          merged = [intervals[0]]
+        merged = [intervals[0]]
 
-          for start,end in intervals[1:]:
+        for start,end in intervals[1:]:
 
-              last_end = merged[-1][1]
+            last_end = merged[-1][1]
 
-              if start <= last_end:
+            if start <= last_end:
 
-                  merged[-1][1] = max(last_end,end)
+                merged[-1][1] = max(last_end,end)
 
-              else:
+            else:
 
-                  merged.append([start,end])
+                merged.append([start,end])
 
-          print(merged)
-          ```
+        print(merged)
+        ```
 
     - 실행 결과
 
-          ```
-          [[1,6],[8,10],[15,18]]
-          ```
+        ```
+        [[1,6],[8,10],[15,18]]
+        ```
 
     - 시간 복잡도
 
-          ```
-          O(N log N)
-          ```
+        ```
+        O(N log N)
+        ```
   - Sweep Line
 
     - 개념
