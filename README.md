@@ -5358,14 +5358,14 @@
         이런 패턴이 매우 자주 등장한다
   - 대표 정렬
 
-        ```
-        Bubble Sort
-        Selection Sort
-        Insertion Sort
-        Merge Sort
-        Quick Sort
-        Counting Sort
-        ```
+      ```
+      Bubble Sort
+      Selection Sort
+      Insertion Sort
+      Merge Sort
+      Quick Sort
+      Counting Sort
+      ```
   - Stable Sort (안정 정렬)
 
     - 개념
@@ -5411,25 +5411,25 @@
 
     - 시간 복잡도
 
-          ```
-          O(N²)
-          ```
+        ```
+        O(N²)
+        ```
 
     - 예시 코드
 
-          ```python
-          arr = [5,2,9,1,7]
+        ```python
+        arr = [5,2,9,1,7]
 
-          n = len(arr)
+        n = len(arr)
 
-          for i in range(n):
-              for j in range(n-1-i):
+        for i in range(n):
+            for j in range(n-1-i):
 
-                  if arr[j] > arr[j+1]:
-                      arr[j],arr[j+1] = arr[j+1],arr[j]
+                if arr[j] > arr[j+1]:
+                    arr[j],arr[j+1] = arr[j+1],arr[j]
 
-          print(arr)
-          ```
+        print(arr)
+        ```
 
       - 실행 결과
 
@@ -5443,30 +5443,30 @@
 
     - 시간 복잡도
 
-          ```
-          O(N²)
-          ```
+        ```
+        O(N²)
+        ```
 
     - 예시 코드
 
-          ```python
-          arr = [5,2,9,1,7]
+        ```python
+        arr = [5,2,9,1,7]
 
-          n = len(arr)
+        n = len(arr)
 
-          for i in range(n):
+        for i in range(n):
 
-              min_idx = i
+            min_idx = i
 
-              for j in range(i+1,n):
+            for j in range(i+1,n):
 
-                  if arr[j] < arr[min_idx]:
-                      min_idx = j
+                if arr[j] < arr[min_idx]:
+                    min_idx = j
 
-              arr[i],arr[min_idx] = arr[min_idx],arr[i]
+            arr[i],arr[min_idx] = arr[min_idx],arr[i]
 
-          print(arr)
-          ```
+        print(arr)
+        ```
 
       - 실행 결과
 
@@ -5480,30 +5480,30 @@
 
     - 시간 복잡도
 
-          ```
-          평균 O(N²)
-          최선 O(N)
-          ```
+        ```
+        평균 O(N²)
+        최선 O(N)
+        ```
 
     - 예시 코드
 
-          ```python
-          arr = [5,2,9,1,7]
+        ```python
+        arr = [5,2,9,1,7]
 
-          for i in range(1,len(arr)):
+        for i in range(1,len(arr)):
 
-              key = arr[i]
-              j = i-1
+            key = arr[i]
+            j = i-1
 
-              while j >= 0 and arr[j] > key:
+            while j >= 0 and arr[j] > key:
 
-                  arr[j+1] = arr[j]
-                  j -= 1
+                arr[j+1] = arr[j]
+                j -= 1
 
-              arr[j+1] = key
+            arr[j+1] = key
 
-          print(arr)
-          ```
+        print(arr)
+        ```
 
       - 실행 결과
 
@@ -5646,11 +5646,11 @@
         - 이동 시간
   - 특징
 
-        ```
-        사이클이 존재할 수 있다
-        연결이 끊어질 수 있다
-        방향 그래프 / 무방향 그래프 존재
-        ```
+      ```
+      사이클이 존재할 수 있다
+      연결이 끊어질 수 있다
+      방향 그래프 / 무방향 그래프 존재
+      ```
 
 - 그래프 표현
 
@@ -5709,37 +5709,37 @@
 
   - 핵심 연산
 
-        ```
-        find
-        union
-        ```
+      ```
+      find
+      union
+      ```
 
   - 예시 코드
 
-        ```python
-        parent = [i for i in range(6)]
+      ```python
+      parent = [i for i in range(6)]
 
-        def find(x):
+      def find(x):
 
-            if parent[x] != x:
-                parent[x] = find(parent[x])
+          if parent[x] != x:
+              parent[x] = find(parent[x])
 
-            return parent[x]
+          return parent[x]
 
-        def union(a,b):
+      def union(a,b):
 
-            rootA = find(a)
-            rootB = find(b)
+          rootA = find(a)
+          rootB = find(b)
 
-            if rootA != rootB:
-                parent[rootB] = rootA
+          if rootA != rootB:
+              parent[rootB] = rootA
 
-        union(1,2)
-        union(2,3)
+      union(1,2)
+      union(2,3)
 
-        print(find(1))
-        print(find(3))
-        ```
+      print(find(1))
+      print(find(3))
+      ```
 
     - 실행 결과
 
@@ -5757,33 +5757,33 @@
 
       - 아이디어
 
-            ```
-            find 수행 중
+          ```
+          find 수행 중
 
-            parent[x] = find(parent[x])
-            ```
+          parent[x] = find(parent[x])
+          ```
 
         이렇게 하면 **경로에 있는 모든 노드가 바로 루트를 가리키게 된다**
 
       - 예시 코드
 
-            ```python
-            parent = [i for i in range(6)]
+          ```python
+          parent = [i for i in range(6)]
 
-            def find(x):
+          def find(x):
 
-                if parent[x] != x:
-                    parent[x] = find(parent[x])
+              if parent[x] != x:
+                  parent[x] = find(parent[x])
 
-                return parent[x]
-            ```
+              return parent[x]
+          ```
 
       - 효과
 
-            ```
-            트리 높이를 줄인다
-            find 연산 속도 개선
-            ```
+          ```
+          트리 높이를 줄인다
+          find 연산 속도 개선
+          ```
 
     - Union by Rank
 
@@ -5792,71 +5792,15 @@
 
       - 아이디어
 
-            ```
-            rank 배열 사용
-            ```
+          ```
+          rank 배열 사용
+          ```
 
       - 예시 코드
 
-            ```python
-            parent = [i for i in range(6)]
-            rank = [0]*6
-
-            def find(x):
-
-                if parent[x] != x:
-                    parent[x] = find(parent[x])
-
-                return parent[x]
-
-
-            def union(a,b):
-
-                rootA = find(a)
-                rootB = find(b)
-
-                if rootA == rootB:
-                    return
-
-                if rank[rootA] < rank[rootB]:
-                    parent[rootA] = rootB
-
-                elif rank[rootA] > rank[rootB]:
-                    parent[rootB] = rootA
-
-                else:
-                    parent[rootB] = rootA
-                    rank[rootA] += 1
-            ```
-
-      - 효과
-
-            ```
-            트리 높이를 최소화
-            union 연산 효율 개선
-            ```
-            
-  - Cycle Detection (Union Find)
-
-    - 개념
-      - 간선을 추가할 때 **두 정점이 이미 같은 집합이면 사이클**
-
-    - 핵심 아이디어
-
-          ```
-          find(u) == find(v)
-          ```
-
-    - 예시 코드
-
           ```python
-          edges = [
-              (1,2),
-              (2,3),
-              (3,1)
-          ]
-
-          parent = [0,1,2,3]
+          parent = [i for i in range(6)]
+          rank = [0]*6
 
           def find(x):
 
@@ -5865,23 +5809,79 @@
 
               return parent[x]
 
+
           def union(a,b):
 
               rootA = find(a)
               rootB = find(b)
 
               if rootA == rootB:
-                  return True
+                  return
 
-              parent[rootB] = rootA
-              return False
+              if rank[rootA] < rank[rootB]:
+                  parent[rootA] = rootB
 
-          for u,v in edges:
+              elif rank[rootA] > rank[rootB]:
+                  parent[rootB] = rootA
 
-              if union(u,v):
-                  print("cycle detected")
-                  break
+              else:
+                  parent[rootB] = rootA
+                  rank[rootA] += 1
           ```
+
+      - 효과
+
+          ```
+          트리 높이를 최소화
+          union 연산 효율 개선
+          ```
+            
+  - Cycle Detection (Union Find)
+
+    - 개념
+      - 간선을 추가할 때 **두 정점이 이미 같은 집합이면 사이클**
+
+    - 핵심 아이디어
+
+        ```
+        find(u) == find(v)
+        ```
+
+    - 예시 코드
+
+        ```python
+        edges = [
+            (1,2),
+            (2,3),
+            (3,1)
+        ]
+
+        parent = [0,1,2,3]
+
+        def find(x):
+
+            if parent[x] != x:
+                parent[x] = find(parent[x])
+
+            return parent[x]
+
+        def union(a,b):
+
+            rootA = find(a)
+            rootB = find(b)
+
+            if rootA == rootB:
+                return True
+
+            parent[rootB] = rootA
+            return False
+
+        for u,v in edges:
+
+            if union(u,v):
+                print("cycle detected")
+                break
+        ```
           
 - MST (Minimum Spanning Tree)
 
