@@ -5236,48 +5236,48 @@
 
     - 대표 문제
 
-          ```
-          Meeting Rooms
-          구간 겹침
-          선분 교차
-          ```
+        ```
+        Meeting Rooms
+        구간 겹침
+        선분 교차
+        ```
 
     - 핵심 아이디어
 
-          ```
-          시작 / 끝 이벤트 정렬
-          ```
+        ```
+        시작 / 끝 이벤트 정렬
+        ```
 
     - 예시 코드
-
-          ```python
-          intervals = [(1,4),(2,5),(7,9)]
-
-          events = []
-
-          for s,e in intervals:
-
-              events.append((s,1))
-              events.append((e,-1))
-
-          events.sort()
-
-          count = 0
-          max_count = 0
-
-          for time,val in events:
-
-              count += val
-              max_count = max(max_count,count)
-
-          print(max_count)
-          ```
+  
+        ```python
+        intervals = [(1,4),(2,5),(7,9)]
+  
+        events = []
+  
+        for s,e in intervals:
+  
+            events.append((s,1))
+            events.append((e,-1))
+  
+        events.sort()
+  
+        count = 0
+        max_count = 0
+  
+        for time,val in events:
+  
+            count += val
+            max_count = max(max_count,count)
+  
+        print(max_count)
+        ```
 
     - 실행 결과
 
-          ```
-          2
-          ```
+        ```
+        2
+        ```
   - Meeting Rooms
 
     - 개념
@@ -5285,37 +5285,37 @@
 
     - 핵심 아이디어
 
-          ```
-          시작 시간 정렬
-          끝나는 시간 비교
-          ```
+        ```
+        시작 시간 정렬
+        끝나는 시간 비교
+        ```
 
     - 예시 코드
 
-          ```python
-          import heapq
+        ```python
+        import heapq
 
-          meetings = [(0,30),(5,10),(15,20)]
+        meetings = [(0,30),(5,10),(15,20)]
 
-          meetings.sort()
+        meetings.sort()
 
-          heap = []
+        heap = []
 
-          for start,end in meetings:
+        for start,end in meetings:
 
-              if heap and heap[0] <= start:
-                  heapq.heappop(heap)
+            if heap and heap[0] <= start:
+                heapq.heappop(heap)
 
-              heapq.heappush(heap,end)
+            heapq.heappush(heap,end)
 
-          print(len(heap))
-          ```
+        print(len(heap))
+        ```
 
     - 실행 결과
 
-          ```
-          2
-          ```
+        ```
+        2
+        ```
 
 ## 정렬 알고리즘
 
