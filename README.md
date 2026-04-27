@@ -3273,12 +3273,12 @@
 
   - 배열 주요 연산 시간 복잡도
 
-        ```
-        접근   O(1)
-        탐색   O(N)
-        삽입   O(N)
-        삭제   O(N)
-        ```
+      ```
+      접근   O(1)
+      탐색   O(N)
+      삽입   O(N)
+      삭제   O(N)
+      ```
 
   - 삽입이 느린 이유
     - 설명
@@ -6014,9 +6014,9 @@
 
   - 대표 알고리즘
 
-        ```
-        Dijkstra
-        ```
+      ```
+      Dijkstra
+      ```
 
   - Dijkstra Algorithm
 
@@ -6074,60 +6074,60 @@
 
     - 특징
 
-          ```
-          가중치 0 → 앞에 삽입
-          가중치 1 → 뒤에 삽입
-          ```
+        ```
+        가중치 0 → 앞에 삽입
+        가중치 1 → 뒤에 삽입
+        ```
 
     - 시간 복잡도
 
-          ```
-          O(V + E)
-          ```
+        ```
+        O(V + E)
+        ```
 
     - 예시 코드
 
-          ```python
-          from collections import deque
+        ```python
+        from collections import deque
 
-          graph = {
-              0: [(1,0),(2,1)],
-              1: [(3,1)],
-              2: [(3,0)],
-              3: []
-          }
+        graph = {
+            0: [(1,0),(2,1)],
+            1: [(3,1)],
+            2: [(3,0)],
+            3: []
+        }
 
-          INF = float('inf')
-          dist = [INF]*4
-          dist[0] = 0
+        INF = float('inf')
+        dist = [INF]*4
+        dist[0] = 0
 
-          dq = deque([0])
+        dq = deque([0])
 
-          while dq:
+        while dq:
 
-              v = dq.popleft()
+            v = dq.popleft()
 
-              for nxt,w in graph[v]:
+            for nxt,w in graph[v]:
 
-                  nd = dist[v] + w
+                nd = dist[v] + w
 
-                  if nd < dist[nxt]:
+                if nd < dist[nxt]:
 
-                      dist[nxt] = nd
+                    dist[nxt] = nd
 
-                      if w == 0:
-                          dq.appendleft(nxt)
-                      else:
-                          dq.append(nxt)
+                    if w == 0:
+                        dq.appendleft(nxt)
+                    else:
+                        dq.append(nxt)
 
-          print(dist)
-          ```
+        print(dist)
+        ```
 
     - 실행 결과
 
-          ```
-          [0,0,1,1]
-          ```
+        ```
+        [0,0,1,1]
+        ```
 
   - Bellman-Ford Algorithm
 
@@ -6136,47 +6136,47 @@
 
     - 특징
 
-          ```
-          음수 간선 허용
-          음수 사이클 탐지 가능
-          ```
+        ```
+        음수 간선 허용
+        음수 사이클 탐지 가능
+        ```
 
     - 시간 복잡도
 
-          ```
-          O(V × E)
-          ```
+        ```
+        O(V × E)
+        ```
 
     - 예시 코드
 
-          ```python
-          edges = [
-              (1,2,4),
-              (1,3,5),
-              (2,3,-3)
-          ]
+        ```python
+        edges = [
+            (1,2,4),
+            (1,3,5),
+            (2,3,-3)
+        ]
 
-          n = 3
-          INF = float('inf')
+        n = 3
+        INF = float('inf')
 
-          dist = [INF]*(n+1)
-          dist[1] = 0
+        dist = [INF]*(n+1)
+        dist[1] = 0
 
-          for _ in range(n-1):
+        for _ in range(n-1):
 
-              for u,v,w in edges:
+            for u,v,w in edges:
 
-                  if dist[u] != INF and dist[v] > dist[u] + w:
-                      dist[v] = dist[u] + w
+                if dist[u] != INF and dist[v] > dist[u] + w:
+                    dist[v] = dist[u] + w
 
-          print(dist)
-          ```
+        print(dist)
+        ```
 
     - 실행 결과
 
-          ```
-          [inf,0,4,1]
-          ```
+        ```
+        [inf,0,4,1]
+        ```
 
   - Floyd-Warshall Algorithm
 
@@ -6185,50 +6185,50 @@
 
     - 특징
 
-          ```
-          모든 정점 → 모든 정점
-          DP 기반
-          ```
+        ```
+        모든 정점 → 모든 정점
+        DP 기반
+        ```
 
     - 시간 복잡도
 
-          ```
-          O(N³)
-          ```
+        ```
+        O(N³)
+        ```
 
     - 예시 코드
 
-          ```python
-          INF = float('inf')
+        ```python
+        INF = float('inf')
 
-          graph = [
-              [0,3,INF],
-              [INF,0,1],
-              [INF,INF,0]
-          ]
+        graph = [
+            [0,3,INF],
+            [INF,0,1],
+            [INF,INF,0]
+        ]
 
-          n = 3
+        n = 3
 
-          for k in range(n):
-              for i in range(n):
-                  for j in range(n):
+        for k in range(n):
+            for i in range(n):
+                for j in range(n):
 
-                      graph[i][j] = min(
-                          graph[i][j],
-                          graph[i][k] + graph[k][j]
-                      )
+                    graph[i][j] = min(
+                        graph[i][j],
+                        graph[i][k] + graph[k][j]
+                    )
 
-          for row in graph:
-              print(row)
-          ```
+        for row in graph:
+            print(row)
+        ```
 
     - 실행 결과
 
-          ```
-          [0,3,4]
-          [inf,0,1]
-          [inf,inf,0]
-          ```
+        ```
+        [0,3,4]
+        [inf,0,1]
+        [inf,inf,0]
+        ```
 
 - DAG (Directed Acyclic Graph)
 
@@ -6238,11 +6238,11 @@
 
   - 사용 예
 
-        ```
-        작업 순서
-        선수 과목
-        빌드 시스템
-        ```
+      ```
+      작업 순서
+      선수 과목
+      빌드 시스템
+      ```
 
   - Topological Sort
 
@@ -6307,82 +6307,82 @@
 
     - 특징
 
-          ```
-          DFS 기반
-          스택 사용
-          O(V + E)
-          ```
+        ```
+        DFS 기반
+        스택 사용
+        O(V + E)
+        ```
 
     - 예시 코드
 
-          ```python
-          graph = {
-              0:[1],
-              1:[2],
-              2:[0,3],
-              3:[4],
-              4:[]
-          }
+        ```python
+        graph = {
+            0:[1],
+            1:[2],
+            2:[0,3],
+            3:[4],
+            4:[]
+        }
 
-          stack = []
-          on_stack = set()
+        stack = []
+        on_stack = set()
 
-          ids = {}
-          low = {}
+        ids = {}
+        low = {}
 
-          id_counter = 0
-          sccs = []
+        id_counter = 0
+        sccs = []
 
-          def dfs(v):
+        def dfs(v):
 
-              global id_counter
+            global id_counter
 
-              ids[v] = id_counter
-              low[v] = id_counter
-              id_counter += 1
+            ids[v] = id_counter
+            low[v] = id_counter
+            id_counter += 1
 
-              stack.append(v)
-              on_stack.add(v)
+            stack.append(v)
+            on_stack.add(v)
 
-              for nxt in graph[v]:
+            for nxt in graph[v]:
 
-                  if nxt not in ids:
-                      dfs(nxt)
-                      low[v] = min(low[v], low[nxt])
+                if nxt not in ids:
+                    dfs(nxt)
+                    low[v] = min(low[v], low[nxt])
 
-                  elif nxt in on_stack:
-                      low[v] = min(low[v], ids[nxt])
+                elif nxt in on_stack:
+                    low[v] = min(low[v], ids[nxt])
 
-              if ids[v] == low[v]:
+            if ids[v] == low[v]:
 
-                  scc = []
+                scc = []
 
-                  while True:
+                while True:
 
-                      node = stack.pop()
-                      on_stack.remove(node)
+                    node = stack.pop()
+                    on_stack.remove(node)
 
-                      scc.append(node)
+                    scc.append(node)
 
-                      if node == v:
-                          break
+                    if node == v:
+                        break
 
-                  sccs.append(scc)
+                sccs.append(scc)
 
 
-          for v in graph:
+        for v in graph:
 
-              if v not in ids:
-                  dfs(v)
+            if v not in ids:
+                dfs(v)
 
-          print(sccs)
-          ```
+        print(sccs)
+        ```
 
     - 실행 결과
 
-          ```
-          [[4],[3],[0,2,1]]
-          ```
+      ```
+      [[4],[3],[0,2,1]]
+      ```
           
   - Kosaraju SCC
 
@@ -6392,80 +6392,80 @@
 
     - 알고리즘 과정
 
-          ```
-          1️⃣ DFS로 종료 순서 기록
-          2️⃣ 그래프 방향 뒤집기
-          3️⃣ 종료 순서 역순 DFS
-          ```
+        ```
+        1️⃣ DFS로 종료 순서 기록
+        2️⃣ 그래프 방향 뒤집기
+        3️⃣ 종료 순서 역순 DFS
+        ```
 
     - 시간 복잡도
 
-          ```
-          O(V + E)
-          ```
+        ```
+        O(V + E)
+        ```
 
     - 예시 코드
 
-          ```python
-          graph = {
-              0:[1],
-              1:[2],
-              2:[0,3],
-              3:[4],
-              4:[]
-          }
+        ```python
+        graph = {
+            0:[1],
+            1:[2],
+            2:[0,3],
+            3:[4],
+            4:[]
+        }
 
-          visited = set()
-          order = []
+        visited = set()
+        order = []
 
-          def dfs(v):
+        def dfs(v):
 
-              visited.add(v)
+            visited.add(v)
 
-              for nxt in graph[v]:
+            for nxt in graph[v]:
 
-                  if nxt not in visited:
-                      dfs(nxt)
+                if nxt not in visited:
+                    dfs(nxt)
 
-              order.append(v)
-
-
-          for v in graph:
-
-              if v not in visited:
-                  dfs(v)
-
-          rev = {v:[] for v in graph}
-
-          for u in graph:
-              for v in graph[u]:
-                  rev[v].append(u)
-
-          visited.clear()
-
-          def dfs2(v, comp):
-
-              visited.add(v)
-              comp.append(v)
-
-              for nxt in rev[v]:
-
-                  if nxt not in visited:
-                      dfs2(nxt, comp)
+            order.append(v)
 
 
-          sccs = []
+        for v in graph:
 
-          for v in reversed(order):
+            if v not in visited:
+                dfs(v)
 
-              if v not in visited:
+        rev = {v:[] for v in graph}
 
-                  comp = []
-                  dfs2(v, comp)
-                  sccs.append(comp)
+        for u in graph:
+            for v in graph[u]:
+                rev[v].append(u)
 
-          print(sccs)
-          ```
+        visited.clear()
+
+        def dfs2(v, comp):
+
+            visited.add(v)
+            comp.append(v)
+
+            for nxt in rev[v]:
+
+                if nxt not in visited:
+                    dfs2(nxt, comp)
+
+
+        sccs = []
+
+        for v in reversed(order):
+
+            if v not in visited:
+
+                comp = []
+                dfs2(v, comp)
+                sccs.append(comp)
+
+        print(sccs)
+        ```
 
 ## 알고리즘 기법
 
@@ -6475,19 +6475,19 @@
 
   - 특징
 
-        ```
-        현재 선택이 전체 최적해로 이어져야 한다
-        구현이 간단하다
-        매우 빠르다
-        ```
+      ```
+      현재 선택이 전체 최적해로 이어져야 한다
+      구현이 간단하다
+      매우 빠르다
+      ```
 
   - 대표 문제
 
-        ```
-        거스름돈 문제
-        회의실 배정
-        MST
-        ```
+      ```
+      거스름돈 문제
+      회의실 배정
+      MST
+      ```
 
   - 예시 : 거스름돈 문제
     - 문제
@@ -6522,18 +6522,18 @@
 
   - 특징
 
-        ```
-        DFS 기반
-        가지치기(pruning)
-        ```
+      ```
+      DFS 기반
+      가지치기(pruning)
+      ```
 
   - 대표 문제
 
-        ```
-        N-Queen
-        부분집합
-        순열
-        ```
+      ```
+      N-Queen
+      부분집합
+      순열
+      ```
 
   - 예시 : 부분집합 탐색
     - 예시 코드
@@ -6572,19 +6572,19 @@
 
   - 구조
 
-        ```
-        Divide
-        Conquer
-        Combine
-        ```
+      ```
+      Divide
+      Conquer
+      Combine
+      ```
 
   - 대표 알고리즘
 
-        ```
-        Merge Sort
-        Quick Sort
-        Binary Search
-        ```
+      ```
+      Merge Sort
+      Quick Sort
+      Binary Search
+      ```
 
   - 예시 : 이진 탐색
     - 예시 코드
@@ -6629,18 +6629,18 @@
 
   - 특징
 
-        ```
-        Overlapping Subproblem
-        Optimal Substructure
-        ```
+      ```
+      Overlapping Subproblem
+      Optimal Substructure
+      ```
 
   - 대표 문제
 
-        ```
-        피보나치
-        배낭 문제
-        LIS
-        ```
+      ```
+      피보나치
+      배낭 문제
+      LIS
+      ```
 
   - 예시 : 피보나치
     - 예시 코드
@@ -6676,53 +6676,53 @@
 
     - 예시
 
-          ```
-          weight = [2,1,3]
-          value  = [4,2,3]
-          capacity = 4
-          ```
+        ```
+        weight = [2,1,3]
+        value  = [4,2,3]
+        capacity = 4
+        ```
 
     - 핵심 아이디어
 
-          ```
-          DP[i][w]
+        ```
+        DP[i][w]
 
-          i번째 물건까지 고려
-          w 무게에서 최대 가치
-          ```
+        i번째 물건까지 고려
+        w 무게에서 최대 가치
+        ```
 
     - 예시 코드
 
-          ```python
-          weight = [2,1,3]
-          value = [4,2,3]
+        ```python
+        weight = [2,1,3]
+        value = [4,2,3]
 
-          capacity = 4
-          n = len(weight)
+        capacity = 4
+        n = len(weight)
 
-          dp = [[0]*(capacity+1) for _ in range(n+1)]
+        dp = [[0]*(capacity+1) for _ in range(n+1)]
 
-          for i in range(1,n+1):
+        for i in range(1,n+1):
 
-              for w in range(capacity+1):
+            for w in range(capacity+1):
 
-                  dp[i][w] = dp[i-1][w]
+                dp[i][w] = dp[i-1][w]
 
-                  if w >= weight[i-1]:
+                if w >= weight[i-1]:
 
-                      dp[i][w] = max(
-                          dp[i][w],
-                          dp[i-1][w-weight[i-1]] + value[i-1]
-                      )
+                    dp[i][w] = max(
+                        dp[i][w],
+                        dp[i-1][w-weight[i-1]] + value[i-1]
+                    )
 
-          print(dp[n][capacity])
-          ```
+        print(dp[n][capacity])
+        ```
 
     - 실행 결과
 
-          ```
-          6
-          ```
+        ```
+        6
+        ```
 
   - LIS (Longest Increasing Subsequence)
 
@@ -6731,41 +6731,41 @@
 
     - 예시
 
-          ```
-          arr = [10,9,2,5,3,7,101,18]
-          ```
+        ```
+        arr = [10,9,2,5,3,7,101,18]
+        ```
 
     - 예시 코드
 
-          ```python
-          arr = [10,9,2,5,3,7,101,18]
+        ```python
+        arr = [10,9,2,5,3,7,101,18]
 
-          n = len(arr)
+        n = len(arr)
 
-          dp = [1]*n
+        dp = [1]*n
 
-          for i in range(n):
+        for i in range(n):
 
-              for j in range(i):
+            for j in range(i):
 
-                  if arr[j] < arr[i]:
+                if arr[j] < arr[i]:
 
-                      dp[i] = max(dp[i], dp[j]+1)
+                    dp[i] = max(dp[i], dp[j]+1)
 
-          print(max(dp))
-          ```
+        print(max(dp))
+        ```
 
     - 실행 결과
 
-          ```
-          4
-          ```
+        ```
+        4
+        ```
 
     - 시간 복잡도
 
-          ```
-          O(N²)
-          ```
+        ```
+        O(N²)
+        ```
 
 - Bit Manipulation
   - 개념
@@ -6794,14 +6794,14 @@
 
   - 비트 연산자
 
-        ```
-        AND  &
-        OR   |
-        XOR  ^
-        NOT  ~
-        SHIFT LEFT  <<
-        SHIFT RIGHT >>
-        ```
+      ```
+      AND  &
+      OR   |
+      XOR  ^
+      NOT  ~
+      SHIFT LEFT  <<
+      SHIFT RIGHT >>
+      ```
 
     - AND
 
@@ -6852,9 +6852,9 @@
 
   - 비트마스크 예시
 
-        ```
-        mask = 5
-        ```
+      ```
+      mask = 5
+      ```
 
     - 이 값을 2진수로 보면
 
@@ -6940,43 +6940,43 @@
 
     - 대표 문제
 
-          ```
-          Traveling Salesman Problem
-          방문 상태 관리
-          ```
+        ```
+        Traveling Salesman Problem
+        방문 상태 관리
+        ```
 
     - 핵심 아이디어
 
-          ```
-          dp[mask][i]
+        ```
+        dp[mask][i]
 
-          mask 상태에서
-          i 위치
-          ```
+        mask 상태에서
+        i 위치
+        ```
 
     - 예시 코드
 
-          ```python
-          n = 3
+        ```python
+        n = 3
 
-          dp = [[False]*(n+1) for _ in range(1<<n)]
+        dp = [[False]*(n+1) for _ in range(1<<n)]
 
-          dp[1][1] = True
+        dp[1][1] = True
 
-          for mask in range(1<<n):
+        for mask in range(1<<n):
 
-              for i in range(n):
+            for i in range(n):
 
-                  if mask & (1<<i):
+                if mask & (1<<i):
 
-                      for j in range(n):
+                    for j in range(n):
 
-                          if not (mask & (1<<j)):
+                        if not (mask & (1<<j)):
 
-                              dp[mask | (1<<j)][j] = True
+                            dp[mask | (1<<j)][j] = True
 
-          print(dp)
-          ```
+        print(dp)
+        ```
           
 ## 자료구조 기반 알고리즘
 
@@ -6987,11 +6987,11 @@
 
   - 특징
 
-        ```
-        삽입      O(log N)
-        삭제      O(log N)
-        최소값    O(1)
-        ```
+      ```
+      삽입      O(log N)
+      삭제      O(log N)
+      최소값    O(1)
+      ```
 
   - 파이썬 구현
     - `heapq` 모듈 사용
@@ -7030,49 +7030,49 @@
 
     - 대표 문제
 
-          ```
-          Top K Frequent Elements
-          K번째 큰 수
-          ```
+        ```
+        Top K Frequent Elements
+        K번째 큰 수
+        ```
 
     - 핵심 아이디어
 
-          ```
-          Min Heap 유지
-          크기가 K를 넘으면 제거
-          ```
+        ```
+        Min Heap 유지
+        크기가 K를 넘으면 제거
+        ```
 
     - 예시 코드
 
-          ```python
-          import heapq
+        ```python
+        import heapq
 
-          arr = [5,1,9,3,7,8]
-          k = 3
+        arr = [5,1,9,3,7,8]
+        k = 3
 
-          heap = []
+        heap = []
 
-          for num in arr:
+        for num in arr:
 
-              heapq.heappush(heap, num)
+            heapq.heappush(heap, num)
 
-              if len(heap) > k:
-                  heapq.heappop(heap)
+            if len(heap) > k:
+                heapq.heappop(heap)
 
-          print(heap)
-          ```
+        print(heap)
+        ```
 
     - 실행 결과
 
-          ```
-          [7,8,9]
-          ```
+        ```
+        [7,8,9]
+        ```
 
     - 시간 복잡도
 
-          ```
-          O(N log K)
-          ```
+        ```
+        O(N log K)
+        ```
 
 - Segment Tree
 
@@ -7082,16 +7082,16 @@
 
   - 특징
 
-        ```
-        구간 질의   O(log N)
-        업데이트   O(log N)
-        ```
+      ```
+      구간 질의   O(log N)
+      업데이트   O(log N)
+      ```
 
   - 예시 배열
 
-        ```
-        arr = [1,3,5,7,9,11]
-        ```
+      ```
+      arr = [1,3,5,7,9,11]
+      ```
 
   - Segment Tree 생성
     - 예시 코드
@@ -7160,47 +7160,47 @@
 
     - 특징
 
-          ```
-          전처리 O(N log N)
-          쿼리 O(1)
-          ```
+        ```
+        전처리 O(N log N)
+        쿼리 O(1)
+        ```
 
     - 대표 문제
 
-          ```
-          Range Minimum Query
-          ```
+        ```
+        Range Minimum Query
+        ```
 
     - 예시 코드
 
-          ```python
-          import math
+        ```python
+        import math
 
-          arr = [4,6,1,5,7,3]
-          n = len(arr)
+        arr = [4,6,1,5,7,3]
+        n = len(arr)
 
-          k = int(math.log2(n)) + 1
+        k = int(math.log2(n)) + 1
 
-          st = [[0]*n for _ in range(k)]
+        st = [[0]*n for _ in range(k)]
 
-          for i in range(n):
-              st[0][i] = arr[i]
+        for i in range(n):
+            st[0][i] = arr[i]
 
-          j = 1
+        j = 1
 
-          while (1<<j) <= n:
+        while (1<<j) <= n:
 
-              for i in range(n-(1<<j)+1):
+            for i in range(n-(1<<j)+1):
 
-                  st[j][i] = min(
-                      st[j-1][i],
-                      st[j-1][i + (1<<(j-1))]
-                  )
+                st[j][i] = min(
+                    st[j-1][i],
+                    st[j-1][i + (1<<(j-1))]
+                )
 
-              j += 1
+            j += 1
 
-          print(st)
-          ```
+        print(st)
+        ```
 
 - Fenwick Tree (Binary Indexed Tree)
 
@@ -7210,10 +7210,10 @@
 
   - 특징
 
-        ```
-        업데이트   O(log N)
-        prefix sum O(log N)
-        ```
+      ```
+      업데이트   O(log N)
+      prefix sum O(log N)
+      ```
 
   - Fenwick Tree 생성
     - 예시 코드
@@ -7282,11 +7282,11 @@
 
   - 특징
 
-        ```
-        문자열 길이를 L이라 하면
-        삽입 O(L)
-        탐색 O(L)
-        ```
+      ```
+      문자열 길이를 L이라 하면
+      삽입 O(L)
+      탐색 O(L)
+      ```
 
   - Trie 노드 정의
     - 예시 코드
