@@ -246,7 +246,91 @@ Python 학습 정리는 [python/README.md](python/README.md)로 이동했습니�
       ```
   - git pull
     - 내용, 설명  
-      - 원격 저장소 최신 내용 가져오
+      - 원격 저장소 최신 내용을 가져와 현재 브랜치에 병합
+    - 예시
+      ```bash
+      git pull origin main
+      ```
+    - 실수하기 쉬운 포인트
+      - 원격과 로컬에서 같은 파일을 다르게 수정했다면 충돌이 발생할 수 있음
+- 🌿 브랜치 생성 & 이동
+  - branch란
+    - 내용, 설명
+      - 특정 커밋을 가리키는 이름
+      - 기능별로 작업 공간을 나누어 main 브랜치를 안전하게 유지할 수 있음
+      - `HEAD`는 현재 내가 작업 중인 브랜치 또는 커밋을 가리킴
+  - git branch
+    - 내용, 설명
+      - 브랜치 목록 확인 또는 새 브랜치 생성
+    - 예시
+      ```bash
+      git branch
+      git branch feature/login
+      ```
+  - git switch
+    - 내용, 설명
+      - 다른 브랜치로 이동
+      - `-c` 옵션을 사용하면 브랜치를 만들면서 바로 이동
+    - 예시
+      ```bash
+      git switch feature/login
+      git switch -c feature/articles
+      ```
+    - 실수하기 쉬운 포인트
+      - 이동 전 작업 중인 변경사항이 있으면 먼저 commit하거나 stash 필요
+- 🔀 브랜치 병합 & 충돌 해결
+  - git merge
+    - 내용, 설명
+      - 다른 브랜치의 작업 내용을 현재 브랜치에 병합
+    - 예시
+      ```bash
+      git switch main
+      git merge feature/login
+      ```
+  - 병합 방식
+    - 내용, 설명
+      - Fast-forward merge: main이 분기 이후 변경되지 않아 브랜치 포인터만 앞으로 이동하는 병합
+      - 3-way merge: 양쪽 브랜치에 모두 변경이 있어 merge commit이 생기는 병합
+      - Conflict: 같은 파일의 같은 부분이 서로 다르게 수정되어 Git이 자동 병합하지 못하는 상황
+  - conflict marker
+    - 내용, 설명
+      - 충돌이 나면 파일 안의 표시를 보고 직접 수정한 뒤 다시 add/commit
+    - 예시
+      ```text
+      <<<<<<< HEAD
+      main branch content
+      =======
+      feature branch content
+      >>>>>>> feature/login
+      ```
+  - git branch -d
+    - 내용, 설명
+      - 병합이 끝난 브랜치 삭제
+    - 예시
+      ```bash
+      git branch -d feature/login
+      ```
+- 🤝 Pull Request 협업 흐름
+  - 기본 흐름
+    - 내용, 설명
+      - main에서 직접 작업하지 않고 기능별 브랜치를 만들어 작업
+      - 작업 브랜치를 push한 뒤 Pull Request로 리뷰와 병합 요청
+    - 예시
+      ```text
+      main
+      -> feature branch 생성
+      -> 기능 구현
+      -> commit
+      -> push
+      -> Pull Request
+      -> review
+      -> merge
+      ```
+  - 실수하기 쉬운 포인트
+    - main 브랜치를 직접 수정하지 않기
+    - PR 제목과 설명에 변경 내용을 명확히 남기기
+    - 리뷰어가 이해할 수 있도록 변경 범위를 작게 유지하기
+    - branch protection을 사용하면 리뷰 없이 main에 merge되는 것을 막을 수 있음
 
 
 # Markdown / README 작성법 정리
