@@ -44,6 +44,10 @@ Django 프로젝트 구조와 URL, View, Template, DTL, namespace, variable rout
 
 AI 학습을 위한 Python, 수학 기초, 머신러닝, EDA, Scikit-learn, PyTorch, NLP, LLM prompting, 데이터 생성, 컴퓨터 비전, 이미지 파운데이션 모델, 멀티모달, LangChain과 RAG를 정리했습니다.
 
+### [Agent & Harness](agent&harness/README.md)
+
+Agentic AI와 Harness Engineering을 활용한 개발 흐름을 정리했습니다. PRD, Spec, Phase 분할, Verify Loop, Agent 역할 매핑, 사람 리뷰, 문서 업데이트와 작은 단위 commit까지 AI Agent가 안전하게 일할 수 있는 구조를 다룹니다.
+
 ## 공통 메모
 
 여러 학습 과정에서 공통으로 반복해서 쓰이는 도구와 문서 작성 기준입니다.
@@ -321,4 +325,3 @@ print("hello")
 ~~취소선~~
 ---
 ```
-
