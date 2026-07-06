@@ -48,6 +48,38 @@
 - Workflow
   - Phase, Verify Loop, Agent, 완료 기준을 묶은 Harness 구조이다.
 
+## Claude Code CLI 설치 (Windows / Git Bash)
+- Claude Code v2.1부터 네이티브 인스톨러를 지원한다.
+- `install.sh`는 macOS, Linux, WSL 전용이다. Windows에서는 실행되지 않는다.
+- Git Bash 터미널이 아닌 PowerShell에서 설치한다.
+- 설치 후 Git Bash PATH에 수동으로 등록해야 `claude` 명령이 인식된다.
+
+### 설치
+
+```powershell
+# PowerShell에서 실행
+irm https://claude.ai/install.ps1 | iex
+```
+
+### Git Bash에서 PATH 등록
+
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### 실행 확인
+
+```bash
+claude --version
+```
+
+### VS Code에서 실행
+- VS Code 통합 터미널(Ctrl+`)을 열고 작업 폴더에서 `claude`를 입력한다.
+- Claude Code는 현재 열린 폴더를 프로젝트 컨텍스트로 인식한다.
+- 처음 실행하면 브라우저 로그인 창이 뜬다.
+- VS Code를 완전히 재시작해야 새로 등록한 PATH가 반영된다.
+
 ## 프로젝트 공통 규칙
 - Agent가 프로젝트를 일관되게 이해하도록 공통 규칙 파일을 둔다.
 - Claude Code에서는 `CLAUDE.md`, 여러 Agentic Coding Tool을 고려하면 `AGENTS.md`를 사용할 수 있다.
@@ -258,6 +290,40 @@ PLAN.md에 작성한 내용대로 구현해줘.
 이번 기능을 위해 추가된 코드만 수정해줘.
 기존 기능을 수정해야 한다면 먼저 이유와 수정 방법을 설명하고 승인을 받아줘.
 최종 결과와 남은 리스크를 알려줘.
+```
+
+## Claude Code 사용 팁
+
+### 세션 내 슬래시 명령어
+
+| 명령어 | 설명 |
+| --- | --- |
+| `/usage` | 현재 세션의 토큰 사용량과 플랜 한도 확인 |
+| `/context` | 컨텍스트 창 사용량 확인 |
+| `/compact` | 긴 대화를 요약해서 압축 |
+
+- Claude Code는 5시간 단위 롤링 윈도우로 토큰 한도가 적용된다.
+- 작업 중간에 `/usage`로 남은 토큰을 확인하는 습관을 들인다.
+- 대화가 길어지면 `/compact`로 컨텍스트를 줄이고 계속 작업할 수 있다.
+
+### 세션 이어가기
+
+```bash
+# 가장 최근 세션을 이어서 시작
+claude --continue
+
+# 세션 목록에서 선택해서 이어가기
+claude --resume
+```
+
+### 다음 세션에서 이어가기
+- 세션을 종료하기 전에 `PROGRESS.md`에 오늘 완료한 것과 다음에 할 것을 기록한다.
+- 세션 기록보다 문서 기반으로 이어가는 것이 컨텍스트가 흐려지는 문제를 방지한다.
+- 새 세션 시작 시 문서를 먼저 읽게 한 뒤 진행한다.
+
+```text
+PROGRESS.md, PLAN.md, SPEC.md를 읽고 현재 진행 상황을 파악해줘.
+Phase N부터 이어서 진행할 거야.
 ```
 
 ## 문서 업데이트와 Commit
