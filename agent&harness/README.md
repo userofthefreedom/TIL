@@ -1,4 +1,4 @@
-# Agent & Harness Study Notes
+﻿# Agent & Harness Study Notes
 
 ## 핵심 흐름
 - Agentic AI를 잘 쓰는 핵심은 "코드 짜줘"가 아니라, AI가 안전하게 일할 수 있는 작업 구조를 먼저 만드는 것이다.

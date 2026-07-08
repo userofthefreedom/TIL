@@ -1,4 +1,4 @@
-# Django
+﻿# Django
 
 Django는 Python으로 웹 애플리케이션을 만들기 위한 웹 프레임워크다.  
 이 폴더에서는 Django 프로젝트 구조, MTV 패턴, URL/View/Template 흐름, Model과 ORM, Form과 인증, Static/Media 파일, 그리고 DRF 기반 REST API 흐름을 정리한다.

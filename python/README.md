@@ -1,4 +1,4 @@
-# Python Study Notes
+﻿# Python Study Notes
 
 ## 핵심
 - **값/타입/변수(객체)** → 데이터를 만든다

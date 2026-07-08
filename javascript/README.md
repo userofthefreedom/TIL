@@ -1,4 +1,4 @@
-# JavaScript
+﻿# JavaScript
 
 JavaScript는 웹 브라우저에서 동적인 동작을 만들기 위해 사용하는 프로그래밍 언어다.  
 이 폴더에서는 JavaScript 기초 문법, 함수와 객체, `this`, 배열 helper method, DOM 조작, Event, 비동기 처리, Axios를 이용한 Ajax 요청까지 정리한다.
