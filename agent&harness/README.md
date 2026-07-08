@@ -231,6 +231,268 @@ Coding
 | Verify | Verify Agent | Acceptance Criteria 충족 여부를 확인한다. |
 | Decide | Decision Agent | 결과를 종합해 다음 행동을 결정한다. |
 
+## Multi-Agent Orchestration
+- Multi-Agent Orchestration은 여러 AI Agent에게 작업을 나누어 맡기고, 각 Agent의 결과를 연결, 검증, 조정하는 구조를 설계하는 것이다.
+- 중요한 점은 Agent의 수를 늘리는 것이 아니라, 역할과 책임을 명확히 나누는 것이다.
+- Agent가 많아질수록 자동으로 품질이 좋아지는 것이 아니라, 중복 작업, 잘못된 합의, 검증 누락, 컨텍스트 오염이 생길 수 있다.
+- 좋은 Orchestration은 "누가 계획하고, 누가 만들고, 누가 검토하고, 누가 최종 결정하는가"를 명확히 한다.
+
+### 단일 Agent와 Multi-Agent의 차이
+- 단일 Agent는 하나의 AI가 조사, 계획, 구현, 검증, 문서화를 모두 수행하는 방식이다.
+- 작업 흐름이 단순하고 빠르지만, 스스로 만든 결과를 스스로 검증하기 때문에 오류를 놓칠 위험이 있다.
+- Multi-Agent는 역할을 나누어 서로 다른 관점에서 작업을 수행하게 만드는 방식이다.
+- 예를 들어 Planner는 범위를 정하고, Coder는 구현하고, Reviewer는 위험을 찾고, Tester는 실행 결과를 확인한다.
+- Multi-Agent가 항상 더 좋은 것은 아니다. 작업이 작거나 기준이 명확하지 않다면 오히려 복잡도만 증가할 수 있다.
+- Multi-Agent는 복잡한 작업을 안정적으로 나누고 검증해야 할 때 사용한다.
+
+### Orchestration을 설계할 때 던질 질문
+- 누가 작업을 계획하는가?
+- 누가 실제 결과물을 만드는가?
+- 누가 결과물을 검토하는가?
+- 누가 테스트와 검증을 수행하는가?
+- 누가 최종 결정을 내리는가?
+- Agent 사이에서 어떤 정보를 넘길 것인가?
+- 실패했을 때 어디로 되돌아갈 것인가?
+- 사람은 어느 지점에서 개입할 것인가?
+
+### 주요 역할
+
+#### Orchestrator
+- 입력: 사용자 요청, PRD, Spec, 현재 Phase, 이전 작업 기록
+- 책임: 전체 작업 흐름을 조정하고 어떤 Agent에게 어떤 일을 맡길지 결정한다.
+- 출력: 작업 순서, 역할 배정, 다음 행동 결정
+- 금지: 모든 세부 구현을 직접 처리하려 하지 않는다.
+
+#### Planner
+- 입력: PRD, Spec, 현재 Phase, 프로젝트 구조
+- 책임: 작업 범위, 구현 순서, 수정 대상 파일 후보, 검증 방법을 정한다.
+- 출력: Plan, 작업 범위, 제외할 일, 예상 위험
+- 금지: 직접 코드를 수정하지 않는다.
+
+#### Researcher
+- 입력: 기존 코드, 문서, 에러 로그, 외부 자료
+- 책임: 구현 전에 필요한 맥락과 근거를 수집한다.
+- 출력: 관련 파일 목록, 참고 문서, 조사 결과 요약
+- 금지: 근거 없이 구현 방향을 확정하지 않는다.
+
+#### Coder
+- 입력: Plan, PRD, Spec, 현재 Phase
+- 책임: 정해진 범위 안에서 실제 코드를 수정한다.
+- 출력: 변경된 코드, 변경 이유, 영향 범위
+- 금지: Plan에 없는 파일이나 기능을 임의로 확장하지 않는다.
+
+#### Tester
+- 입력: 변경된 코드, 테스트 명령어, Acceptance Criteria
+- 책임: 테스트와 빌드를 실행하고 실패 원인을 분석한다.
+- 출력: 테스트 결과, 실패 로그 요약, 재현 방법
+- 금지: 실패를 단순히 무시하거나 성공처럼 보고하지 않는다.
+
+#### Reviewer
+- 입력: diff, Plan, PRD, Spec
+- 책임: 코드 품질, 범위 초과, 회귀 위험, 누락된 테스트를 확인한다.
+- 출력: 리뷰 코멘트, 위험 목록, 수정 제안
+- 금지: 새 기능을 임의로 추가하지 않는다.
+
+#### Verifier
+- 입력: 구현 결과, 테스트 결과, Acceptance Criteria
+- 책임: 이번 Phase가 실제로 완료되었는지 기준에 맞춰 판단한다.
+- 출력: 완료 여부, 미충족 조건, 남은 작업
+- 금지: Agent의 "완료" 선언만 보고 통과시키지 않는다.
+
+#### Documenter
+- 입력: 변경 결과, 테스트 결과, 결정 사항
+- 책임: README, PROGRESS, TEST_RESULT, PHASE 같은 문서를 최신 상태로 만든다.
+- 출력: 업데이트된 문서, 다음 세션을 위한 기록
+- 금지: 실제 구현과 맞지 않는 기록을 남기지 않는다.
+
+#### Decision Maker
+- 입력: Plan, 구현 결과, 테스트 결과, 리뷰 결과, 검증 결과
+- 책임: 통과, 재작업, 범위 축소, 사람 리뷰 요청 같은 다음 행동을 결정한다.
+- 출력: 최종 결정, 다음 Phase, 남은 위험
+- 금지: 불확실한 상태에서 완료로 처리하지 않는다.
+
+### Orchestration 패턴
+
+#### Sequential Pipeline
+```text
+Planner
+-> Coder
+-> Tester
+-> Reviewer
+-> Verifier
+-> Documenter
+-> Decision Maker
+```
+
+- 가장 기본적인 순차 처리 방식이다.
+- 각 Agent가 이전 Agent의 산출물을 입력으로 받아 다음 단계로 넘긴다.
+- 단계가 명확해서 학습과 문서화에 좋다.
+- 단점은 앞 단계가 잘못되면 뒤 단계 전체가 영향을 받는다는 점이다.
+
+#### Supervisor / Worker
+```text
+Supervisor
+-> Worker A
+-> Worker B
+-> Worker C
+-> Supervisor
+```
+
+- Supervisor가 작업을 나누고 Worker들이 세부 작업을 수행한다.
+- 여러 독립 작업을 병렬로 처리할 때 유용하다.
+- 예를 들어 문서 조사, 테스트 분석, 코드 구조 파악을 나누어 맡길 수 있다.
+- Supervisor는 Worker 결과를 그대로 합치지 말고 충돌과 누락을 확인해야 한다.
+
+#### Planner / Executor
+```text
+Planner
+-> Executor
+-> Planner or Verifier
+```
+
+- Planner는 계획만 세우고 Executor는 실행만 한다.
+- 계획과 실행을 분리해 범위 초과를 줄일 수 있다.
+- 구현 전 승인 절차가 필요한 프로젝트에 잘 맞는다.
+
+#### Generator / Reviewer
+```text
+Generator
+-> Reviewer
+-> Generator
+-> Verifier
+```
+
+- Generator가 초안을 만들고 Reviewer가 위험과 누락을 찾는다.
+- 코드, 문서, 설계안, 테스트 케이스를 만들 때 모두 사용할 수 있다.
+- Reviewer가 직접 고치기보다 문제를 명확히 지적하는 역할을 맡으면 책임 경계가 분명해진다.
+
+#### Router Pattern
+```text
+User Request
+-> Router
+   -> Docs Agent
+   -> Coding Agent
+   -> Test Agent
+   -> Research Agent
+```
+
+- 요청의 종류에 따라 적절한 Agent로 보내는 방식이다.
+- "문서 정리", "버그 수정", "테스트 실패 분석"처럼 작업 유형이 명확할 때 유용하다.
+- Router의 기준이 모호하면 잘못된 Agent에게 작업이 전달될 수 있다.
+
+#### Blackboard Pattern
+```text
+Shared Board
+<- Planner
+<- Researcher
+<- Coder
+<- Tester
+<- Reviewer
+```
+
+- 여러 Agent가 하나의 공유 작업판에 결과를 남기는 방식이다.
+- 큰 문제를 여러 관점에서 점진적으로 해결할 때 유용하다.
+- 공유 공간에는 사실, 결정, 열린 질문, 위험, 다음 행동을 구분해서 기록해야 한다.
+
+#### Human-in-the-loop
+```text
+Agent Work
+-> Human Review
+-> Agent Work
+-> Human Final Decision
+```
+
+- 중요한 결정 지점에 사람이 개입하는 방식이다.
+- 요구사항 변경, 보안, 데이터 삭제, 대규모 구조 변경처럼 위험한 작업에서 필요하다.
+- 사람은 모든 세부 작업을 직접 하지 않더라도 최종 기준과 책임을 가져야 한다.
+
+### 상태 관리
+- Shared Context
+  - 모든 Agent가 공통으로 알아야 하는 프로젝트 규칙, PRD, Spec, 현재 Phase이다.
+- Task State
+  - 현재 작업이 조사, 계획, 구현, 테스트, 리뷰, 검증 중 어디에 있는지 나타낸다.
+- Artifact
+  - Agent가 만든 산출물이다. Plan, diff, 테스트 로그, 리뷰 코멘트, 문서 업데이트가 여기에 포함된다.
+- Handoff
+  - 한 Agent가 다음 Agent에게 넘기는 요약이다. 무엇을 했고, 무엇을 확인해야 하며, 무엇이 남았는지 포함한다.
+- Checkpoint
+  - 실패했을 때 되돌아갈 수 있는 기준점이다. commit, 문서 기록, 테스트 통과 상태가 될 수 있다.
+- Memory
+  - 장기적으로 유지해야 하는 학습과 결정 기록이다. 단순 대화 기록보다 문서화된 결정이 더 안정적이다.
+
+### Handoff 템플릿
+```md
+## Handoff
+
+### 완료한 일
+- 
+
+### 변경한 파일
+- 
+
+### 확인한 근거
+- 
+
+### 테스트 결과
+- 
+
+### 남은 위험
+- 
+
+### 다음 Agent가 해야 할 일
+- 
+```
+
+### 검증 구조
+- Self-check
+  - Agent가 자신의 결과를 1차로 점검한다.
+- Cross-review
+  - 다른 역할의 Agent가 결과를 검토한다.
+- Test-based verification
+  - 테스트와 빌드처럼 실행 가능한 기준으로 확인한다.
+- Acceptance Criteria verification
+  - PRD와 Spec에 적힌 완료 기준을 하나씩 대조한다.
+- Human final review
+  - 최종 품질과 책임은 사람이 판단한다.
+
+### 실패 패턴
+- 역할 경계가 흐려진다.
+  - Planner가 구현까지 하거나 Reviewer가 새 기능을 추가하면 책임이 섞인다.
+- Agent끼리 서로의 오류를 강화한다.
+  - 앞 Agent의 잘못된 가정을 뒤 Agent가 검증 없이 받아들이면 오류가 커진다.
+- Context가 너무 커진다.
+  - 모든 내용을 매번 넘기면 중요한 기준이 묻히고 비용이 증가한다.
+- 최종 결정권이 사라진다.
+  - 여러 Agent가 말했지만 아무도 완료 여부를 책임지지 않는 상태가 된다.
+- 검증 없는 자동화가 된다.
+  - 많은 Agent가 움직였지만 테스트, 리뷰, Acceptance Criteria 확인이 없다면 품질을 보장할 수 없다.
+- 병렬 작업 결과가 충돌한다.
+  - 여러 Agent가 같은 파일이나 같은 결정을 동시에 바꾸면 통합 비용이 커진다.
+
+### 실전 예시: 게시판 CRUD Phase 분리
+```text
+User
+-> Orchestrator: 이번 Phase는 게시글 목록 화면이다.
+-> Planner: 목록 화면 구현 범위와 제외할 기능을 정한다.
+-> Researcher: 기존 라우팅, 모델, 템플릿 구조를 조사한다.
+-> Coder: 목록 화면에 필요한 코드만 구현한다.
+-> Tester: 관련 테스트와 서버 실행을 확인한다.
+-> Reviewer: 범위 초과, 구조 문제, 기존 기능 영향 여부를 검토한다.
+-> Verifier: Acceptance Criteria 충족 여부를 확인한다.
+-> Documenter: PROGRESS.md와 TEST_RESULT.md를 업데이트한다.
+-> Decision Maker: 통과 또는 재작업을 결정한다.
+```
+
+### Multi-Agent Orchestration 체크리스트
+- 이번 작업이 Multi-Agent를 쓸 만큼 복잡한가?
+- 각 Agent의 입력, 책임, 출력, 금지사항이 명확한가?
+- Agent 사이의 Handoff 형식이 정해져 있는가?
+- 공유 Context와 개별 작업 Context를 구분했는가?
+- 최종 결정을 내리는 역할이 정해져 있는가?
+- 테스트와 Acceptance Criteria 검증이 포함되어 있는가?
+- 사람이 개입해야 하는 위험 지점이 표시되어 있는가?
+- 실패했을 때 어느 단계로 되돌아갈지 정했는가?
+
 ## Phase 실행 루프
 ```text
 1. 조사
