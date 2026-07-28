@@ -505,7 +505,7 @@
   - LEGB Rule
     - 파이썬은 식별자를 특정 이름 공간에 저장하고, LEGB Rule 순서에 따라 찾아 나간다
     - local > enclosed > global > Built-in
-  - global zldnjem
+  - global 키워드
     - 변수의 스코프를 전역으로 확대한다
   - **실수하기 쉬운 포인트**
     - `sum`, `list`, `dict`, `str` 같은 내장함수 이름을 변수명으로 쓰지 말기
