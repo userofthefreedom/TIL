@@ -3,27 +3,25 @@
 Django는 Python으로 웹 애플리케이션을 만들기 위한 웹 프레임워크다.  
 이 폴더에서는 Django 프로젝트 구조, MTV 패턴, URL/View/Template 흐름, Model과 ORM, Form과 인증, Static/Media 파일, 그리고 DRF 기반 REST API 흐름을 정리한다.
 
-## Django Quick Navigation
+## Quick Navigation
 
-- [Django](#django)
-  - [Django Quick Navigation](#django-quick-navigation)
-  - [Django의 큰 흐름](#django의-큰-흐름)
-  - [개발 환경과 프로젝트 시작](#개발-환경과-프로젝트-시작)
-  - [URL, View, Template](#url-view-template)
-  - [Template와 DTL](#template와-dtl)
-  - [URL namespace와 variable routing](#url-namespace와-variable-routing)
-  - [GET, POST, CSRF](#get-post-csrf)
-  - [Model, Migration, Admin](#model-migration-admin)
-  - [ORM과 QuerySet](#orm과-queryset)
-  - [View 기반 CRUD](#view-기반-crud)
-  - [Django Form과 ModelForm](#django-form과-modelform)
-  - [Static File과 Media File](#static-file과-media-file)
-  - [Auth 1: 로그인과 로그아웃](#auth-1-로그인과-로그아웃)
-  - [Auth 2: 회원가입, 탈퇴, 정보수정, 비밀번호 변경](#auth-2-회원가입-탈퇴-정보수정-비밀번호-변경)
-  - [Django 웹페이지 구현 실습에서 정리한 흐름](#django-웹페이지-구현-실습에서-정리한-흐름)
-  - [REST API와 DRF](#rest-api와-drf)
-  - [DRF 예시 프로젝트 흐름](#drf-예시-프로젝트-흐름)
-  - [정리하며 남긴 기준](#정리하며-남긴-기준)
+- [Django의 큰 흐름](#django의-큰-흐름)
+- [개발 환경과 프로젝트 시작](#개발-환경과-프로젝트-시작)
+- [URL, View, Template](#url-view-template)
+- [Template와 DTL](#template와-dtl)
+- [URL namespace와 variable routing](#url-namespace와-variable-routing)
+- [GET, POST, CSRF](#get-post-csrf)
+- [Model, Migration, Admin](#model-migration-admin)
+- [ORM과 QuerySet](#orm과-queryset)
+- [View 기반 CRUD](#view-기반-crud)
+- [Django Form과 ModelForm](#django-form과-modelform)
+- [Static File과 Media File](#static-file과-media-file)
+- [Auth 1: 로그인과 로그아웃](#auth-1-로그인과-로그아웃)
+- [Auth 2: 회원가입, 탈퇴, 정보수정, 비밀번호 변경](#auth-2-회원가입-탈퇴-정보수정-비밀번호-변경)
+- [Django 웹페이지 구현 실습에서 정리한 흐름](#django-웹페이지-구현-실습에서-정리한-흐름)
+- [REST API와 DRF](#rest-api와-drf)
+- [DRF 예시 프로젝트 흐름](#drf-예시-프로젝트-흐름)
+- [정리하며 남긴 기준](#정리하며-남긴-기준)
 
 ## Django의 큰 흐름
 

@@ -4,27 +4,25 @@ Vue는 사용자 인터페이스를 컴포넌트 단위로 만들고, 상태 변
 
 이 폴더에서는 Vue 프로젝트 생성, Single File Component, 반응형 state, directive, computed/watch/lifecycle, component 분리, props/emit, Vue Router와 navigation guard를 정리한다.
 
-## Vue Quick Navigation
+## Quick Navigation
 
-- [Vue](#vue)
-  - [Vue Quick Navigation](#vue-quick-navigation)
-  - [Vue 프로젝트 시작](#vue-프로젝트-시작)
-  - [Vue 앱의 실행 흐름](#vue-앱의-실행-흐름)
-  - [Single File Component](#single-file-component)
-  - [반응형 state와 `ref`](#반응형-state와-ref)
-  - [Mustache와 `v-model`](#mustache와-v-model)
-  - [Event와 `v-on`](#event와-v-on)
-  - [Directive](#directive)
-  - [Computed, Method, Watch](#computed-method-watch)
-  - [Lifecycle Hooks](#lifecycle-hooks)
-  - [Components](#components)
-  - [Props](#props)
-  - [Emit](#emit)
-  - [Vue Router](#vue-router)
-  - [Dynamic Routes](#dynamic-routes)
-  - [Nested Routes](#nested-routes)
-  - [Navigation Guard](#navigation-guard)
-  - [정리하며 남긴 기준](#정리하며-남긴-기준)
+- [Vue 프로젝트 시작](#vue-프로젝트-시작)
+- [Vue 앱의 실행 흐름](#vue-앱의-실행-흐름)
+- [Single File Component](#single-file-component)
+- [반응형 state와 `ref`](#반응형-state와-ref)
+- [Mustache와 `v-model`](#mustache와-v-model)
+- [Event와 `v-on`](#event와-v-on)
+- [Directive](#directive)
+- [Computed, Method, Watch](#computed-method-watch)
+- [Lifecycle Hooks](#lifecycle-hooks)
+- [Components](#components)
+- [Props](#props)
+- [Emit](#emit)
+- [Vue Router](#vue-router)
+- [Dynamic Routes](#dynamic-routes)
+- [Nested Routes](#nested-routes)
+- [Navigation Guard](#navigation-guard)
+- [정리하며 남긴 기준](#정리하며-남긴-기준)
 
 ## Vue 프로젝트 시작
 

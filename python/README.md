@@ -1,5 +1,22 @@
 ﻿# Python Study Notes
 
+Python 기본 문법, 자료형, 함수, 모듈, 제어문, 메서드, 클래스, 예외 처리, 자주 쓰는 라이브러리를 정리합니다.
+
+## Quick Navigation
+
+- [핵심](#핵심)
+- [Basic](#basic)
+- [변수와 자료형](#변수와-자료형)
+- [함수(Function)](#함수function)
+- [모듈](#모듈)
+- [제어문](#제어문)
+- [method](#method)
+- [클래스](#클래스)
+- [상속 (Inheritance)](#상속-inheritance)
+- [에러(Error)와 예외(Exception) 처리](#에러error와-예외exception-처리)
+- [Python requests 클라이언트 서버 요청 정리](#python-requests-클라이언트-서버-요청-정리)
+- [라이브러리](#라이브러리)
+
 ## 핵심
 - **값/타입/변수(객체)** → 데이터를 만든다
 - **연산자/표현식/문장** → 데이터를 계산한다
@@ -2291,7 +2308,7 @@
   - EAFP 스타일이 파이썬스럽다
   - finally는 정리용, else는 성공 시 실행
 
-## Python으로 “클라이언트 → 서버 요청” 정리 (requests 중심)
+## Python requests 클라이언트 서버 요청 정리
 - 기초 
   - 내용, 설명
     - 클라이언트(내 파이썬 코드)가 서버(API)에 요청(request)을 보내면 서버는 응답(response)을 반환한다.

@@ -1,5 +1,30 @@
 ﻿# DB Study Notes
 
+관계형 데이터베이스, SQL, Django ORM, 모델 관계, CRUD, 인증, fixture, CSV 활용 흐름을 정리합니다.
+
+## Quick Navigation
+
+- [핵심 흐름](#핵심-흐름)
+- [관계형 데이터베이스 기초](#관계형-데이터베이스-기초)
+- [SQL 기본 문법](#sql-기본-문법)
+- [SQL 테이블과 데이터 변경](#sql-테이블과-데이터-변경)
+- [SQL 조회 흐름](#sql-조회-흐름)
+- [JOIN](#join)
+- [Django와 DB](#django와-db)
+- [Django 프로젝트 기본 흐름](#django-프로젝트-기본-흐름)
+- [Django 인증과 커스텀 유저](#django-인증과-커스텀-유저)
+- [Django 모델 관계](#django-모델-관계)
+- [Django CRUD](#django-crud)
+- [HTTP Method와 권한](#http-method와-권한)
+- [M:N 관계](#mn-관계)
+- [좋아요 구현](#좋아요-구현)
+- [팔로우 구현](#팔로우-구현)
+- [Profile 화면에서 확인할 관계](#profile-화면에서-확인할-관계)
+- [Fixtures](#fixtures)
+- [Hashtag 구현](#hashtag-구현)
+- [CSV와 데이터 가져오기](#csv와-데이터-가져오기)
+- [정리하며 남긴 기준](#정리하며-남긴-기준)
+
 ## 핵심 흐름
 - DB 학습은 데이터를 저장하는 방법에서 시작해, 관계를 맺고, 조회하고, 웹 애플리케이션의 모델로 연결하는 흐름으로 이어진다.
 - 이 폴더의 학습 내용은 크게 SQL 기본 문법, JOIN, Django ORM과 CRUD, M:N 관계 구현, fixtures, hashtag 기능으로 정리할 수 있다.

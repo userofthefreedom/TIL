@@ -3,27 +3,25 @@
 JavaScript는 웹 브라우저에서 동적인 동작을 만들기 위해 사용하는 프로그래밍 언어다.  
 이 폴더에서는 JavaScript 기초 문법, 함수와 객체, `this`, 배열 helper method, DOM 조작, Event, 비동기 처리, Axios를 이용한 Ajax 요청까지 정리한다.
 
-## JavaScript Quick Navigation
+## Quick Navigation
 
-- [JavaScript](#javascript)
-  - [JavaScript Quick Navigation](#javascript-quick-navigation)
-  - [JavaScript의 큰 흐름](#javascript의-큰-흐름)
-  - [변수 선언과 기본 자료형](#변수-선언과-기본-자료형)
-  - [연산자, 조건문, 반복문](#연산자-조건문-반복문)
-  - [Array와 Object 기초](#array와-object-기초)
-  - [객체 문법 확장](#객체-문법-확장)
-  - [함수](#함수)
-  - [Callback 함수](#callback-함수)
-  - [`this`](#this)
-  - [Array Helper Method](#array-helper-method)
-  - [DOM과 BOM](#dom과-bom)
-  - [DOM 요소 선택과 조작](#dom-요소-선택과-조작)
-  - [Event](#event)
-  - [비동기 처리](#비동기-처리)
-  - [Promise, then/catch, async/await](#promise-thencatch-asyncawait)
-  - [Axios와 Ajax](#axios와-ajax)
-  - [Ajax 좋아요와 팔로우 실습 흐름](#ajax-좋아요와-팔로우-실습-흐름)
-  - [정리하며 남긴 기준](#정리하며-남긴-기준)
+- [JavaScript의 큰 흐름](#javascript의-큰-흐름)
+- [변수 선언과 기본 자료형](#변수-선언과-기본-자료형)
+- [연산자, 조건문, 반복문](#연산자-조건문-반복문)
+- [Array와 Object 기초](#array와-object-기초)
+- [객체 문법 확장](#객체-문법-확장)
+- [함수](#함수)
+- [Callback 함수](#callback-함수)
+- [`this`](#this)
+- [Array Helper Method](#array-helper-method)
+- [DOM과 BOM](#dom과-bom)
+- [DOM 요소 선택과 조작](#dom-요소-선택과-조작)
+- [Event](#event)
+- [비동기 처리](#비동기-처리)
+- [Promise, then/catch, async/await](#promise-thencatch-asyncawait)
+- [Axios와 Ajax](#axios와-ajax)
+- [Ajax 좋아요와 팔로우 실습 흐름](#ajax-좋아요와-팔로우-실습-흐름)
+- [정리하며 남긴 기준](#정리하며-남긴-기준)
 
 ## JavaScript의 큰 흐름
 

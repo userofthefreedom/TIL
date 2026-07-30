@@ -1,73 +1,17 @@
 ﻿# Algorithm
 
-## 🚀 Algorithm Quick Navigation
+알고리즘 문제 풀이에 필요한 사고 방식, 자료구조, 탐색, 정렬, 그래프, DP, 그리디, 고급 자료구조를 정리합니다.
+
+## Quick Navigation
 
 - [알고리즘 사고 방식](#알고리즘-사고-방식)
-  - [알고리즘 기본 개념](#알고리즘-기본-개념)
-  - [시간 복잡도](#시간-복잡도)
-  - 알고리즘 입출력 패턴
-
 - [기본 자료구조 기반 알고리즘](#기본-자료구조-기반-알고리즘)
-  - Stack
-  - Recursion
-  - Tree
-  - Binary Tree
-  - Binary Search Tree
-  - 2D 배열 순회
-
 - [탐색 알고리즘](#탐색-알고리즘)
-  - DFS
-  - BFS
-  - Grid BFS
-  - 2D Grid Direction
-  - 완전 탐색
-  - 선형 탐색
-
 - [배열 기반 알고리즘](#배열-기반-알고리즘)
-  - String Matching
-  - Palindrome
-  - Two Pointer
-  - Sliding Window
-  - Prefix Sum
-  - Binary Search
-
 - [정렬 알고리즘](#정렬-알고리즘)
-  - Selection Sort
-  - Bubble Sort
-  - Insertion Sort
-  - Merge Sort
-  - Quick Sort
-
 - [그래프 알고리즘](#그래프-알고리즘)
-  - Graph 개념
-  - Union Find
-  - MST
-    - Kruskal
-    - Prim
-  - Shortest Path
-    - Dijkstra
-  - DAG
-    - Topological Sort
-
 - [알고리즘 기법](#알고리즘-기법)
-  - Greedy
-  - Backtracking
-  - Permutation / Combination / Subset
-  - Implementation / Simulation
-  - Divide and Conquer
-  - Dynamic Programming
-  - Bit Manipulation
-
 - [자료구조 기반 알고리즘](#자료구조-기반-알고리즘)
-  - Priority Queue
-  - Segment Tree
-  - Fenwick Tree
-  - Trie
-
----
-
-
-## 알고리즘 정리
 
 ## 알고리즘 사고 방식
 - 알고리즘 기본 개념

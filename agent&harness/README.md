@@ -1,5 +1,27 @@
 ﻿# Agent & Harness Study Notes
 
+Agentic AI와 Harness Engineering을 활용해 AI Agent가 안전하게 일할 수 있는 개발 흐름을 정리합니다.
+
+## Quick Navigation
+
+- [핵심 흐름](#핵심-흐름)
+- [생성형 AI와 Agentic AI](#생성형-ai와-agentic-ai)
+- [Harness Engineering 전체 흐름](#harness-engineering-전체-흐름)
+- [Claude Code CLI 설치 (Windows / Git Bash)](#claude-code-cli-설치-windows--git-bash)
+- [프로젝트 공통 규칙](#프로젝트-공통-규칙)
+- [팀 단위 Agent 운영 규칙](#팀-단위-agent-운영-규칙)
+- [PRD 작성](#prd-작성)
+- [Spec 작성](#spec-작성)
+- [Phase 분할](#phase-분할)
+- [Verify Loop](#verify-loop)
+- [Agent 역할 매핑](#agent-역할-매핑)
+- [Multi-Agent Orchestration](#multi-agent-orchestration)
+- [Phase 실행 루프](#phase-실행-루프)
+- [Claude Code 사용 팁](#claude-code-사용-팁)
+- [문서 업데이트와 Commit](#문서-업데이트와-commit)
+- [실전 체크리스트](#실전-체크리스트)
+- [유의점과 교훈](#유의점과-교훈)
+
 ## 핵심 흐름
 - Agentic AI를 잘 쓰는 핵심은 "코드 짜줘"가 아니라, AI가 안전하게 일할 수 있는 작업 구조를 먼저 만드는 것이다.
 - Harness는 AI Agent가 따라야 할 문서, 규칙, 작업 단위, 검증 루프, 역할 분담, 완료 기준을 묶은 개발 운영 구조이다.

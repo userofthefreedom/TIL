@@ -1,5 +1,25 @@
 ﻿# AI Study Notes
 
+AI 학습에 필요한 Python, 수학 기초, 머신러닝, 딥러닝, NLP, LLM, 컴퓨터 비전, RAG 흐름을 정리합니다.
+
+## Quick Navigation
+
+- [핵심 흐름](#핵심-흐름)
+- [학습 환경](#학습-환경)
+- [AI를 위한 Python](#ai를-위한-python)
+- [AI 수학 기초](#ai-수학-기초)
+- [머신러닝 기초](#머신러닝-기초)
+- [선형 회귀와 로지스틱 회귀](#선형-회귀와-로지스틱-회귀)
+- [EDA와 Scikit-learn](#eda와-scikit-learn)
+- [딥러닝과 PyTorch](#딥러닝과-pytorch)
+- [NLP 기초](#nlp-기초)
+- [LLM과 텍스트 파운데이션 모델](#llm과-텍스트-파운데이션-모델)
+- [AI를 이용한 데이터 생성](#ai를-이용한-데이터-생성)
+- [컴퓨터 비전](#컴퓨터-비전)
+- [이미지 파운데이션 모델과 멀티모달](#이미지-파운데이션-모델과-멀티모달)
+- [LangChain과 RAG](#langchain과-rag)
+- [유의점과 교훈](#유의점과-교훈)
+
 ## 핵심 흐름
 - AI, ML, Deep Learning의 관계
   - AI(Artificial Intelligence)
