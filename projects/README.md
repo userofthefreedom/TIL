@@ -23,7 +23,7 @@ GitHub에 공개한 프로젝트를 돌아보며, 어떤 문제를 풀려고 했
 | 프로젝트 | 성격 | 주요 기술 | 정리 상태 |
 | --- | --- | --- | --- |
 | FirstHome Navigator AI | 청약 추천, 자금 계획, AI 코치 서비스 | Django, DRF, Vue, Pinia, Axios, PDF 분석, LLM | Draft |
-| Green Commit | 팀 개발 온보딩/기여 흐름 프로토타입 | TypeScript, Java, Python, Docker | Draft |
+| Green Commit | 오픈소스 첫 기여 온보딩 프로토타입 (Apache 2.0) | React/TS, Java·Spring Boot, Python·FastAPI, Docker | Draft |
 | AI 쇼핑 어시스턴트 | AI/MCP/Harness 기반 쇼핑 추천 toy project | Python, Gradio, Docker | Draft |
 | 채용 공고 자동 수집기 | 채용 정보 수집/필터링 자동화 toy project | Python, scraping, API, Windows Scheduler | Draft |
 | AI Building Permit Manager | 해커톤 대비 건축 인허가 프로토타입 | Python, Vue, TypeScript, FastAPI, Docker | Draft |
