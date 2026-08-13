@@ -21,6 +21,9 @@
 - 인기 저장소의 `good first issue`는 노출되자마자 선점되는 구조라, "많이 추천"이 아니라 저장소 스타 상한·이슈 기간 창으로 후보 자체를 좁혀 "입문자가 실제로 잡을 수 있는" 이슈만 남기는 큐레이션을 핵심 원칙으로 삼았다.
 - AI가 정답 코드를 대신 작성해 주는 대신, 근거(Evidence)와 질문·Hint로 사용자 스스로 판단하게 만들어 "학습이 남는 기여"를 지향했다.
 
+![일반 AI, 깃든, 결과의 차이를 비교하는 랜딩 페이지 카드](../etc/gitden/home-compare.png)
+*"코드 정답을 바로 준다"가 아니라 "질문·근거·검증을 함께"한다는 차별점을 랜딩 페이지에서부터 명시했다.*
+
 ## 주요 기능
 
 - GitHub OAuth 로그인 및 온보딩 설문(6문항) 기반 프로필 확정
@@ -31,9 +34,41 @@
 - 성장 기록(XP·Level)과 "나의 기여" History
 - Responsive Web + PWA(Lite 설치 지원), 모바일에서는 로컬 환경이 필요한 Clone·PR만 "PC에서 이어하기"로 안내
 
+### 화면 미리보기
+
+![GitHub OAuth 온보딩 화면, 요청 권한과 비공개 저장소는 건드리지 않는다는 안내](../etc/gitden/login.png)
+*요청 권한과 "비공개 저장소는 건드리지 않는다"는 제한을 로그인 전에 먼저 보여준다.*
+
+![Fork·Clone·Branch/Edit·Commit/Push·Pull Request·Review/Merge 6단계 Journey 스테퍼](../etc/gitden/journey-steps.png)
+*Journey는 Fork부터 Review/Merge까지 6단계로 쪼개, 지금 어디에 있는지 항상 보여준다.*
+
+![이슈 추천 점수 구성: 기술스택·난이도·이슈정보충실도 등 8개 항목 가중합](../etc/gitden/recommend-score.png)
+*추천 점수를 숨기지 않고 8개 항목 가중합을 그대로 노출해, 왜 이 이슈가 추천됐는지 근거를 준다.*
+
+![AI가 이슈를 쉬운 말로 요약하고 지금 문제·기대 결과·완료 기준으로 정리한 Brief 카드](../etc/gitden/ai-brief.png)
+*Repo/Issue Brief는 원문 이슈를 "지금 문제 · 기대 결과 · 완료 기준"으로 구조화해 보여준다.*
+
+![코치가 오답 이유를 근거와 함께 설명하는 피드백 박스](../etc/gitden/ai-coach-feedback.png)
+*AI Coach는 정답만 알려주지 않고, 오답을 골랐을 때도 근거를 들어 다시 생각해보게 한다.*
+
+![GitHub PR URL을 붙여넣어 리뷰·CI·머지 상태 추적을 등록하는 카드](../etc/gitden/pr-register.png)
+*PR을 등록하면 그 이후 리뷰·CI·머지 상태를 계속 추적할 수 있다.*
+
+![PR 등록됨 → 리뷰 대기 → 결과로 이어지는 진행 타임라인](../etc/gitden/pr-monitoring.png)
+*진행 타임라인으로 지금 PR이 어느 단계인지 한눈에 보여준다.*
+
+![PR이 머지되어 축하 메시지와 캐릭터 성장 단계가 표시되는 결과 화면](../etc/gitden/result-celebrate.png)
+*첫 기여가 머지되면 캐릭터가 성장하는 축하 화면으로 마무리된다.*
+
+![알 → 부화 → 병아리 → 닭으로 이어지는 성장 단계 트랙](../etc/gitden/my-contribution.png)
+*"나의 기여" 페이지는 누적 기여를 알에서 닭까지 이어지는 성장 단계로 시각화한다.*
+
 ## 아키텍처
 
 모노레포 구조로 `apps/{frontend, backend, ai-service}`와 `infra/`를 함께 관리했다.
+
+![Blue/Green 배포와 Frontend/Backend/AI Service/Observability로 구성된 전체 아키텍처 다이어그램](../etc/gitden/architecture.png)
+*Stage/Prod를 Blue-Green 페어로 분리하고, Edge(Traefik)가 트래픽을 무중단으로 전환한다. 실제 배포 포트 번호는 반출 규정에 따라 가렸다.*
 
 - **Frontend (React 19 + Vite + TypeScript)**: 18개 화면, react-router-dom v7 + TanStack Query, 백엔드 OpenAPI 스펙에서 API 클라이언트를 자동 생성하는 파이프라인을 구성해 스펙과 프론트 호출부의 드리프트를 줄였다.
 - **Backend (Java 21 + Spring Boot)**: 도메인 주도로 인증/추천/Journey/PR/AI연동/게이미피케이션 등 14개 도메인을 수직 분할. GitHub OAuth는 Access Token이 아닌 GitHub 사용자 ID를 기준으로 회원을 식별하도록 설계했고, Prometheus/Grafana/Loki/Tempo로 관측성을 갖췄다.
