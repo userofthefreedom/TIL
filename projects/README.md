@@ -4,6 +4,7 @@ GitHub에 공개한 프로젝트를 돌아보며, 어떤 문제를 풀려고 했
 
 ## Quick Navigation
 
+- [깃든 (Gitden)](gitden.md)
 - [FirstHome Navigator AI](FirstHome_Navigator_AI.md)
 - [Green Commit](for_green_commit.md)
 - [AI 쇼핑 어시스턴트](shopping_with_ai.md)
@@ -22,6 +23,7 @@ GitHub에 공개한 프로젝트를 돌아보며, 어떤 문제를 풀려고 했
 
 | 프로젝트 | 성격 | 주요 기술 | 정리 상태 |
 | --- | --- | --- | --- |
+| 깃든 (Gitden) | 오픈소스 첫 기여 온보딩 AI 서비스, SSAFY 15기 공통 프로젝트 수상작 (소스 비공개) | React 19, Java/Spring Boot, Python/FastAPI, PostgreSQL, Redis, Docker, Blue-Green | Done |
 | FirstHome Navigator AI | 청약 추천, 자금 계획, AI 코치 서비스 | Django, DRF, Vue, Pinia, Axios, PDF 분석, LLM | Draft |
 | Green Commit | 오픈소스 첫 기여 온보딩 프로토타입 (Apache 2.0) | React/TS, Java·Spring Boot, Python·FastAPI, Docker | Draft |
 | AI 쇼핑 어시스턴트 | AI/MCP/Harness 기반 쇼핑 추천 toy project | Python, Gradio, Docker | Draft |
