@@ -2,7 +2,7 @@
 
 ## 한 줄 소개
 
-- 주니어 개발자에게 맞는 GitHub Repository·Issue를 추천하고, 근거 기반 AI 코칭과 실제 Git 실행 흐름(Fork → Clone → 학습 → Commit/PR → 상태 추적)을 통해 첫 오픈소스 기여를 완주하도록 돕는 AI 웹 서비스. SSAFY 15기 공통 프로젝트 수상작.
+- 주니어 개발자에게 맞는 GitHub Repository·Issue를 추천하고, 근거 기반 AI 코칭과 실제 Git 실행 흐름(Fork → Clone → 학습 → Commit/PR → 상태 추적)을 통해 첫 오픈소스 기여를 완주하도록 돕는 AI 웹 서비스. SSAFY 15기 공통 프로젝트 **최우수상** 수상.
 
 ## 기본 정보
 
@@ -10,7 +10,7 @@
 | --- | --- |
 | GitHub | 비공개 (SSAFY 15기 소스코드 반출·공개 금지 규정) |
 | 기간 | 2026-07-13 ~ 2026-08-12 (약 1개월) |
-| 형태 | 팀 프로젝트 (SSAFY 15기 공통 프로젝트, 6인 팀) — 수상작 |
+| 형태 | 팀 프로젝트 (SSAFY 15기 공통 프로젝트, 6인 팀) — **최우수상** 수상 |
 | 역할 | 팀장 · 기획 겸 풀스택(AI Service 초기 구현, Backend 정책, Frontend UX 개편, 문서 정합화, dev 브랜치 통합 리드) |
 | 팀 구성 | 오세진(본인) + 팀원 5인 (FE, BE, AI, Infra, UI/UX 역할 분담) |
 | 주요 기술 | React 19, Vite, TypeScript / Java 21, Spring Boot / Python 3.12, FastAPI / PostgreSQL, Redis / Docker Compose, Jenkins, Blue-Green 배포 |

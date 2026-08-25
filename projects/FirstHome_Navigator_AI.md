@@ -9,7 +9,7 @@
 | 항목 | 내용 |
 | --- | --- |
 | GitHub | https://github.com/userofthefreedom/FirstHome_Navigator_AI |
-| 형태 | 팀 프로젝트 |
+| 형태 | SSAFY 15기 관통 프로젝트, 3인 팀 / **우수상** 수상 |
 | 역할 | 팀장, 서비스 기획, 백엔드 설계/구현, 추천/자금/AI 규칙 설계 |
 | 주요 기술 | Python, Django, DRF, Vue, Pinia, Axios, SQLite, PDF 분석, LLM API, Kakao Map |
 | 기준 자료 | README, 공개 커밋 기록 |
