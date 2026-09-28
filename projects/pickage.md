@@ -61,7 +61,7 @@ npm 패키지를 고를 때 다운로드 수 하나로는 충분하지 않다. �
 | 기능 비교 | 패키지별 major 버전 후보 선택, module format·bundled types·direct/peer 의존 수 등 실행 환경 표, README 근거 RAG의 공통점·패키지별 차이·핵심 문장/핵심어 강조·자료 제한 상태 |
 | GitHub 커뮤니티 | 기준 패키지 저장소의 활동·열린 Issue 수치, 핵심 Issue 요약과 실제 발화 최대 4개, 수집·갱신·부분 자료 상태 |
 
-탭은 지연 로드되고 방문한 탭 상태는 유지된다. 커뮤니티 갱신은 분석을 확정할 때 비동기로 시작하고, GET 조회 자체는 외부 수집을 일으키지 않는다.
+탭은 지연 로드되고 방문한 탭 상태는 유지된다. 커뮤니티 갱신은 분석을 확정할 때 비동기로 시작하고, GET 조회 자체는 외부 수집을 일으키지 않는다. 이렇게 지연 수집되는 특성상 2026-09-28 기준 운영 DB에는 커뮤니티 스냅샷이 39건 쌓여 있다(AVAILABLE 26 · PARTIAL 7 · NO_DISCUSSION_DATA 4 · UNVERIFIED_REPOSITORY 2, 수집 시각 09-21~09-27).
 
 ### 내보내기
 
@@ -174,6 +174,21 @@ flowchart LR
 
 외부 공개 진입점은 nginx의 HTTP/HTTPS뿐이다. nginx가 TLS 종단, SPA fallback, 내부 운영 API(`/api/v1/ops/**`) 차단을 맡고 API와 PostgreSQL은 외부에 노출하지 않는다. 운영 Spark는 두 호스트의 host network로 master와 worker가 나뉘어 로컬 단일 컨테이너와 다르므로, 크로스 호스트 네트워킹과 메모리 상한을 운영에서 따로 검증해야 했다.
 
+노드별 컨테이너 메모리 상한(2026-09-28 `docker inspect` 실측):
+
+| 노드 | 서비스 | 메모리 상한 |
+| --- | --- | --- |
+| app | PostgreSQL | 2 GiB |
+| app | Spring Boot API | 1.6 GiB |
+| app | 기능 비교 RAG API | 512 MiB |
+| app | nginx(정적 웹) | 256 MiB |
+| data | MinIO | 1 GiB |
+| data | MLflow | 512 MiB |
+| data | Spark master | 1 GiB(swap 2 GiB) |
+| data | Spark worker-1 | 10 GiB(swap 20 GiB) |
+
+유사도 배치가 도는 `ai-similarity` 컨테이너의 8 GiB 상한은 "대표 문제 해결 4"에서 따로 다룬다.
+
 ## 데이터가 보고서가 되기까지
 
 | 단계 | 처리 내용 | 결과 |
@@ -198,8 +213,10 @@ flowchart LR
 | 유사 후보 배치 기본 범위 | 상위 100,000개 |
 | 유사 후보 코퍼스(2026-09-26 최종 운영 반영) | 28,737개(기준 패키지 26,187개·후보 203,564행) |
 | 보고서 가능 범위(`available_package`, 갱신) | 90,833행 |
+| 운영 PostgreSQL DB 전체 용량(2026-09-28 실측) | 163 GB |
+| 운영 MinIO 버킷 용량(2026-09-28 실측) | `pickage-raw` 60G · `pickage-curated` 24G · `pickage-mlflow-artifacts` 266M · `pickage-vectors` 130M · `pickage-quarantine` 4.0K |
 
-마감 직전 다운로드 값을 가진 패키지를 약 10만 개(97,728개)에서 약 46만 개(459,758개, 2026-09-28 발표 공식 수치)로 넓혀 registry 추가분 수집, downloads 재적재, 확장 transition 적재까지 진행했다. 이후 유사도 배치와 dependents 재계산은 이 468,519개 전체가 아니라 “재정렬 10만 ∩ 보고서 가능 범위(`available_package` 90,833행)”로 좁힌 부분집합을 기준으로 운영에 반영을 마쳤으므로 “모든 지표가 468k로 확장됐다”고 쓰지 않는다. 이 확장으로 다운로드 순위가 낮은 작은 분야에서도 비교 후보를 가진 비율이 52%에서 84%로 늘었다(발표자료 기준).
+마감 직전 다운로드 값을 가진 패키지를 약 10만 개(97,728개)에서 약 46만 개(459,758개, 2026-09-28 발표 공식 수치)로 넓혀 registry 추가분 수집, downloads 재적재, 확장 transition 적재까지 진행했다. 이후 유사도 배치와 dependents 재계산은 이 468,519개 전체가 아니라 “재정렬 10만 ∩ 보고서 가능 범위(`available_package` 90,833행)”로 좁힌 부분집합을 기준으로 운영에 반영을 마쳤으므로 “모든 지표가 468k로 확장됐다”고 쓰지 않는다. 이 확장으로 다운로드 순위가 낮은 작은 분야에서도 비교 후보를 가진 비율이 52%에서 84%로 늘었다(발표자료 기준). `pickage-quarantine` 버킷이 2026-09-28 기준 사실상 비어 있는 것(4.0K)은 "검증한 원본만 Bronze로 게시한다"는 원칙이 실제로 지켜지고 있다는 근거다.
 
 ## 주요 기술과 선택 이유
 
@@ -208,7 +225,7 @@ flowchart LR
 | PostgreSQL + Flyway | 서비스 조회 모델과 적재 이력을 관계형으로 관리하고, 로컬·운영이 같은 SQL 마이그레이션을 쓰도록 스키마 정본을 하나로 유지. JPA는 `validate`만 수행 |
 | GCS·MinIO + Parquet | 대용량 원본·Curated·모델 산출물을 DB와 분리하고 검증한 원천에서 다시 계산할 수 있게 보존 |
 | Spark·DuckDB + Python | Snapshot 간 대규모 의존 관계는 Spark 배치로, 단일 노드 검증·데이터셋 빌드는 DuckDB로 나눠 처리 |
-| ONNX Runtime + MLflow | 학습 환경과 분리된 CPU 운영 노드에서 임베딩을 실행하고, 운영 모델을 `pickage-similarity@production` 별칭 하나로 참조 |
+| ONNX Runtime + MLflow | 학습 환경과 분리된 CPU 운영 노드에서 임베딩을 실행하고, 운영 모델을 `pickage-similarity@production` 별칭 하나로 참조. MLflow는 실험 추적 없이 버전·별칭을 관리하는 아티팩트 레지스트리로만 쓴다(학습 하이퍼파라미터는 별도 GPU 환경에 있다) |
 | Spring Boot | 패키지·커뮤니티·기능 비교·PDF·HAND-OFF·운영 상태 API를 한 서버에서 제공하고 Bean Validation·Flyway·Actuator를 운영 계약에 포함 |
 | React + TanStack Query | 세 탭의 서버 상태와 재시도 흐름을 분리하고 탭 단위 lazy loading |
 | 직접 만든 SVG 차트 | 기하 계산을 React·DOM과 분리해 화면과 PDF가 같은 계산 규칙을 재사용 |
@@ -430,3 +447,4 @@ PDF는 사람이 읽는 레이아웃이라 개발자가 프로젝트 폴더에 �
 - 구현 상태와 테스트 결과는 2026-09-23 개발 현황 조사, 커밋 통계는 2026-09-24 로컬 `origin/develop`(`29153b3`)을 기준으로 다시 계산했다. 이번 최종 업데이트의 커밋 통계는 2026-09-28 로컬 `develop`(`9efb1e5`) 기준으로 한 번 더 재계산했다.
 - 이전 기록의 9월 20일 수치(전체 868건·merge 237건, 본인 비율 44.7%·54.4%)는 작성 시점 기준이었다. 이번에는 같은 날 마지막 커밋까지 포함한 871건·238건으로 다시 계산해 비교표에 넣었다.
 - 발표·시연 관련 수치와 서술은 2026-09-28 최종 발표 슬라이드와 시연 대본(팀 내부 자료, 파일 원문은 싣지 않음), `exec/04_시연_시나리오.md`를 근거로 했다.
+- DB·MinIO·컨테이너 메모리 상한 수치는 2026-09-28 운영 app·data 노드에 읽기 전용으로 접속해 직접 조회했다. 비밀번호·토큰·`.env` 등은 조회하지 않았고 문서에도 싣지 않았다.
