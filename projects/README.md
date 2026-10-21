@@ -25,7 +25,7 @@ GitHub에 공개한 프로젝트를 돌아보며, 어떤 문제를 풀려고 했
 | 프로젝트 | 성격 | 주요 기술 | 정리 상태 |
 | --- | --- | --- | --- |
 | 깃든 (Gitden) | 오픈소스 첫 기여 온보딩 AI 서비스, SSAFY 15기 공통 프로젝트 수상작 (소스 비공개) | React 19, Java/Spring Boot, Python/FastAPI, PostgreSQL, Redis, Docker, Blue-Green | Done |
-| Pickage | npm 패키지를 생태계·기능·커뮤니티로 비교하고 PDF·에이전트용 Markdown으로 내보내는 서비스, SSAFY 15기 빅데이터 분산 트랙 공통 프로젝트 **(개발 범위 확정, 발표 전, 소스 비공개)** | Java 21/Spring Boot 4, React 19/Vite, Python(ONNX·Spark·DuckDB), FastAPI RAG, PostgreSQL, MinIO | Draft (발표 전) |
+| Pickage | npm 패키지를 생태계·기능·커뮤니티로 비교하고 PDF·에이전트용 Markdown으로 내보내는 서비스, SSAFY 15기 빅데이터 분산 트랙 공통 프로젝트 **(완료, 2026-09-28 발표 종료, 소스 비공개)** | Java 21/Spring Boot 4, React 19/Vite, Python(ONNX·Spark·DuckDB), FastAPI RAG, PostgreSQL, MinIO | Done |
 | FirstHome Navigator AI | 청약 추천, 자금 계획, AI 코치 서비스 | Django, DRF, Vue, Pinia, Axios, PDF 분석, LLM | Draft |
 | Green Commit | 오픈소스 첫 기여 온보딩 프로토타입 (Apache 2.0) | React/TS, Java·Spring Boot, Python·FastAPI, Docker | Draft |
 | AI 쇼핑 어시스턴트 | AI/MCP/Harness 기반 쇼핑 추천 toy project | Python, Gradio, Docker | Draft |
