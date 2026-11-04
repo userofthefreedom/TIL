@@ -4,6 +4,7 @@ GitHub에 공개한 프로젝트를 돌아보며, 어떤 문제를 풀려고 했
 
 ## Quick Navigation
 
+- [씬크루 (SceneCrew)](scenecrew.md)
 - [깃든 (Gitden)](gitden.md)
 - [Pickage](pickage.md)
 - [FirstHome Navigator AI](FirstHome_Navigator_AI.md)
@@ -24,6 +25,7 @@ GitHub에 공개한 프로젝트를 돌아보며, 어떤 문제를 풀려고 했
 
 | 프로젝트 | 성격 | 주요 기술 | 프로젝트 상태 | 회고 정리도 |
 | --- | --- | --- | --- | --- |
+| 씬크루 (SceneCrew) | 콘서트 운영 팀의 계획·업무 배정·장비·안전·현장 보고를 AI 제안과 총괄 승인으로 조정하는 WEB/Android 서비스, SSAFY 15기 자율 프로젝트 (소스 비공개) | React 19/Capacitor Android, Spring Boot, FastAPI·LangGraph, PostgreSQL, WebSocket·SSE·FCM, Python 장비 수집기 | 진행 중 (2026-11-18 시연 예정) | 보강 |
 | 깃든 (Gitden) | 오픈소스 첫 기여 온보딩 AI 서비스, SSAFY 15기 공통 프로젝트 (소스 비공개) | React 19, Java/Spring Boot, Python/FastAPI, PostgreSQL, Redis, Docker, Blue-Green | 완료 · **우수상** | 완성 |
 | Pickage | npm 패키지를 생태계·기능·커뮤니티로 비교하고 PDF·에이전트용 Markdown으로 내보내는 서비스, SSAFY 15기 빅데이터 분산 트랙 공통 프로젝트 (소스 비공개) | Java 21/Spring Boot 4, React 19/Vite, Python(ONNX·Spark·DuckDB), FastAPI RAG, PostgreSQL, MinIO | 완료 (2026-09-28 발표) | 완성 |
 | FirstHome Navigator AI | 청약 추천, 자금 계획, AI 코치 서비스, SSAFY 15기 관통 프로젝트 | Django, DRF, Vue, Pinia, Axios, PDF 분석, LLM | 완료 · **우수상** | 보강 |
@@ -39,6 +41,7 @@ GitHub에 공개한 프로젝트를 돌아보며, 어떤 문제를 풀려고 했
 | 값 | 의미 |
 | --- | --- |
 | 완료 | 제출·발표·과제 마감 등 목표 시점까지 끝낸 프로젝트 |
+| 진행 중 | 아직 개발 중이며 제출·발표 전인 프로젝트 |
 | 운영 중 | 지금도 직접 사용하면서 개선하고 있는 프로젝트 |
 | 프로토타입 | 아이디어 검증 단계까지만 진행하고 멈춘 프로젝트 |
 
@@ -51,6 +54,8 @@ GitHub에 공개한 프로젝트를 돌아보며, 어떤 문제를 풀려고 했
 | 완성 | 설계 의사결정, 트러블슈팅, 화면, 수치 근거까지 정리한 포트폴리오 수준의 문서 |
 
 ## 다음에 보완할 것
+
+- 씬크루: 2026-11-18 시연 후 결과·최종 수치 반영, 실제 장비·Android 실기기 사진 추가
 
 - 보강 단계 문서에 대표 화면 캡처 추가 (`etc/<프로젝트>/`)
 - 프로젝트마다 가장 어려웠던 문제 1~2개를 깃든·Pickage처럼 "문제 → 판단 → 결과" 구조로 깊게 서술
