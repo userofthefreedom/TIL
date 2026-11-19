@@ -47,13 +47,24 @@
 ## 작성 템플릿과 체크리스트
 
 - [TIL 작성 템플릿](docs/TIL_TEMPLATE.md)
-- [학습 노트 리뷰 체크리스트](docs/REVIEW_CHECKLIST.md)
+- [학습 노트 리뷰 체크리스트](docs/REVIEW_CHECKLIST.md): 프로젝트 회고 공개 전 점검 항목 포함
 
 ## 프로젝트 회고
 
-GitHub에 공개한 프로젝트 repo를 분석해 구현 흐름, 주요 커밋, 사용 기술, 배운 점을 정리합니다.
+GitHub에 공개한 프로젝트 repo를 분석해 구현 흐름, 주요 커밋, 사용 기술, 배운 점을 정리합니다. 소스를 공개할 수 없는 프로젝트는 설계 판단, 실측 수치, 검증 기록으로 내용을 뒷받침합니다.
 
-- [프로젝트 회고 인덱스](projects/README.md)
+| 프로젝트 | 한 줄 소개 | 프로젝트 상태 | 회고 정리도 |
+| --- | --- | --- | --- |
+| [씬크루](projects/scenecrew.md) | 콘서트 운영 팀의 계획·업무 배정·장비·안전·현장 보고를 AI 제안과 총괄 승인으로 조정하는 WEB/Android 서비스 | 완료 | 완성 |
+| [깃든](projects/gitden.md) | 오픈소스 첫 기여 온보딩 AI 서비스 | 완료 · 우수상 | 완성 |
+| [Pickage](projects/pickage.md) | npm 패키지를 비교하고 PDF·에이전트용 Markdown으로 내보내는 서비스 | 완료 | 완성 |
+| [FirstHome Navigator AI](projects/FirstHome_Navigator_AI.md) | 청약 추천, 자금 계획, AI 코치 서비스 | 완료 · 우수상 | 보강 |
+| [Green Commit](projects/for_green_commit.md) | 깃든의 개인 MVP에서 출발한 오픈소스 기여 연습 저장소 | 완료 | 보강 |
+| [AI 쇼핑 어시스턴트](projects/shopping_with_ai.md) | 상품 사진 기반 탐지·유사 상품 추천·챗봇 | 완료 | 보강 |
+| [채용 공고 수집 + 자소서 초안 도구](projects/job_find.md) | 채용 공고 수집·관련성 랭킹·AI 자소서 초안 CLI 도구 | 운영 중 | 보강 |
+| [AI Building Permit Manager](projects/R.E.D.md) | 팀 해커톤용 건축 인허가 사전진단 프로토타입 | 프로토타입 | 보강 |
+
+- [프로젝트 회고 인덱스](projects/README.md): 상태 표기 기준과 보완 계획
 - [프로젝트 분석 템플릿](projects/PROJECT_TEMPLATE.md)
 - [`etc/`](etc/): 프로젝트 회고 문서에서 참조하는 스크린샷·다이어그램 등 이미지 자산을 프로젝트별 하위 폴더로 보관합니다.
 
@@ -99,11 +110,11 @@ Agentic AI와 Harness Engineering을 활용한 개발 흐름을 정리했습니�
 
 여러 학습 과정에서 공통으로 반복해서 쓰이는 도구와 문서 작성 기준입니다.
 
-## CLI 기본 명령어
+### CLI 기본 명령어
 
 CLI(Command Line Interface)는 터미널에서 명령어로 컴퓨터를 조작하는 방식입니다. 폴더 이동, 파일 생성, 삭제, 복사, 내용 확인을 빠르게 수행할 수 있습니다.
 
-### 현재 위치와 파일 목록
+#### 현재 위치와 파일 목록
 
 ```bash
 pwd
@@ -120,7 +131,7 @@ ls -al
 
 위치가 헷갈릴 때는 먼저 `pwd`와 `ls`를 확인합니다.
 
-### 폴더 이동
+#### 폴더 이동
 
 ```bash
 cd 폴더이름
@@ -135,7 +146,7 @@ cd /
 - `~`: 홈 디렉터리
 - `/`: 루트 디렉터리
 
-### 파일과 폴더 생성
+#### 파일과 폴더 생성
 
 ```bash
 mkdir my_folder
@@ -147,7 +158,7 @@ touch test.txt
 - `mkdir -p`: 중간 경로까지 한 번에 생성
 - `touch`: 파일이 없으면 생성, 있으면 수정 시간 갱신
 
-### 파일 내용 확인과 출력
+#### 파일 내용 확인과 출력
 
 ```bash
 cat README.md
@@ -161,7 +172,7 @@ echo "world" >> hello.txt
 - `>`: 덮어쓰기
 - `>>`: 이어쓰기
 
-### 복사와 이동
+#### 복사와 이동
 
 ```bash
 cp a.txt b.txt
@@ -175,7 +186,7 @@ mv a.txt folder/
 - `cp -r`: 폴더 복사
 - `mv`: 파일/폴더 이동 또는 이름 변경
 
-### 삭제와 터미널 정리
+#### 삭제와 터미널 정리
 
 ```bash
 rm a.txt
@@ -191,11 +202,11 @@ history
 
 `rm -rf`는 매우 위험하므로 삭제 대상 경로를 반드시 확인한 뒤 사용합니다.
 
-## Git 활용법
+### Git 활용법
 
 Git은 코드 변경 사항을 기록하는 버전 관리 도구입니다. 기본 흐름은 수정, add, commit, push입니다.
 
-### 저장소 시작과 복제
+#### 저장소 시작과 복제
 
 ```bash
 git init
@@ -207,7 +218,7 @@ git clone https://github.com/username/repository.git
 
 `.git` 폴더는 저장소의 변경 이력을 담고 있으므로 함부로 삭제하지 않습니다.
 
-### 상태 확인과 변경 내용 보기
+#### 상태 확인과 변경 내용 보기
 
 ```bash
 git status
@@ -221,7 +232,7 @@ git log --oneline --graph --decorate
 - `git diff --staged`: staging된 변경 비교
 - `git log`: commit 기록 확인
 
-### 변경 사항 저장
+#### 변경 사항 저장
 
 ```bash
 git add 파일이름
@@ -235,7 +246,7 @@ git commit -m "commit message"
 
 commit message는 나중에 변경 이유를 이해할 수 있도록 작성합니다.
 
-### 원격 저장소 동기화
+#### 원격 저장소 동기화
 
 ```bash
 git remote -v
@@ -250,7 +261,7 @@ git pull origin main
 
 로컬과 원격에서 같은 파일을 다르게 수정했다면 conflict가 발생할 수 있습니다.
 
-### 브랜치
+#### 브랜치
 
 ```bash
 git branch
@@ -266,7 +277,7 @@ git switch -c feature/articles
 
 작업 중인 변경 사항이 있을 때 브랜치를 이동하면 충돌하거나 이동이 막힐 수 있으므로, 이동 전 `git status`를 확인합니다.
 
-### 병합과 충돌
+#### 병합과 충돌
 
 ```bash
 git switch main
@@ -289,7 +300,7 @@ feature branch content
 
 충돌 부분을 직접 수정한 뒤 다시 `git add`와 `git commit`을 진행합니다.
 
-### Pull Request 협업 흐름
+#### Pull Request 협업 흐름
 
 ```text
 main
@@ -304,11 +315,11 @@ main
 
 협업 시에는 main 브랜치에서 직접 작업하기보다 기능별 브랜치를 만들고, Pull Request를 통해 리뷰와 병합을 진행합니다. PR 제목과 설명에는 변경 내용과 확인한 내용을 남깁니다.
 
-## Markdown / README 작성법
+### Markdown / README 작성법
 
 Markdown은 문서를 구조화하고, GitHub README처럼 렌더링되는 환경에서 보기 좋게 표시하기 위한 문법입니다.
 
-### 제목과 문서 구조
+#### 제목과 문서 구조
 
 ```md
 # 제목1
@@ -318,7 +329,7 @@ Markdown은 문서를 구조화하고, GitHub README처럼 렌더링되는 환�
 
 `#` 뒤에는 공백을 넣습니다. 긴 문서는 `#`, `##`, `###` 계층을 유지하면 읽기 쉽습니다.
 
-### 목차와 내부 링크
+#### 목차와 내부 링크
 
 ```md
 - [Git 활용법](#git-활용법)
@@ -326,7 +337,7 @@ Markdown은 문서를 구조화하고, GitHub README처럼 렌더링되는 환�
 
 내부 링크는 heading 텍스트를 소문자화하고, 띄어쓰기를 `-`로 바꾼 형태를 사용합니다. 한글 heading도 GitHub에서 내부 링크로 사용할 수 있습니다.
 
-### 리스트
+#### 리스트
 
 ```md
 - 항목
@@ -341,7 +352,7 @@ Markdown은 문서를 구조화하고, GitHub README처럼 렌더링되는 환�
 
 한 문서 안에서는 리스트 스타일을 가능하면 통일합니다.
 
-### 코드
+#### 코드
 
 ````md
 ```python
@@ -355,7 +366,7 @@ print("hello")
 `git status`를 실행한다.
 ```
 
-### 링크와 이미지
+#### 링크와 이미지
 
 ```md
 [Python 정리](python/README.md)
@@ -364,7 +375,7 @@ print("hello")
 
 링크는 `[텍스트](주소)`, 이미지는 앞에 `!`를 붙입니다.
 
-### 텍스트 강조와 구분선
+#### 텍스트 강조와 구분선
 
 ```md
 **굵게**
